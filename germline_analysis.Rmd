@@ -1,0 +1,1352 @@
+---
+title: "CH_germline_IMPACT.rmd"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(magrittr)
+#library(dplyr)
+library(ggplot2)
+library(reshape2)
+#library(stringr)
+#library(readr)
+library(RColorBrewer)
+library(ggpubr)
+library(gridGraphics)
+library(ggsci)
+library(ggsignif)
+library(grid)
+library(kableExtra)
+library(ggrepel)
+library(sjPlot)
+library(sjlabelled)
+library(sjmisc)
+library(forcats)
+library(survminer)
+library(ggplotify)
+#library(compareGroups)
+library(patchwork)
+library(geepack)
+library(scales)
+library(table1)
+library(data.table)
+library(metafor)
+library(imputeTS)
+library(lubridate)
+options(na.action = "na.omit")
+source('data_from_Kelly/toolbox.R')
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+do_plot = function(p, f, w, h, r = 300, save_pdf = T) {
+  ggsave(f, plot = p, width = w, height = h, dpi = r)
+  if (save_pdf) {
+    ggsave(paste0(str_remove(f, '\\..+'), '.pdf'), plot = p, width = w, height = h, dpi = r)
+  }
+  knitr::include_graphics(f)
+}
+```
+
+## Plot settings
+```{r global theme}
+panel_theme = theme_bw() + theme(
+    panel.border = element_blank(),
+    legend.position = "none",
+ #   panel.grid.minor = element_blank(),
+    plot.subtitle = element_text(hjust = 0.5, size = 8),
+    plot.title = element_text(face = 'bold', hjust = 0, vjust = -2, size = 12),
+    panel.grid.major = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_text(size = 6),
+    axis.text.y = element_text(size = 6),
+    axis.text.x = element_text(size = 6),
+    axis.title = element_text(size = 8),
+    axis.line = element_line(),
+    plot.margin = unit(c(0,0,0,0), 'pt')
+) 
+
+therapy_colors = c('untreated' = '#0072B2', 'treated' = '#D55E00')
+
+th <- theme_classic()
+th <- th + theme(axis.text = element_text(color = "black"))
+theme_set(th)
+```
+
+# Data Preprocessing
+```{r pre-process data}
+
+M_long = suppressWarnings(read_tsv("data/processed/mut_full_long_filtered.tsv", col_types = cols()))
+M_wide_all = suppressWarnings(data.table::fread("data/processed/mut_full_wide.tsv", sep = '\t', header = T))
+M_copy = suppressWarnings(data.table::fread("data/ch_cnvs_jul9.tsv", sep = ',', header = T))
+
+tch_genes = c('PPM1D', 'TP53', 'CHEK2')
+
+#Merge in part C data
+partc = suppressWarnings(data.table::fread("data/part_c_clean.txt", sep ='\t', header=T))
+M_wide_all <- left_join(M_wide_all,partc,by="MRN")
+
+
+M_long = M_long %>%
+    mutate(tCH = Gene %in% tch_genes) %>%
+    mutate(therapy_binary = ifelse(ind_anychemo | preimpact_xrt, 'treated', 'untreated')) %>%
+    mutate(therapy_binary = factor(therapy_binary, levels = c('treated', 'untreated'))) %>%
+    mutate(race_b = as.character(as.integer(race == "WHITE"))) %>%
+    mutate(
+        gender = relevel(factor(gender), ref = "M"),
+        race = relevel(factor(race), "WHITE"),
+        systemtumortype = relevel(factor(systemtumortype), "thoracic"),
+        smoke = relevel(factor(smoke), "0"),
+        smoke_bin = relevel(factor(smoke_bin), "never"),
+        therapy_binary = relevel(factor(therapy_binary), 'untreated'),
+        Gene = relevel(factor(Gene), "DNMT3A")
+    ) %>% 
+    mutate(age_scaled = as.vector(scale(age_impact)))
+
+M_all = M_long %>% filter(txMSK == 1)
+
+M = M_long %>% filter((txMSK == 1) & CH_nonsilent == 1)
+
+agebreaks <- c(0,40,50,60,70,500)
+agelabels <- c("0-40","40-50","50-60","60-70","70+")
+
+setDT(M_wide_all)[ , age_cat := cut(age_impact, 
+                                breaks = agebreaks, 
+                                right = FALSE, 
+                                labels = agelabels)]
+
+M_wide = M_wide_all %>%
+    mutate(therapy_binary = ifelse(ind_anychemo | preimpact_xrt, 'treated', 'untreated')) %>% 
+    mutate(race = as.character(race)) %>%
+    mutate(
+        race = case_when(
+        race == '' | is.na(race) ~ "Missing",
+        race == 'UNKNOWN' ~ 'Missing',
+        T ~ race),
+        smoke = case_when(
+            smoke == 0 ~ '0',
+            smoke == 1 ~ '1',
+            smoke == 2 ~ '2',
+            is.na(smoke) ~ 'Missing'),
+        race_b = as.integer(race == "WHITE"),
+        age_scaled = as.vector(scale(age_impact))
+    ) %>%
+    mutate(gender = case_when(
+        gender == 'M' ~ 'Male',
+        gender == 'F' ~ 'Female')
+    ) %>%
+    mutate(mutnum_all_r = case_when(
+        mutnum_all ==0 ~ 0,
+        mutnum_all == 1 ~ 1,
+        mutnum_all >= 2 ~ 2)
+    ) %>%
+    mutate(race = case_when(
+        is.na(race) ~ "Missing",
+        race == 'MISSING/OTHER' ~ 'Other',
+        T ~ tools::toTitleCase(tolower(race)))
+    ) %>%
+    mutate(
+        gender = relevel(factor(gender), ref = 'Male'),
+        race = relevel(factor(race), "White"),
+        systemtumortype = relevel(factor(systemtumortype), "thoracic"),
+        smoke = relevel(factor(smoke), "0"),
+        smoke_bin = relevel(factor(smoke_bin), "never"),
+        therapy_binary = relevel(factor(therapy_binary), 'untreated')
+    ) %>%
+    filter(!is.na(germline))
+```
+
+```{r Age by Germline Overall, fig.width = 10, fig.asp = .5}
+panel_theme = theme_bw() + theme(
+    panel.border = element_blank(),
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    plot.subtitle = element_text(hjust = 0.5, size = 8),
+    # plot.title = element_text(face = 'bold', hjust = 0, vjust = -2, size = 12),
+    plot.title = element_text(face = 'bold', size = 12, hjust = 0, vjust = -11),
+    panel.grid.major = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_text(size = 6),
+    axis.text.y = element_text(size = 6),
+    axis.text.x = element_text(size = 6),
+    axis.title = element_text(size = 8),
+    axis.line = element_line(),
+    plot.margin = unit(c(0,0,0,0), 'pt')
+) 
+
+get_ch_grouped = function(M_wide) {
+
+    CH_by_age_grouped = M_wide %>% select(MRN, age_cat, CH) %>%
+        mutate(CH = ifelse(is.na(CH), 0, CH)) %>%
+        group_by(age_cat) %>%
+        summarise(CH = sum(CH), total = n()) %>% 
+        filter(!is.na(age_cat)) %>%
+        mutate(freq = CH / total)
+}
+
+font_size = 8
+age_curve_theme = 
+  theme(
+      legend.position = 'top',
+      legend.key.size = unit(5, 'mm'),
+      legend.title = element_blank(),
+      legend.direction = 'horizontal',
+      plot.title = element_text(hjust = -0.08),
+      axis.text.x = element_text(angle = 45, vjust = 0.5, size = font_size),
+      axis.text.y = element_text(size = font_size),
+      axis.title = element_text(size = font_size),
+      legend.text = element_text(size = font_size)
+  )
+
+## Age All
+D = rbind(
+    get_ch_grouped(M_wide %>% filter(germline == 1) %>% mutate(CH = CH_all)) %>% mutate(germline_mutation = 'yes'),
+    get_ch_grouped(M_wide %>% filter(germline == 0) %>% mutate(CH = CH_all)) %>% mutate(germline_mutation = 'no')
+)
+
+D <- D %>% rowwise() %>% mutate(lower = prop.test(CH, total, conf.level = .95)$conf.int[1], upper = prop.test(CH, total, conf.level = .95)$conf.int[2]) %>% mutate(germline_mutation=as.factor(germline_mutation))
+
+ggplot(
+      D,
+      aes(x = age_cat,
+          y = freq,
+          ymin = upper,
+          ymax = lower,
+          color = germline_mutation,
+          fill = germline_mutation,
+          group =germline_mutation)
+  ) +
+  geom_ribbon(
+      alpha = 0.2,
+      colour = NA
+  ) +
+  geom_line() +
+  # scale_x_continuous(
+  #     breaks = c(1, 2, 3, 4, 5, 6),
+  #     labels = agelabels
+  # ) +
+  # panel_theme +
+  # age_curve_theme +
+  ggtitle("Any CH")+
+  xlab("Age") +
+  ylab("Proportion of patients with CH") +
+  theme(plot.title = element_text(hjust = -0.08))
+  # scale_fill_manual(values = therapy_colors) +
+  # scale_color_manual(values = therapy_colors)
+
+## Age PD
+D = rbind(
+    get_ch_grouped(M_wide %>% filter(germline == 1) %>% mutate(CH = ch_pd2)) %>% mutate(germline_mutation = 'yes'),
+    get_ch_grouped(M_wide %>% filter(germline == 0) %>% mutate(CH = ch_pd2)) %>% mutate(germline_mutation = 'no')
+)
+
+D <- D %>% rowwise() %>% mutate(lower = prop.test(CH, total, conf.level = .95)$conf.int[1], upper = prop.test(CH, total, conf.level = .95)$conf.int[2]) %>% mutate(germline_mutation=as.factor(germline_mutation))
+
+ggplot(
+      D,
+      aes(x = age_cat,
+          y = freq,
+          ymin = upper,
+          ymax = lower,
+          color = germline_mutation,
+          fill = germline_mutation,
+          group =germline_mutation)
+  ) +
+  geom_ribbon(
+      alpha = 0.2,
+      colour = NA
+  ) +
+  geom_line() +
+  # scale_x_continuous(
+  #     breaks = c(1, 2, 3, 4, 5, 6),
+  #     labels = agelabels
+  # ) +
+  # panel_theme +
+  # age_curve_theme +
+  ggtitle("CH-PD")+
+  xlab("Age") +
+  ylab("Proportion of patients with CH-PD") +
+  theme(plot.title = element_text(hjust = -0.08))
+  # scale_fill_manual(values = therapy_colors) +
+  # scale_color_manual(values = therapy_colors)
+```
+```{r Genes and classes, fig.width = 8, fig.asp = .5}
+
+class_list <- c("g_hr_hrd","g_ss_germ", "g_wnt_signaling", "g_mmr", "g_rad_sens", "g_metabolic", "g_helicase", "g_ras_mek_erk", "g_transcription_factors", "g_hr_cell_cycle", "g_hif2_alpha", "g_tsg_other", "g_kinase", "g_swi_snf", "g_cell_cycle", "g_ss_germ", "g_hrd_dna_damage", "g_cadherin", "g_onco_gene_other", "g_hr_mmr")
+
+D = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    mutate(gene = factor(gene, gene))
+
+ggplot(
+      D
+  ) + 
+  geom_col(
+      aes(x = gene, y = freq), color = 'black'
+  ) +
+  theme(
+      plot.title = element_text(hjust = .5, size = 16),
+      axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = font_size),
+      axis.title = element_text(size=14),
+      axis.text.y = element_text(size=13)
+  ) +
+  xlab("") + 
+  ylab("Frequency")  +
+  ggtitle("Gene Class Freqeuncy") +
+  scale_fill_nejm() +
+  scale_color_nejm() +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0))
+
+D = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter(!(gene %in% class_list)) %>%
+    mutate(gene = factor(gene, gene))
+
+ggplot(
+      D
+  ) + 
+  geom_col(
+      aes(x = gene, y = freq), color = 'black'
+  ) +
+  theme(
+      plot.title = element_text(hjust = .5, size = 16),
+      axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = font_size),
+      axis.title = element_text(size=14),
+      axis.text.y = element_text(size=13)
+  ) +
+  xlab("") + 
+  ylab("Frequency")  +
+  ggtitle("Gene Freqeuncy") +
+  scale_fill_nejm() +
+  scale_color_nejm() +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0))
+```
+
+```{r Table 1}
+#Table 1
+D = M_wide %>% 
+    mutate(ch_pd_verbose = case_when (
+      ch_pd == 0 ~ "No CH-PD",
+      ch_pd == 1 ~ "CH-PD"
+    )) %>%
+      mutate(ch_pd2_verbose = case_when (
+      ch_pd2 == 0 ~ "No CH-PD",
+      ch_pd2 == 1 ~ "CH-PD"
+    )) %>%
+      mutate(ch_mypd_verbose = case_when (
+      ch_my_pd == 0 ~ "No CH-MyPD",
+      ch_my_pd == 1 ~ "CH-MyPD"
+    )) %>%
+        mutate(CH_all_v = case_when (
+      CH_all == 0 ~ "No CH",
+      CH_all == 1 ~ "CH"
+    )) %>%
+        mutate(CH_nondriver_verbose = case_when (
+     CH_nondriver == 0 ~ "No non-driver CH",
+      CH_nondriver == 1 ~ "Non-driver CH"
+     )) %>% 
+         mutate(CH_nondriver2_verbose = case_when (
+     CH_nondriver2 == 0 ~ "No non-driver CH",
+      CH_nondriver2 == 1 ~ "Non-driver CH"))
+
+label(D$age_cat) <- "Age(y)"
+label(D$gender) <- "Gender"
+label(D$smoke_bin) <- "Smoking"
+label(D$race_bin) <- "Race"
+label(D$systemtumortype) <- "Primary Tumor Site"
+label(D$ch_pd2_verbose) <- "CH-PD"
+label(D$ch_mypd_verbose) <- "CH-MyPD"
+label(D$germline) <- "Germline Mutation"
+
+
+
+D <- D %>% mutate(pct_cytotoxic_therapy=as.factor(pct_cytotoxic_therapy),
+                  eqd_3_t=as.factor(eqd_3_t),
+                  pct_platinum=as.factor(pct_platinum),
+                  pct_topoisomerase_ii_inh=as.factor(pct_topoisomerase_ii_inh),
+                  pct_taxane=as.factor(pct_taxane),
+                  pct_topoisomerase_i_inhi=as.factor(pct_topoisomerase_i_inhi),
+                  pct_antimetabolite=as.factor(pct_antimetabolite),
+                  pct_carboplatin=as.factor(pct_carboplatin),
+                  pct_oxaliplatin=as.factor(pct_oxaliplatin),
+                  pct_cisplatin=as.factor(pct_cisplatin),
+                  germline=as.factor(germline))
+
+table1(~ age_cat + gender + smoke_bin + race_bin + systemtumortype + pct_cytotoxic_therapy + eqd_3_t + pct_platinum + pct_carboplatin + pct_oxaliplatin + pct_cisplatin+ pct_topoisomerase_ii_inh + pct_taxane + pct_topoisomerase_i_inhi + pct_antimetabolite + CH_all_v + ch_pd2_verbose + CH_nondriver2_verbose | germline, data=D, overall=F, output="markdown", export="ktab")
+
+D <- D %>% mutate(germline_gene=case_when(
+  g_BRCA1==1 ~ "BRCA1",
+  g_BRCA2==1 ~ "BRCA2",
+  g_APC==1 ~ "APC",
+  g_MUTYH==1 ~ "MUTYH",
+  g_ATM==1 ~ "ATM",
+  germline==0 ~ "No germline"
+))
+
+
+table1(~ age_cat + gender + smoke_bin + race_bin + systemtumortype + pct_cytotoxic_therapy + eqd_3_t + pct_platinum + pct_carboplatin + pct_oxaliplatin + pct_cisplatin+ pct_topoisomerase_ii_inh + pct_taxane + pct_topoisomerase_i_inhi + pct_antimetabolite + CH_all_v + ch_pd2_verbose + CH_nondriver2_verbose | germline_gene, data=D, overall=F, output="markdown", export="ktab")
+```
+
+```{r Regression with CH all unadjusted for therapy, fig.width = 8, fig.asp = .5}
+
+D <- M_wide
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    filter(freq>20) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = CH_all ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH') +
+    xlab('') +
+    scale_x_discrete(expand = c(0.25,0))
+```
+
+```{r Regression with CH PD unadjusted for therapy, fig.width = 8, fig.asp = .5}
+
+D <- M_wide
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    filter(freq>20) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = ch_pd2 ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-PD') +
+    xlab('') +
+    scale_x_discrete(expand = c(0.25,0))
+```
+```{r Regression with CH-My-PD unadjusted for therapy, fig.width = 8, fig.asp = .5}
+
+D <- M_wide
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    filter(freq>20) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = ch_my_pd ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-My-PD') +
+    xlab('') +
+    scale_x_discrete(expand = c(0.25,0))
+```
+```{r Regression with CH-Non-Driver unadjusted for therapy, fig.width = 8, fig.asp = .5}
+
+D <- M_wide
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    filter(freq>20) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = CH_nondriver2 ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-Non-Driver') +
+    xlab('') +
+    scale_x_discrete(expand = c(0.25,0))
+```
+```{r Regression with DDR vs non-DDR CH unadjusted for therapy, fig.width = 8, fig.asp = .5}
+
+D <- M_wide
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    filter(freq>20) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = ch_tch ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-Non-Driver') +
+    xlab('') +
+    scale_x_discrete(expand = c(0.25,0))
+
+
+###Non-DDR
+D <- M_wide %>% mutate(non_ddr_pd=ifelse(ch_tch==1,NA,ch_pd2))
+                    
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    filter(freq>20) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = non_ddr_pd ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-Non-DDR') +
+    xlab('') +
+    scale_x_discrete(expand = c(0.25,0))
+```
+```{r Regression with CH-PD Adjusted for therapy, fig.width = 8, fig.asp = .5}
+
+#Treated/Untreated
+D <- M_wide 
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    filter(freq>30) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = ch_pd2 ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + therapy_binary + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-PD') +
+    xlab('') +
+    scale_x_discrete(expand = c(0.25,0))
+
+
+#PCT XRT and chemo
+
+D <- M_wide %>% filter(txMSK==1)
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    filter(freq>30) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = ch_pd2 ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + eqd_3_t + pct_cytotoxic_therapy + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-PD') +
+    xlab('') +
+    scale_x_discrete(expand = c(0.25,0))
+
+
+#Full including class
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = ch_pd2 ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + eqd_3_t + pct_platinum + pct_topoisomerase_ii_inh + pct_taxane + pct_topoisomerase_i_inhi + pct_antimetabolite + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-PD') +
+    xlab('') +
+    scale_x_discrete(expand = c(0.25,0))
+```
+
+```{r Regression with CH PD unadjusted for therapy by Gene and then adjusted, fig.width = 8, fig.asp = .5}
+
+D <- M_wide
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter(!(gene %in% class_list)) %>%
+    filter(freq>30) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = ch_pd2 ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-PD') +
+    xlab('') +
+    ggtitle ("Unadjusted for therapy") +
+    scale_x_discrete(expand = c(0.25,0))
+
+##adjusted
+
+D <- M_wide %>% filter(txMSK==1)
+
+gene_class_label_list = D %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter(!(gene %in% class_list)) %>%
+    filter(freq>10) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = ch_pd2 ~ age_scaled + smoke_bin + race_b + gender + systemtumortype +  eqd_3_t + pct_cytotoxic_therapy + get(gene),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)") %>% mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    panel_theme +
+    # theme_classic() +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-PD') +
+    xlab('') +
+    ggtitle ("Adjusted for therapy") +
+    scale_x_discrete(expand = c(0.25,0))
+```
+```{r Regression with CH PD by germline class stratified by therapy, fig.width = 8, fig.asp = .5}
+
+D <- M_wide %>% mutate(cytoxrt=case_when(
+ (preimpact_xrt==1 | ind_cytotoxic_therapy==1) ~ 1,
+ (preimpact_xrt==0 & ind_cytotoxic_therapy==0) ~ 0
+))
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    filter(freq>30) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+D_treat <- D %>% filter(cytoxrt==1)
+D_untreat <- D %>% filter(cytoxrt==0)
+D_xrt <- D %>% filter(preimpact_xrt==1)
+
+data_list <- c("D_treat", "D_untreat", "D_xrt")
+
+for (data in data_list) {
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = ch_pd2 ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(gene),
+        data = get(data),
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene) %>% cbind(data=data)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)")  %>% filter(std.error<30) %>%
+    mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        fill = "data",
+        col = "data",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,10,0,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-PD') +
+    xlab('') +
+    ggtitle ("Stratified by therapy") +
+    scale_x_discrete(expand = c(0.25,0))
+```
+```{r Regression with CH PD by gene stratified by therapy, fig.width = 15, fig.asp = .5}
+
+D <- M_wide %>% mutate(cytoxrt=case_when(
+ (preimpact_xrt==1 | ind_cytotoxic_therapy==1) ~ 1,
+ (preimpact_xrt==0 & ind_cytotoxic_therapy==0) ~ 0
+))
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter(!(gene %in% class_list)) %>%
+    filter(freq>30) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+gene_class_list = gene_class_label_list %$% gene
+
+logit_gene_var = list()
+D_treat <- D %>% filter(cytoxrt==1)
+D_untreat <- D %>% filter(cytoxrt==0)
+D_xrt <- D %>% filter(preimpact_xrt==1)
+
+data_list <- c("D_treat", "D_untreat", "D_xrt")
+
+for (data in data_list) {
+for (gene in gene_class_list) {
+    logit = glm(
+        formula = ch_pd2 ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(gene),
+        data = get(data),
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    print(gene)
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(gene = gene) %>% cbind(data=data)
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+}
+
+plot <- left_join(logit_gene_var, 
+        gene_class_label_list,
+        by = 'gene'
+    ) %>%
+    filter(term=="get(gene)")  %>% filter(std.error<30) %>%
+    mutate(gene_label = factor(gene_label, levels = unique(gene_label[order(estimate)])))
+
+
+plot %>%  plot_forest(
+        x = "gene_label",
+        fill = "data",
+        col = "data",
+        eb_w = 0,
+        eb_s = 1.5,
+        label="p.stars",
+        ps = 2,
+        or_s = 3) +
+    theme(
+        strip.placement = 'bottom',
+        strip.text = element_text(size = 8),
+        plot.margin = unit(c(0,0,10,0), 'pt'),
+        axis.text.y = element_text(size = 6)
+    ) +
+    scale_fill_nejm() +
+    scale_color_nejm() +
+    ylab('Odds Ratio of CH-PD') +
+    xlab('') +
+    ggtitle ("Stratified therapy") +
+    scale_x_discrete(expand = c(0.05,0))
+```
+
+```{r Gene class by CH}
+D <- M_wide 
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter((gene %in% class_list)) %>%
+    filter(freq>30) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+gene_class_list = gene_class_label_list %$% gene
+
+interest_ch_genes = c("PPM1D","TP53","CHEK2","DNMT3A","TET2","ASXL1","ATM")
+
+logit_gene_var = list()
+  
+for (gene in interest_ch_genes) {
+
+            germline_list = filter_terms(
+                M_wide %>% filter(get(gene) == 1),
+                gene_class_list,
+                verbose = F,
+                threshold = 5
+            )
+print(germline_list)
+for (term in germline_list) {
+      print(gene)
+    print(term)
+    logit = glm(
+        formula = get(gene) ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(term),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(ch = gene) %>% cbind(germline=term) 
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+}
+
+D <- logit_gene_var %>% filter (term=="get(term)") %>% mutate(p_fdr = p.adjust(p.value, method = "fdr")) %>% mutate(log_or = log(estimate))
+
+ggplot(
+        D,
+        aes(x = ch, y = germline, fill = log_or)
+    ) +
+    geom_tile(color = "lightgrey") +
+    scale_fill_gradient2(
+        low = "darkblue",
+        mid = "white",
+        high = "darkred", 
+        midpoint = 0, 
+        na.value = "white",
+        limits = c(-2.5, 2.5)
+        
+    ) +
+    geom_point(
+        aes(size = ifelse(p_fdr <= 0.10, 1, NA)),
+        shape = 8, 
+        colour = "black",
+        show.legend = F
+    ) +
+    scale_size_area(max_size = 2) +
+    xlab('') +
+    ylab('') +
+    panel_theme +
+    scale_y_discrete(expand = c(0,0)) +
+    scale_x_discrete(expand = c(0,0)) +
+    theme(
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank(),
+        axis.line = element_blank(),
+        legend.position = 'right',
+        axis.text.x = element_text(size = 8, angle = 30, hjust = 1),
+        plot.margin = unit(c(20, 0, 20, 0), 'pt'),
+        legend.text = element_text(size = 4),
+        legend.title = element_text(size = 4),
+        legend.key.size = unit(10, "pt")
+    )
+
+#ggsave("p_heatmap.png", plot = p_heatmap, width = 4, height = 4, dpi = 300)
+```
+
+```{r Gene by CH}
+D <- M_wide 
+
+gene_class_label_list = M_wide %>% 
+    select(str_subset(colnames(.), '^g_')) %>%
+    replace(., is.na(.), 0) %>%
+    colSums() %>%
+    as.data.frame %>%
+    setNames('freq') %>%
+    tibble::rownames_to_column('gene')  %>%
+    arrange(-freq) %>%
+    filter(!(gene %in% class_list)) %>%
+    filter(freq>30) %>%
+    mutate(gene_label=paste(gene," n=",freq))
+
+gene_class_list = gene_class_label_list %$% gene
+
+interest_ch_genes = c("PPM1D","TP53","CHEK2","DNMT3A","TET2","ASXL1","ATM")
+
+logit_gene_var = list()
+  
+for (gene in interest_ch_genes) {
+
+            germline_list = filter_terms(
+                M_wide %>% filter(get(gene) == 1),
+                gene_class_list,
+                verbose = F,
+                threshold = 5
+            )
+print(germline_list)
+for (term in germline_list) {
+      print(gene)
+    print(term)
+    logit = glm(
+        formula = get(gene) ~ age_scaled + smoke_bin + race_b + gender + systemtumortype + get(term),
+        data = D,
+        family = binomial(link = "logit"), na.action = 'na.omit')
+    logit_data = logit %>% sjPlot::get_model_data(type="est") %>% cbind(ch = gene) %>% cbind(germline=term) 
+    logit_gene_var = rbind(logit_gene_var, logit_data)
+}
+}
+
+D <- logit_gene_var %>% filter (term=="get(term)") %>% mutate(p_fdr = p.adjust(p.value, method = "fdr")) %>% mutate(log_or = log(estimate))
+
+ggplot(
+        D,
+        aes(x = ch, y = germline, fill = log_or)
+    ) +
+    geom_tile(color = "lightgrey") +
+    scale_fill_gradient2(
+        low = "darkblue",
+        mid = "white",
+        high = "darkred", 
+        midpoint = 0, 
+        na.value = "white",
+        limits = c(-2.5, 2.5)
+        
+    ) +
+    geom_point(
+        aes(size = ifelse(p_fdr <= 0.10, 1, NA)),
+        shape = 8, 
+        colour = "black",
+        show.legend = F
+    ) +
+    scale_size_area(max_size = 2) +
+    xlab('') +
+    ylab('') +
+    panel_theme +
+    scale_y_discrete(expand = c(0,0)) +
+    scale_x_discrete(expand = c(0,0)) +
+    theme(
+        panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank(),
+        axis.line = element_blank(),
+        legend.position = 'right',
+        axis.text.x = element_text(size = 8, angle = 30, hjust = 1),
+        plot.margin = unit(c(20, 0, 20, 0), 'pt'),
+        legend.text = element_text(size = 4),
+        legend.title = element_text(size = 4),
+        legend.key.size = unit(10, "pt")
+    )
+
+#ggsave("p_heatmap.png", plot = p_heatmap, width = 4, height = 4, dpi = 300)
+```
+
