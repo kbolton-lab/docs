@@ -1,0 +1,4 @@
+Your input parameter must be of one of the following classes:
+applet         array:file     array:record   file           int
+array:applet   array:float    array:string   float          record
+array:boolean  array:int      boolean        hash           string
