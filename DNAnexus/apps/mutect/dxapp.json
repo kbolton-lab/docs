@@ -1,48 +1,61 @@
 {
-  "name": "cram2bam",
-  "title": "CRAM2BAM",
-  "summary": "Converts cram file to bam file and indexes the bam.",
+  "name": "mutect",
+  "title": "Mutect2 Scatter intervals",
+  "summary": "Run GATK Mutect2 and FilterMutectCalls",
   "dxapi": "1.0.0",
-  "folder": "/CH_Exome/BAMS",
   "version": "0.0.1",
   "inputSpec": [
     {
-      "name": "cram_in",
-      "label": "Input_CRAM",
+      "name": "reference",
       "class": "file",
       "optional": false,
       "patterns": [
-        "*.cram"
+        "*"
       ],
       "help": ""
     },
     {
-      "name": "ref_fasta",
-      "label": "Reference_Genome",
+      "name": "tumor_bam",
       "class": "file",
       "optional": false,
       "patterns": [
-        "*.fa"
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "normal_bam",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "interval_list",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
       ],
       "help": ""
     }
   ],
   "outputSpec": [
     {
-      "name": "bam_out",
-      "label": "Output_BAM",
+      "name": "vcf",
       "class": "file",
       "patterns": [
-        "*.bam"
+        "*"
       ],
       "help": ""
     },
     {
-      "name": "bai_out",
-      "label": "Output_BAM_Index",
+      "name": "vcf_index",
       "class": "file",
       "patterns": [
-        "*.bam.bai"
+        "*"
       ],
       "help": ""
     }
@@ -50,27 +63,25 @@
   "runSpec": {
     "timeoutPolicy": {
       "*": {
-        "hours": 1
+        "hours": 2
       }
     },
     "interpreter": "bash",
-    "file": "src/cram2bam.sh",
+    "file": "src/mutect.sh",
     "distribution": "Ubuntu",
     "release": "20.04",
     "version": "0"
   },
+  "access": {
+    "project": "CONTRIBUTE"
+  },
   "regionalOptions": {
-    "aws:eu-west-2": {
+    "aws:us-east-1": {
       "systemRequirements": {
         "*": {
-          "instanceType": "mem1_ssd1_v2_x2"
+          "instanceType": "mem1_ssd1_v2_x4"
         }
       }
     }
-  },
-  "access": {
-    "network": [
-      "*"
-    ]
   }
 }
