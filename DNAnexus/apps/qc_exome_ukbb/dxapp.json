@@ -1,0 +1,170 @@
+{
+  "name": "qc_exome_ukbb",
+  "title": "QC metrics for alignment",
+  "summary": "We are getting files alignment_summary_metrics and hs_metrics",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "bam",
+      "label": "input bam",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "label": "reference assembly fasta",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa",
+        "*.fasta"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_index",
+      "label": "reference assembly index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bait_intervals",
+      "label": "bait_intervals: interval_list file of baits used in the sequencing experiment",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "target_intervals",
+      "label": "target_intervals: interval_list file of targets used in the sequencing experiment",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "per_base_intervals",
+      "label": "per_target_intervals: additional intervals over which to summarize coverage/QC at a per-target resolution",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "omni_vcf",
+      "label": "omni_vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "per_target_intervals",
+      "label": "per_target_intervals: additional intervals over which to summarize coverage/QC at a per-target resolution",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "picard_metric_accumulation_level",
+      "label": "string",
+      "class": "string",
+      "optional": true,
+      "default": "ALL_READS",
+      "help": ""
+    },
+    {
+      "name": "minimum_mapping_quality",
+      "class": "int",
+      "optional": true,
+      "default": 1,
+      "help": ""
+    },
+    {
+      "name": "minimum_base_quality",
+      "class": "int",
+      "optional": true,
+      "default": 1,
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "alignment_summary_metrics",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "hs_metrics",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "per_target_coverage",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "per_base_coverage",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 2
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/qc_exome_UKBB.sh",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "project": "CONTRIBUTE"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x4"
+        }
+      }
+    }
+  }
+}

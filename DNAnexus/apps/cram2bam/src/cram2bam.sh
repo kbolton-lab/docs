@@ -25,9 +25,9 @@ main() {
     # recover the original filenames, you can use the output of "dx describe
     # "$variable" --name".
 
-    dx download "$cram_in" -o cram_in # "~/in/name_of_input_field/" e.x. "~/in/cram_in/4384617_23153_0_0.cram"
-    dx download "$ref_fasta" -o ref_fasta # "~/in/ref_fasta/GRCh38_full_analysis_set_plus_decoy_hla.fa"
-    #dx-download-all-inputs --parallel # https://documentation.dnanexus.com/developer/apps/bash
+    #dx download "$cram_in" -o cram_in # "~/in/name_of_input_field/" e.x. "~/in/cram_in/4384617_23153_0_0.cram"
+    #dx download "$ref_fasta" -o ref_fasta # "~/in/ref_fasta/GRCh38_full_analysis_set_plus_decoy_hla.fa"
+    dx-download-all-inputs --parallel # https://documentation.dnanexus.com/developer/apps/bash
 
     # Fill in your application code here.
     #
@@ -43,24 +43,28 @@ main() {
     # reported in the job_error.json file, then the failure reason
     # will be AppInternalError with a generic error message.
     bam_out="${cram_in_prefix}.bam"
+	
 
-    echo $HOME
-	echo $ref_fasta_path
-    echo $cram_in_path
-	docker load -i /samtools.tar.gz
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus quay.io/biocontainers/samtools:1.11--h6270b1f_0 \
-        /usr/local/bin/samtools view -b -T $ref_fasta_path $cram_in_path -o $bam_out && \
-		    /usr/local/bin/samtools index $bam_out
-
+	
+    docker load -i /samtools.tar.gz
+    #docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus quay.io/biocontainers/samtools:1.11--h6270b1f_0 /bin/bash -c \
+    #    "/usr/local/bin/samtools view -b -T $ref_fasta_path $cram_in_path -o $bam_out; /usr/local/bin/samtools index $bam_out"
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin:/usr/bin -w /home/dnanexus quay.io/biocontainers/samtools:1.11--h6270b1f_0 /usr/bin/cram2bam_helper.sh $ref_fasta_path $cram_in_path $bam_out
     
+    echo "completed docker..."
     # The following line(s) use the dx command-line tool to upload your file
     # outputs after you have created them on the local file system.  It assumes
     # that you have used the output field name for the filename for each output,
     # but you can change that behavior to suit your needs.  Run "dx upload -h"
     # to see more options to set metadata.
-	
-    bam_out=$(dx upload $bam_out --brief --destination "/CH_Exome/BAMS/")
-    bai_out=$(dx upload ${bam_out}.bai --brief --destination "/CH_Exome/BAMS/")
+
+    ## must do bai first or do: bai_out=${bam_out}.bai then bai_out=$(dx upload $bai_out --brief --destination "/CH_Exome/BAMS/")
+    #bai_out=$(dx upload ${bam_out}.bai --brief --destination "UKBB_Exome_2021:/CH_Exome/BAMS/")
+    bai_out=$(dx upload ${bam_out}.bai --brief)
+    #bam_out=$(dx upload $bam_out --brief --destination "UKBB_Exome_2021:/CH_Exome/BAMS/")
+    bam_out=$(dx upload $bam_out --brief)
+
+    
     #bai_out=$(dx upload bai_out --brief)
 
     # The following line(s) use the utility dx-jobutil-add-output to format and
