@@ -54,10 +54,15 @@
 # tutorials on how to modify this file.
 
 main() {
+    set -ex -o pipefail
 
     echo "Value of reference: '$reference'"
+    echo "Value of reference: '$reference_index'"
+    echo "Value of reference: '$reference_dict'"
     echo "Value of tumor_bam: '$tumor_bam'"
+    echo "Value of tumor_bam: '$tumor_bai'"
     echo "Value of normal_bam: '$normal_bam'"
+    echo "Value of normal_bam: '$normal_bai'"
     echo "Value of interval_list: '$interval_list'"
 
     # The following line(s) use the dx command-line tool to download your file
@@ -65,14 +70,9 @@ main() {
     # recover the original filenames, you can use the output of "dx describe
     # "$variable" --name".
 
-    # dx download "$reference" -o reference
-
-    # dx download "$tumor_bam" -o tumor_bam
-
-    # dx download "$normal_bam" -o normal_bam
-
-    # dx download "$interval_list" -o interval_list
+ 
     dx-download-all-inputs --parallel
+    
 
     # To report any recognized errors in the correct format in
     # $HOME/job_error.json and exit this script, you can use the
@@ -95,10 +95,15 @@ main() {
     # will interpret it as such).
 
     # input_to_scatter='placeholder value'
-    input_to_scatter=$interval_list_path
+    #input_to_scatter=$interval_list_path
+    input_to_scatter=$interval_list
+    echo "before scatter"
     scatter_job=$(dx-jobutil-new-job scatter \
-        -iinput_to_scatter:string="$input_to_scatter")
-
+        -iinput_to_scatter="$input_to_scatter")
+    #jbor="-i scat:array:jobref=${scatter_job}:array_of_scattered_input"
+    #echo $jbor
+    echo "after scatter"
+    
     # We will want to call "process" on each output of "scatter", so
     # we call the "map" entry point to do so.  We can also provide
     # here additional input that we want each "process" entry point to
@@ -114,35 +119,53 @@ main() {
     # If your intention is for the subjob to run on an OPEN object,
     # then the input ID MUST be given as a string.
     #process_inputs='-iadditional_input:string="file ID, for example" -ianother_input=32'
-    process_inputs="-ireference:string=$reference_path -itumor_bam:string=$tumor_bam_path -inormal_bam:string=$normal_bam_path"
-    map_job=$(dx-jobutil-new-job map \
-        -iarray_of_scattered_input="$scatter_job":array_of_scattered_input \
-        -iprocess_inputs="$process_inputs")
+    #process_inputs="-ireference:string=$reference_path -ireference_index=$reference_index_path -ireference_dict=$reference_dict_path -itumor_bam=$tumor_bam_path -itumor_bai=$tumor_bai_path -inormal_bam=$normal_bam_path -inormal_bai=$normal_bai_path"
+    #process_inputs='-ireference:string='"${reference_path}"' -ireference_index='"$reference_index_path"
+    #echo $process_inputs
+    # echo "dx-jobutil-new-job map \
+    #     -iarray_of_scattered_input=$scatter_job:array_of_scattered_input \
+    #     -iprocess_inputs=$process_inputs"
+    ## takes 2 parameters
 
+    #-i "array_of_scattered_input=${scatter_job}:array_of_scattered_input" \
+    map_job=$(dx-jobutil-new-job map \
+        -i "array_of_scattered_input:array:jobref=${scatter_job}:array_of_scattered_input" \
+        -i "reference=${reference_path}" \
+        -i "reference_index=${reference_index_path}" \
+        -i "reference_dict=${reference_dict_path}" \
+        -i "tumor_bam=${tumor_bam_path}" \
+        -i "tumor_bai=${tumor_bai_path}" \
+        -i "normal_bam=${normal_bam_path}" \
+        -i "normal_bai=${normal_bai_path}")
+        # -iprocess_inputs="$process_inputs")
+    echo "after map"
     # Finally, we want the "postprocess" job to run after "map" is
     # done calling "process" on each of its inputs.  Note that a job
     # is marked as "done" only after all of its child jobs are also
     # marked "done".
     output_name='merged.mutect.filtered.vcf.gz'
+    #-iprocess_outputs="$map_job":process_outputs \
     postprocess_job=$(dx-jobutil-new-job postprocess \
-        -iprocess_outputs="$map_job":process_outputs \
-        -iadditional_input:string="$output_name" \
+        -iprocess_outputs:array:jobref="$map_job":process_outputs \
+        -ioutput_name:string="$output_name" \
         --depends-on $map_job)
-
+    echo "after postprocess"
     # The following line(s) use the dx command-line tool to upload your file
     # outputs after you have created them on the local file system.  It assumes
     # that you have used the output field name for the filename for each output,
     # but you can change that behavior to suit your needs.  Run "dx upload -h"
     # to see more options to set metadata.
 
-    vcf=$(dx upload vcf --brief)
-    vcf_index=$(dx upload vcf_index --brief)
+    #vcf=$(dx upload vcf --brief)
+    #vcf_index=$(dx upload vcf_index --brief)
 
     # If you would like to include any of the output fields from the
     # postprocess job as the output of your app, you should return it
     # here using a reference.
     #
-    #   dx-jobutil-add-output app_output_field "$postprocess":final_output --class=jobref
+
+    dx-jobutil-add-output vcf --class=jobref "$postprocess_job":vcf 
+    dx-jobutil-add-output vcf_index --class=jobref "$postprocess_job":vcf_index
     #
     # Tip: you can include in your output at this point any open
     # objects (such as files) which are closed by another entry
@@ -156,58 +179,76 @@ main() {
     # class.  Run "dx-jobutil-add-output -h" for more information on what it
     # does.
 
-    dx-jobutil-add-output vcf "$vcf" --class=file
-    dx-jobutil-add-output vcf_index "$vcf_index" --class=file
+    #dx-jobutil-add-output vcf "$vcf" --class=file
+    #dx-jobutil-add-output vcf_index "$vcf_index" --class=file
 }
 
 scatter() {
+    set -ex -o pipefail
     echo "Value of input_to_scatter: '${input_to_scatter}'"
-
+    echo "scattering"
+    #ls /home/dnanexus/in/interval_list/xgen_plus_spikein.GRCh38_chr22.interval_list
+    echo "ls $input_to_scatter_path"
+    ls $input_to_scatter_path
+    echo
+    echo "~/in"
+    ls "~/in"
+    echo
     # Fill in code here to do whatever is necessary to scatter the
     # input.
-    
-    
     docker load -i /picard.tar.gz
 
     output_dir="out"
     mkdir $output_dir
     scatter_count=10
 
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin:/usr/bin -v /usr/bin/:/usr/bin -w /home/dnanexus broadinstitute/picard:2.23.6 \
-        /usr/bin/perl /usr/bin/split_interval_list_helper.pl /home/dnanexus/${output_dir} ${input_to_scatter} ${scatter_count}
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin/:/usr/local/bin -w /home/dnanexus broadinstitute/picard:2.23.6 \
+        bash -c "ls /home/dnanexus/in/interval_list/xgen_plus_spikein.GRCh38_chr22.interval_list; ls $input_to_scatter_path; ls /home/dnanexus/in; ls $HOME/in"
+
+
+    # docker run --rm -v /Users/brian:/Users/brian -v /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/mutect/resources/usr/bin:/usr/local/bin -w /Users/brian broadinstitute/picard:2.23.6 \
+    #     /usr/bin/perl /usr/local/bin/split_interval_list_helper.pl /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/mutect/test/${output_dir} ${input_to_scatter} ${scatter_count}
+
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin/:/usr/local/bin -w /home/dnanexus broadinstitute/picard:2.23.6 \
+        /usr/bin/perl /usr/local/bin/split_interval_list_helper.pl /home/dnanexus/${output_dir} ${input_to_scatter_path} ${scatter_count}
 
     #declare -a scattered_input=(placeholder1 placeholder2)
     scattered_input=( $(ls ${output_dir}/*.interval_list) )
 
     for piece in "${scattered_input[@]}"
     do
-        dx-jobutil-add-output array_of_scattered_input "$piece" --array
+        dx-jobutil-add-output array_of_scattered_input --class=file "$piece" --array
     done
 }
 
-# process_inputs='-iadditional_input:string="file ID, for example" -ianother_input=32'
-#     map_job=$(dx-jobutil-new-job map \
-#         -iarray_of_scattered_input="$scatter_job":array_of_scattered_input \
-#         -iprocess_inputs="$process_inputs")
-
 map() {
-    echo "Value of array_of_scattered_input: '${array_of_scattered_input[@]}'"
-    echo "Value of process_inputs: '${process_inputs}'"
-
+    ## "takes" 2 parameters
+    echo "Value of array_of_scattered_input: '${array_of_scattered_input[@]}'" # this name is the suffix to "$scatter_job":array_of_scattered_input
+    #echo "Value of process_inputs: '${process_inputs}'"
+    echo "Value of process_inputs: '${reference}'"
     # The following calls "process" for each of the items in
     # *array_of_scattered_input*, using as input the item in the
     # array, as well as the rest of the input parameters given in
     # *process_inputs*.
 
-    eval process_args=("$process_inputs")
+    #eval process_args=("$process_inputs")
 
     for scattered_input in "${array_of_scattered_input[@]}"
     do
         process_job=$(dx-jobutil-new-job process \
             -iscattered_input="$scattered_input" \
-            "${process_args[@]}")
-        dx-jobutil-add-output process_outputs --array \
-            "$process_job":process_output
+            -ireference:string="$reference" \
+            -ireference_index:string="$reference_index" \
+            -ireference_dict:string="$reference_dict" \
+            -itumor_bam:string="$tumor_bam" \
+            -itumor_bai:string="$tumor_bai" \
+            -inormal_bam:string="$normal_bam" \
+            -inormal_bai:string="$normal_bai")
+            #"${process_args[@]}")
+        dx-jobutil-add-output process_outputs \
+            --class=jobref ${process_job}:vcf --array
+        dx-jobutil-add-output process_outputs \
+            --class=jobref ${process_job}:vcf_index --array 
     done
 }
 
@@ -215,13 +256,16 @@ process() {
     # "-ireference:string=$reference_path -itumor_bam:string=$tumor_bam_path -inormal_bam:string=$normal_bam_path"
     echo "Value of scattered_input: '${scattered_input}'"
     echo "Value of reference: '${reference}'"
+    echo "Value of reference_index: '${reference_index}'"
+    echo "Value of reference_dict: '${reference_dict}'"
     echo "Value of tumor_bam: '${tumor_bam}'"
-    echo "Value of normal_bam: '${normal_bam}'"
+    echo "Value of tumor_bai: '${tumor_bai}'"
+    echo "Value of normal_bai: '${normal_bai}'"
     # Fill in code here to process the input and create output.
 
     docker load -i /gatk.tar.gz
 
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin:/usr/bin -v /usr/bin/:/usr/bin -w /home/dnanexus broadinstitute/gatk:4.2.0.0 \
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin/:/usr/bin -w /home/dnanexus broadinstitute/gatk:4.2.0.0 \
         /bin/bash /usr/bin/Mutect2 mutect.vcf.gz ${reference} ${tumor_bam} ${normal_bam} ${scattered_input}
 
     # As always, you can choose not to return output if the
@@ -233,8 +277,14 @@ process() {
     # you in the invocation of the "postprocess" job in "main").
 
     # dx-jobutil-add-output process_output "process placeholder output"
-    dx-jobutil-add-output process_output "mutect.filtered.vcf.gz" --class "file" # needs job-based object references (JBORs)?
-    dx-jobutil-add-output process_output "mutect.filtered.vcf.gz.tbi" --class "file" # needs job-based object references (JBORs)?
+    # does this require first to have to upload?
+    vcf=$(dx upload mutect.filtered.vcf.gz --brief)
+    dx-jobutil-add-output vcf --class=file "$vcf" 
+    # can I just do do this instead?
+    #dx-jobutil-add-output vcf mutect.filtered.vcf.gz --class=file
+
+    vcf_index=$(dx upload mutect.filtered.vcf.gz.tbi --brief)
+    dx-jobutil-add-output vcf_index --class=file "$vcf_index"
 }
 
 postprocess() {
@@ -248,9 +298,9 @@ postprocess() {
     docker load -i /bcftools.tar.gz
 
 
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin:/usr/bin -v /usr/bin/:/usr/bin -w /home/dnanexus kboltonlab/sam_bcftools_tabix_bgzip:1.0 \
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin/:/usr/bin -w /home/dnanexus kboltonlab/sam_bcftools_tabix_bgzip:1.0 \
         /usr/local/bin/bcftools merge --merge none -Oz -o ${output_name} ${process_outputs[@]} && tabix ${output_name}
 
-    dx-jobutil-add-output vcf "${output_name}" --class "file" # needs job-based object references (JBORs)?
-    dx-jobutil-add-output vcf_index "${output_name}.tbi" --class "file" # needs job-based object references (JBORs)?
+    dx-jobutil-add-output vcf --class=file "${output_name}"  
+    dx-jobutil-add-output vcf_index --class=file "${output_name}.tbi" 
 }

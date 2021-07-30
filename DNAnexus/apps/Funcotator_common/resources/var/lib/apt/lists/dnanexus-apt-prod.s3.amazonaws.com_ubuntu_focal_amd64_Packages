@@ -1,0 +1,578 @@
+Package: dx-java-bindings
+Architecture: amd64
+Version: 0.311.0
+Priority: optional
+Section: science
+Source: dx-toolkit
+Maintainer: Phil Sung <psung@dnanexus.com>
+Installed-Size: 6270
+Depends: openjdk-7-jre-headless | openjdk-8-jre-headless | openjdk-11-jre-headless
+Filename: focal/amd64/dx-java-bindings_0.311.0_amd64.deb
+Size: 5694204
+MD5sum: 34fc1ce801bde171a320f9488a2c0413
+SHA1: 8eb229417240c0d9b55538c973d7e6c81fc7eabc
+SHA256: d5a38b040e41421ce196adce5afad526ba9f63b251e2fcb9d5535712e358bdbd
+SHA512: 8983ce06a23c4f0a14992e2996de5518758b3b3815ae1ca1dd939a462897b8f17faf204cdf4ddde21d0cf4bddddd1dd2ec9a611dbf828a334a0e2f082a0d9d86
+Description: Java bindings to DNAnexus Platform
+ Bindings for interacting with the DNAnexus platform from Java.
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.91
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.91_amd64.deb
+Size: 461143552
+MD5sum: 85348d427e07b66f1828de959ec5d87a
+SHA1: 5bc8c3453b38da570a61c09b4173a2832cab6a51
+SHA256: 743846c5b45322e4875e745876161e727cc08c227286f4429416cd0a54321b61
+SHA512: 7f97f154559071d0ac30f94ee35e663849c62438de62950b7f5158d9dc17e9fbbd6ce6055779391508a55511000f8d9e138692f5a4ce6ece39d606a53c7d1940
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=006165d4a28be8b7509b2ce1e115a1a053b6c091
+ Date=06-14-2021
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.65
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.65_amd64.deb
+Size: 461059734
+MD5sum: 2979e07c61fb967c4c39821bf0206089
+SHA1: 000edbe2d1aa057d007fb29f59c472897a70dff9
+SHA256: 616d553c53fa73662cc4a112965bf22377ec5a4e7b0f4bfe72fabe097ad96288
+SHA512: d16a59d587c75fea7752ee83ebe25783c57da60541bfefa96287dc731876b55a52737c8eb4795dc0725aaabb06e73ede6ea61e47aea2b2905acebdc9f0fc1908
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=ad8b652be0f1c3f745cca50efabc376857952d58
+ Date=09-29-2020
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.74
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.74_amd64.deb
+Size: 461097082
+MD5sum: ee6fac257dddccef1f56eec58450c688
+SHA1: 7253210467584a5fd8d2bb185e150dbcbcb1d513
+SHA256: 2df0e3e21c62058129605473e10a57c1a30f20c3ffa7af4164983e26475888a4
+SHA512: 0e1272ae069a6791864aa85f4da3802fdd0ad0d45db79a9fb650dc0c109f9a24e41a6820bdaf2e201036f5cf6effd157f5b0bd139d9bc0b81f0a5ac484fd58ca
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=12a3525a279ca3a05025900fab4080569a630ea5
+ Date=02-23-2021
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.81
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.81_amd64.deb
+Size: 461133220
+MD5sum: 29dfefa048d6c9df043e813be4bd2ad4
+SHA1: 7311ebbb2c069203e92fd138079b3c0b1c558642
+SHA256: 173b0a4102dfcd9589c47018ffee8c3914ccc72630c32ce0eced05d6db74afff
+SHA512: aece72ca8bd583e4087d77debfc7241825c707c026b8bec5de22ad55bbc41bccb9ec2e5afad19a614f349d5d1a2aaa107be6c388b5ccbfd2bd08fa8a3979ae28
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=e51a40e55f1e814a2d8ac2716ebd21a2683fa91a
+ Date=04-13-2021
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.73
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.73_amd64.deb
+Size: 461093048
+MD5sum: c70da194de04f84d415d616a55326050
+SHA1: 371fadad5ef1d57e5f88d1a9ede0f2c4716ddbfa
+SHA256: bb3b91e70b24e5beef61f7e9e96880398ac77eb4ceca96ca2ef17942fcacb1db
+SHA512: 2899987688552415955dfefe9041639be00272b9a4cfb06d5395605753befc24115315e1c4376c0bc411b6870d68f9763fc90400aaa72f1c9698950c2d776b7e
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=f3517c6d115c2d3eb86deb14c426b8a435f31857
+ Date=02-09-2021
+ Deploy-type=stag
+
+Package: dx-java-bindings
+Architecture: amd64
+Version: 0.298.1
+Priority: optional
+Section: science
+Source: dx-toolkit
+Maintainer: Phil Sung <psung@dnanexus.com>
+Installed-Size: 6269
+Depends: openjdk-7-jre-headless | openjdk-8-jre-headless | openjdk-11-jre-headless
+Filename: focal/amd64/dx-java-bindings_0.298.1_amd64.deb
+Size: 5692624
+MD5sum: d4112037c2dae45af83dc833a94d5178
+SHA1: 919bb2fe435c3ab7f7a34757e80b80e6eac406f7
+SHA256: 0b5bc9fa8acba8ea0be8a8dc1983cdf4c9fadd97ef474a0b9ebdec3b6f5c8806
+SHA512: 775c1103e6b537bd60a2706c7a5c9cbc519b707c78a66dfef758e5eb66693f06f4107724e1fa81fb453e0e094358e4547e0d7e3965f60df1975e1196edbf4361
+Description: Java bindings to DNAnexus Platform
+ Bindings for interacting with the DNAnexus platform from Java.
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.67
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.67_amd64.deb
+Size: 461061616
+MD5sum: e7f13236a87f567cefa954b9e95a4124
+SHA1: 0c3f2aa57db1d81773706ba67dadb3c26c99513b
+SHA256: 5134be9ec33f280d596dedd11b8d919fc95a87e15b3f13e748ea3909859cd1e0
+SHA512: f7fb1c123edacab7a6fcb9cbb3740eacf00091158aa1d0aced78d561d9392176146cd63f172a4af79ab20f7f00ed37467c3e195af504b01607002cdfd46b9708
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=877215168ada2bdf1f502dcf5a0e65326b208d8c
+ Date=10-14-2020
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.76
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.76_amd64.deb
+Size: 461093054
+MD5sum: 038968ca3f500e0ce72347b36eebcb5d
+SHA1: 92dc213dff049e50994684fb406399d9b173e8f1
+SHA256: abe05f154a233a10c2855727e5f7e247e0931047364dd41d9654218f54aa5084
+SHA512: 67f44ff8d19ef94c789e5263a9db80c71a5c60767d348332c49d56f60d027030bd7a63ff088be33b9ace1e8bca79cf15a8d341d147284d1bbb1c8d060f5a63db
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=d374e38bc2ec9f3a8ab6b55e0b11e29f91bb177e
+ Date=03-10-2021
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.79
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.79_amd64.deb
+Size: 461129430
+MD5sum: 85633f0153743c9fa84bbb554dfa238e
+SHA1: 2e175ffa80840f01b556e2b6b9ca6cf237f30300
+SHA256: d7fada5bed8bb8c5b39fd9c86a9d828543bf33a1f5f172a516ab02026b22316d
+SHA512: d01a26e0e9bec75e523d8b916aca791e5db8e1e80fe210ba641a5b0d8b7d71fc5b877771c120e70aa1f8c8792efffb23e044d7d1e3dce77124c9dcd09ffe2c7b
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=fa150fd2c25a9616e698c4653b23b879643ad295
+ Date=03-30-2021
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.77
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.77_amd64.deb
+Size: 461097088
+MD5sum: dfeaef10992f4c6fc779154d9c2d44fd
+SHA1: 2ecae05dc941480b774411c200d5a20191aa7f27
+SHA256: e83ecbb28a7b5e11f2ee42516c54d2ddd87db1a24c3ca3b22ac311b2dcdba07d
+SHA512: 779ffa8374ea1a451455e3794940ff99c488b178513edc91ccbba7bec80cd9534c0cf304efafab5435e46d2942eef1e56aa7bf8ca5216172ded68bc3f9fa9e14
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=5430ba8a587169d0a206c9f381daf30effe9a31b
+ Date=03-16-2021
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.88
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.88_amd64.deb
+Size: 461140984
+MD5sum: 6f7093dc6e748ffb965525f569992e96
+SHA1: 076b746fad8e9756d82dd4cafe34cab25d034a76
+SHA256: 0a41fee8534f31f70390279dbf3abadff993e78d120b9b7aeb382ef3847396db
+SHA512: 9a07b93e01d3e2f29529ef3a27ce6d0734c8af303cb3c324cb274bfd717e1c223402a7bc1a44bd402d255103cdeb9b53b67022709cd816db7c2df94fc0a6e9bf
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=a95d225262ed917e514717c065aa4069208a8cde
+ Date=05-20-2021
+ Deploy-type=stag
+
+Package: cluster-adv-pkg
+Architecture: all
+Version: 0.0.5
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: cluster-adv-pkg
+Filename: focal/amd64/cluster-adv-pkg_0.0.5_amd64.deb
+Size: 165849716
+MD5sum: ed2bac23e47a563dd786ef77740773c4
+SHA1: fd815e23c421b7af0b51e71de7c78b256a47025d
+SHA256: f807941856c912c5d076a00526b7ae17790ebf3c7781a85a242942f3974eea32
+SHA512: 7c667ce3055ab47fc7f5ff4cd6402e9213ee2ed46cdd0178a55a2c441298a18905795686483db721e3cf09e4ab34eb908521ec17abe6d2e48a91e35fef22e64c
+Description: Advanced cluster packages used along with dx-spark for DNAnexus
+ Commit-id=abeeaa983722e9a9b0d7ace372f44009bcb164c3
+ Date=12-03-2020
+ Deploy-type=stag
+
+Package: apache-spark301
+Architecture: all
+Version: 0.3.0
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: apache-spark301
+Depends: openjdk-8-jdk
+Filename: focal/amd64/apache-spark301_0.3.0_amd64.deb
+Size: 444799928
+MD5sum: 039fb3d4c54f2c7cec29c939898e2aef
+SHA1: a206aad23d5699ee1da7d2eca5114a00ff4a3118
+SHA256: 10395227c0c7a206f7478c7c7c0bc5e2d9b6da3e1338fb35bda46dbdc9d6da30
+SHA512: b47ef84c8e62cfe0cfdd41c8136f0938feca5d14323708cfa9501978641173343c954d4a9c189972c7adc891311f212fbe774c164da5c1cbe540ba86d25b4ce3
+Description: Apache Spark spark-3.0.1 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=4dcb912d11193167c77a00ab0c1582bae5c39833
+ Date=12-02-2020
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.90
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.90_amd64.deb
+Size: 461143028
+MD5sum: 7b6507515e20262c1f99509c23abb9d7
+SHA1: 64273de6a51cfcad60bc696b1823b484e75f7adb
+SHA256: 3eb30642c2edb90dae32d13e6f4993246413e92ed50379502dcf1918727b6072
+SHA512: 80300d18d1e71e0a778588bdb99d7f8acbff7f32ae56c5e84e4ce81f1cb5f308be7cc4c3aac39459137d04698737fc8f3e93091159cbcc1bd6375dee98aaeb32
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=2ee10b59ab3ff515acac39e19d8834c56d6148a5
+ Date=06-09-2021
+ Deploy-type=stag
+
+Package: dx-java-bindings
+Architecture: amd64
+Version: 0.310.0
+Priority: optional
+Section: science
+Source: dx-toolkit
+Maintainer: Phil Sung <psung@dnanexus.com>
+Installed-Size: 6269
+Depends: openjdk-7-jre-headless | openjdk-8-jre-headless | openjdk-11-jre-headless
+Filename: focal/amd64/dx-java-bindings_0.310.0_amd64.deb
+Size: 5694140
+MD5sum: bbab25de9124cc656e1cd69b16da8e85
+SHA1: 3d74bb40f9e84d94f814d52add70a4dc897e9232
+SHA256: 185c7d75e66d45a58eaac80b91026d010a02e15dc5925185394df72d4070ae18
+SHA512: 01dfe398577a677bad67a308c67f1a0c9d0621714cd87c2d062c6861d149ad1a11740a0326fe43869462658ba8f2f5b54753daf9aaaa03a4b1a8c938de88f438
+Description: Java bindings to DNAnexus Platform
+ Bindings for interacting with the DNAnexus platform from Java.
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.80
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.80_amd64.deb
+Size: 461131754
+MD5sum: ceff7a4f22bcca10c25ae590bc4eab4b
+SHA1: 421edeefde043b22cc4aa3fe191ce14b36747a12
+SHA256: bd5ee935ab801522afe168b4ec3cc43c2f7e5f3951f8f39518c407a89f109d1b
+SHA512: 10cd28b0f1c89d3c2a2a43970fad0003a5314307f59b015de9f5f6466c423d136003348a4e05f7d2be500a91469469ef1f003675de088e29d0b1c1b0b0ce2374
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=6b19a94323be1726c2855ded8ca06c4ad591cd1e
+ Date=04-06-2021
+ Deploy-type=stag
+
+Package: apache-spark244
+Architecture: all
+Version: 0.1.8
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: apache-spark244
+Depends: openjdk-8-jdk
+Filename: focal/amd64/apache-spark244_0.1.8_amd64.deb
+Size: 453505828
+MD5sum: 9335df9549f889be5565b2426ec38b35
+SHA1: ac0c18a44ffb321b823764382a0ab587ea2865ad
+SHA256: 28e1f07b8a3cff7f5516b09ad2c56e54b9d06b28b41300b173063fe7f7bf08b9
+SHA512: f15cbfb4ea9d1d510cbe8500d619b8d0def2da758636384aba0b42fd913188ba40dd1b20c636eb228ee9b75b612c7e64ee0552aae4e7f2430320dc4f1148258d
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=f6013b0cd8246ba312e42af9db394940985e62c3
+ Date=08-24-2020
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.68
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.68_amd64.deb
+Size: 461068598
+MD5sum: 11d1449d664180957452e4db9a84b518
+SHA1: e08ee28affb98135e6318ece2549eacaed71e4bb
+SHA256: 5a9917ea560b9ed586c3825f09610f4e6bd3d2dbef55bde8c4ba639997e22483
+SHA512: 93e11c8f4b0d3bed0f0be72c909a1cc9a1370e6b31f16df0361960e5461309de949eedb0bd72599427a76eab4d494971193067cf2b76b20807bc4cff63145a69
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=353daf713044883a5261571312049b55b5c5cba3
+ Date=10-27-2020
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.85
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.85_amd64.deb
+Size: 461140516
+MD5sum: 94e82154d2c9e5dbad98931227dd8e93
+SHA1: 7fa03578b5e1ab1ee0c13eb74dba3b70c3c9759c
+SHA256: a47727736c73a8fa2ee4b41326fba6f75683f00a7410af478696ad56e09024d3
+SHA512: bb7c9591b39dd3c23dcf348a7fa04450542028d09445433ec1ba7b3744e97014ab11b7e24151a1663a3ef0caeb3378b5168bc40676edaa2753a85a93384cdcd8
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=bc2dba84cb811166922ed117e1cfd0146309d906
+ Date=05-10-2021
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.64
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.64_amd64.deb
+Size: 461036560
+MD5sum: aff782babdb9cb674370ee96637271ca
+SHA1: c31a478d3dd1e5cd2789c0d0b14059c383160f10
+SHA256: f4f3a72252a76a6f8b69986b8fce97782492fc39648370b4cd15550fd6ee3fcb
+SHA512: e33eb35ee3ab8cc8f6977bba07a2bff1bea44205852aa2252ff465e1ec592a8ec5a39a3d6580b35c0824929ded50e930ca9e2558de6f286b1d4ab7f6654a262c
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=f6013b0cd8246ba312e42af9db394940985e62c3
+ Date=08-24-2020
+ Deploy-type=stag
+
+Package: dx-java-bindings
+Architecture: amd64
+Version: 0.307.0
+Priority: optional
+Section: science
+Source: dx-toolkit
+Maintainer: Phil Sung <psung@dnanexus.com>
+Installed-Size: 6269
+Depends: openjdk-7-jre-headless | openjdk-8-jre-headless | openjdk-11-jre-headless
+Filename: focal/amd64/dx-java-bindings_0.307.0_amd64.deb
+Size: 5693732
+MD5sum: 500e0ddcc3f3dc6ff3fec2cfa3427e62
+SHA1: 732ddee97f3a54d9a7480d085798681e8763b9a5
+SHA256: 1138d2b4b0ce32ab6d42c48587a4850e88be75a9e97b91622daf4aca79d919ff
+SHA512: a233e409fa38164c89f414e409bb1a54c0811634dd1a97a4e23a6786b151449f2ed7f9debb106ea0d75ec3fce4ca053f255d88fa9ea5104b6c77c944b8dbe350
+Description: Java bindings to DNAnexus Platform
+ Bindings for interacting with the DNAnexus platform from Java.
+
+Package: dx-java-bindings
+Architecture: amd64
+Version: 0.301.1
+Priority: optional
+Section: science
+Source: dx-toolkit
+Maintainer: Phil Sung <psung@dnanexus.com>
+Installed-Size: 6269
+Depends: openjdk-7-jre-headless | openjdk-8-jre-headless | openjdk-11-jre-headless
+Filename: focal/amd64/dx-java-bindings_0.301.1_amd64.deb
+Size: 5692792
+MD5sum: 71a0b3218e13e53136463ea8ccf97c35
+SHA1: 0a21243ebd17383ab3882e8da7854a23c1edfa13
+SHA256: 66dbb8e0225fd2f6b69a062d180e982336e484e50772a2234c432fbedd00a912
+SHA512: b9a769b59d0f388ae7a0777460634888ff870229c17b0b4ad59765313ed3b292631350e1ed858646f4ac0e44bdf0d2b8652569b8e2f6b5e862d9fe26d638418a
+Description: Java bindings to DNAnexus Platform
+ Bindings for interacting with the DNAnexus platform from Java.
+
+Package: dx-java-bindings
+Architecture: amd64
+Version: 0.299.0
+Priority: optional
+Section: science
+Source: dx-toolkit
+Maintainer: Phil Sung <psung@dnanexus.com>
+Installed-Size: 6269
+Depends: openjdk-7-jre-headless | openjdk-8-jre-headless | openjdk-11-jre-headless
+Filename: focal/amd64/dx-java-bindings_0.299.0_amd64.deb
+Size: 5692640
+MD5sum: 9b081cae4f091f6444270772138d1473
+SHA1: 5c0aac957c9b163844719a5143a991ea40e553b3
+SHA256: d3966c0688de8740081f2e4bfc30c0a1bf7967f0b70a45e7f587ba147f6c824a
+SHA512: 549852f1fcca86b42bf9dce027c95ed9c986f375769c696c2cbb77446322ef3ea6f97917ab8cf1b785c091ba57c2d39fc97c984d3dccbfdf126fd2935ea57d8c
+Description: Java bindings to DNAnexus Platform
+ Bindings for interacting with the DNAnexus platform from Java.
+
+Package: dx-java-bindings
+Architecture: amd64
+Version: 0.308.0
+Priority: optional
+Section: science
+Source: dx-toolkit
+Maintainer: Phil Sung <psung@dnanexus.com>
+Installed-Size: 6269
+Depends: openjdk-7-jre-headless | openjdk-8-jre-headless | openjdk-11-jre-headless
+Filename: focal/amd64/dx-java-bindings_0.308.0_amd64.deb
+Size: 5696080
+MD5sum: 0a06a0ad76c7b0d1e320d70bfef33115
+SHA1: d989b56bfc068d42b483b095dddd1a671348096b
+SHA256: fa2cdd9aceb9d9ada673ae859cb4962f96c807473ebbf8d8f907c20561a74d5c
+SHA512: 9ed1a20855d494aa4b2cefef9feb5048c067a691ea8c1adb02b7637b5c0729f6be584e83a4e078e191b1085e81172ef1418d3ec03517e2b52e4cbe4aa7aad4d9
+Description: Java bindings to DNAnexus Platform
+ Bindings for interacting with the DNAnexus platform from Java.
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.78
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.78_amd64.deb
+Size: 461098336
+MD5sum: cea8125aa5646d30e3a5e30e151846c4
+SHA1: 5df3b17cadd5884699d973f46c066847ae131cb9
+SHA256: cf23d7b77cb82ace86df5d7b3f7c39bc98dc71257f4ad73d9fe55888df002f14
+SHA512: 465c9b2fef87fee936994403d7c4880c5cadda4bd234d43e7ed4da56a6a3958b90a60b037aea2b03f0eb0e1b44ff3f659803f6e59a887aecf7b53f26254b2ade
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=065c23f6a9477f3b232efe36a89d7bfed67f97f0
+ Date=03-22-2021
+ Deploy-type=stag
+
+Package: dx-java-bindings
+Architecture: amd64
+Version: 0.300.1
+Priority: optional
+Section: science
+Source: dx-toolkit
+Maintainer: Phil Sung <psung@dnanexus.com>
+Installed-Size: 6269
+Depends: openjdk-7-jre-headless | openjdk-8-jre-headless | openjdk-11-jre-headless
+Filename: focal/amd64/dx-java-bindings_0.300.1_amd64.deb
+Size: 5692692
+MD5sum: 4602f44480e2bd424cd3af7422e65410
+SHA1: 1f18712f493e8007eb189fdf24a7e61661fe96bb
+SHA256: c6394e92dbc094963e67a0179794ed335d3f0ba2d1ff3b4a823790e77890ccf9
+SHA512: e0f10ecfd0e39b29ade44e8f9296ad7c29f59816678f89be02ad0df0545866878c13c9e12788780c22d5726d09986d7d17fc5c2416e2f6820c1572388d5a3b0e
+Description: Java bindings to DNAnexus Platform
+ Bindings for interacting with the DNAnexus platform from Java.
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.84
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.84_amd64.deb
+Size: 461140540
+MD5sum: 3415ab0343366871ecdb65189a7c28c1
+SHA1: d5aa42b723bc4dcaceb1dfe209723a0c7603fa25
+SHA256: 6b5d06c20e88693820c388ecf883ce9cb76f1327d2e80201d1845966d8b4f582
+SHA512: 68d3a104435baf4c202c78cc95dcc9aa1b110b915ee3bb43e09c724d4031019df405d3d882dbdf35629b7a2a722580a85f683fd6b63772176a55d56dd2f48bfb
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=02d66957a48a829d31d096f5f866d6553dc25154
+ Date=05-06-2021
+ Deploy-type=stag
+
+Package: dx-spark244-dx1.0
+Architecture: all
+Version: 0.1.89
+Priority: optional
+Section: misc
+Maintainer: DNAnexus
+Provides: dx-spark244-dx1.0
+Depends: openjdk-8-jdk
+Filename: focal/amd64/dx-spark244-dx1.0_0.1.89_amd64.deb
+Size: 461143216
+MD5sum: cebecdb3f19242556cb3defaa6b8c351
+SHA1: 6b5054a4e115a81545960e61e3aa83bbee23d7ea
+SHA256: d07f75e095d9ab84208f106d1896f4f5e8dc535d408599e3bdefa9a7cfe645db
+SHA512: 57542c476bdb4d72f45102b4dcfef2174ec0d09cf24aad4588cc5008c6de8cafdd21b41da2bd2498f86f1be8b80829e898a83520ac59fb7b5dda46ec532a935b
+Description: Apache Spark spark-2.4.4 with hdfs hadoop-2.7.5 for DNAnexus
+ Commit-id=a4a53d1353fac685faa0def92395e999f1645a24
+ Date=05-24-2021
+ Deploy-type=stag
+
+Package: dx-java-bindings
+Architecture: amd64
+Version: 0.305.0
+Priority: optional
+Section: science
+Source: dx-toolkit
+Maintainer: Phil Sung <psung@dnanexus.com>
+Installed-Size: 6269
+Depends: openjdk-7-jre-headless | openjdk-8-jre-headless | openjdk-11-jre-headless
+Filename: focal/amd64/dx-java-bindings_0.305.0_amd64.deb
+Size: 5692824
+MD5sum: 52ab0e2d634ff11bc5d450ad4f9faae3
+SHA1: aa069617ddb23407bd2ebb6ae3b0cc2a33bc1948
+SHA256: ef91766264f518b157b63e4da78e7c1c19c58da5de501ebb3ff195160de2608d
+SHA512: f19f4dfc77e774b01d25c9fdc196b7db18fbf505f6262ebbe6fa6e45a2f11a5bdc3ff6366de22d3017e94f3c6964e79dbc62f63676b18c17003df9df7d2e167d
+Description: Java bindings to DNAnexus Platform
+ Bindings for interacting with the DNAnexus platform from Java.
+
+Package: dx-java-bindings
+Architecture: amd64
+Version: 0.309.0
+Priority: optional
+Section: science
+Source: dx-toolkit
+Maintainer: Phil Sung <psung@dnanexus.com>
+Installed-Size: 6269
+Depends: openjdk-7-jre-headless | openjdk-8-jre-headless | openjdk-11-jre-headless
+Filename: focal/amd64/dx-java-bindings_0.309.0_amd64.deb
+Size: 5694032
+MD5sum: 4fa05c308accff37d57c4c56153712df
+SHA1: 2c9e327165e2a14ab9c3ba611ce091c0910e2957
+SHA256: 23b162f9d5b00ba7f23f794e5a2630dbdefa2e1293ee1a764b190bc7cdb0f218
+SHA512: 187344b8fad66554158ff0dc74bbd663acaccc5de9fb443fa25f334976aadd005b8d48f33217ee27da6a7702afc214d59a25fa2bae619210c89526c421265a85
+Description: Java bindings to DNAnexus Platform
+ Bindings for interacting with the DNAnexus platform from Java.
+

@@ -1,0 +1,157 @@
+{
+  "name": "Funcotator",
+  "title": "Funcotator",
+  "stages": [
+    {
+      "id": "stage-common",
+      "name": "common",
+      "executable": "applet-G40yP90J6XG9vFV10x2Xp56q"
+    },
+    {
+      "id": "stage-0",
+      "name": "Funcotate",
+      "executable": "applet-G40yP8jJ6XG12Jq30yYjKJB1",
+      "input": {
+        "ref_fasta": {
+          "$dnanexus_link": {
+            "outputField": "ref_fasta",
+            "stage": "stage-common"
+          }
+        },
+        "ref_fasta_index": {
+          "$dnanexus_link": {
+            "outputField": "ref_fasta_index",
+            "stage": "stage-common"
+          }
+        },
+        "ref_dict": {
+          "$dnanexus_link": {
+            "outputField": "ref_dict",
+            "stage": "stage-common"
+          }
+        },
+        "input_vcf": {
+          "$dnanexus_link": {
+            "outputField": "variant_vcf_to_funcotate",
+            "stage": "stage-common"
+          }
+        },
+        "input_vcf_idx": {
+          "$dnanexus_link": {
+            "outputField": "variant_vcf_to_funcotate_index",
+            "stage": "stage-common"
+          }
+        },
+        "reference_version": {
+          "$dnanexus_link": {
+            "outputField": "reference_version",
+            "stage": "stage-common"
+          }
+        },
+        "output_file_base_name": {
+          "$dnanexus_link": {
+            "outputField": "output_file_base_name",
+            "stage": "stage-common"
+          }
+        },
+        "output_format": {
+          "$dnanexus_link": {
+            "outputField": "output_format",
+            "stage": "stage-common"
+          }
+        },
+        "compress": {
+          "$dnanexus_link": {
+            "outputField": "compress",
+            "stage": "stage-common"
+          }
+        },
+        "use_gnomad": {
+          "$dnanexus_link": {
+            "outputField": "use_gnomad",
+            "stage": "stage-common"
+          }
+        },
+        "data_sources_tar_gz": {
+          "$dnanexus_link": {
+            "outputField": "data_sources_tar_gz",
+            "stage": "stage-common"
+          }
+        },
+        "transcript_selection_mode": {
+          "$dnanexus_link": {
+            "outputField": "transcript_selection_mode",
+            "stage": "stage-common"
+          }
+        },
+        "transcript_selection_list": {
+          "$dnanexus_link": {
+            "outputField": "transcript_selection_list",
+            "stage": "stage-common"
+          }
+        },
+        "annotation_defaults": {
+          "$dnanexus_link": {
+            "outputField": "annotation_defaults",
+            "stage": "stage-common"
+          }
+        },
+        "annotation_overrides": {
+          "$dnanexus_link": {
+            "outputField": "annotation_overrides",
+            "stage": "stage-common"
+          }
+        },
+        "interval_list": {
+          "$dnanexus_link": {
+            "outputField": "interval_list",
+            "stage": "stage-common"
+          }
+        },
+        "extra_args": {
+          "$dnanexus_link": {
+            "outputField": "funcotator_extra_args",
+            "stage": "stage-common"
+          }
+        },
+        "gcs_project_for_requester_pays": {
+          "$dnanexus_link": {
+            "outputField": "gcs_project_for_requester_pays",
+            "stage": "stage-common"
+          }
+        },
+        "gatk_docker": {
+          "$dnanexus_link": {
+            "outputField": "gatk_docker",
+            "stage": "stage-common"
+          }
+        },
+        "gatk_override": {
+          "$dnanexus_link": {
+            "outputField": "gatk4_jar_override",
+            "stage": "stage-common"
+          }
+        }
+      }
+    },
+    {
+      "id": "stage-outputs",
+      "name": "outputs",
+      "executable": "applet-G40yP90J6XGFJ8xZPqY029J9",
+      "input": {
+        "Funcotate___funcotated_output_file": {
+          "$dnanexus_link": {
+            "outputField": "funcotated_output_file",
+            "stage": "stage-0"
+          }
+        },
+        "Funcotate___funcotated_output_file_index": {
+          "$dnanexus_link": {
+            "outputField": "funcotated_output_file_index",
+            "stage": "stage-0"
+          }
+        }
+      }
+    }
+  ]
+}

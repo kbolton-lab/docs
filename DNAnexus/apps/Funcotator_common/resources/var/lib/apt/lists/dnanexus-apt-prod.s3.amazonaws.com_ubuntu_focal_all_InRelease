@@ -1,0 +1,39 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Origin: dnanexus
+Label: dnanexus
+Suite: focal
+Codename: focal/all
+Date: Tue, 22 Jun 2021 22:05:55 UTC
+Architectures: all
+Description: Ubuntu packages maintained by DNAnexus
+MD5Sum:
+ d41d8cd98f00b204e9800998ecf8427e               0 Packages
+ aa49d416fa2cb1c1a8118bcceca3f69a              33 Packages.gz
+ 4059d198768f9f8dc9372dc1c54bc3c3              14 Packages.bz2
+SHA1:
+ da39a3ee5e6b4b0d3255bfef95601890afd80709               0 Packages
+ 153885298af7f4c63cb6d684ef884f220bc4d2f0              33 Packages.gz
+ 64a543afbb5f4bf728636bdcbbe7a2ed0804adc2              14 Packages.bz2
+SHA256:
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855               0 Packages
+ c346700b4a9b9af250dfe9fd24f6a753348ea58d468473c09acf477374929ad3              33 Packages.gz
+ d3dda84eb03b9738d118eb2be78e246106900493c0ae07819ad60815134a8058              14 Packages.bz2
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCAAGBQJg0l8eAAoJEOxg6jQrHq/xGE4P/j+2poEJECHK9Y6VFVNL2LKI
+c3DyE6w4/305Iws7MQ2Dj5Yi0HA955liB4Zfumptt+me18vZTAtPDZfNZHSMFJ4c
+rcUJ/+OD24DZ6yLVo5hjCD7EJlFrE6w03wzPXJNENHWTtZUeUW8invQb67FWXTh+
+86ekSt8pLWW1Q0xFlwZevg4niT1RpLJaUw6LPU+n4YRwmT8QiOjl3YmeYXuIcFy1
+ilE7W9mIR9C8zXFt1iHDbtz4pgOlLMYHeF9bqqailsFqxmT/5xAsR9BZp7nt8R8B
+xbRI1Vv2CIJWUAnryFH9sD4cr5mbDKBqlfrTuyPzTgoC0+1Br4vU12euV0xbO/aC
+YnHhBkl8v7p6e7hHHKa3fwENZMLz4EAmKJshv5LFuPkMQqIFvyiOP80Kq/rYnwlw
+A66KUdYqL0XbqI4oo8GxxUeZWzRBctM1iqBvcDwOItkkYw0cUdhYT1ah9kC41PFf
+sJU9pzi0NSh6NuWw7JnAiYznBMX3Gt1Z8kDw8x0JIbUKEVsAMVec3Bge7TGCz8Iu
+TSYy/f4K6YMzXIhZIbROZ1HL0zsphu1nj9EVRosWfRkLWPb18HGbrUZRxD/aF8t/
++jrLXnmjyXCuHyplDhrs09TiZ9CAqr6C0lfsg8x3jle3iqgygkXSpq80ZZnO3nD3
+TRkNRvDDstcqfgl2RyBH
+=1js6
+-----END PGP SIGNATURE-----
