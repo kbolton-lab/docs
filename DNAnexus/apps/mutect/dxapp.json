@@ -7,10 +7,32 @@
   "inputSpec": [
     {
       "name": "reference",
+      "label": "reference assembly fasta",
       "class": "file",
       "optional": false,
       "patterns": [
-        "*"
+        "*.fa",
+        "*.fasta"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_index",
+      "label": "reference assembly index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_dict",
+      "label": "reference assembly dict",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.dict"
       ],
       "help": ""
     },
@@ -19,7 +41,16 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*"
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_bai",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam.bai"
       ],
       "help": ""
     },
@@ -28,7 +59,16 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*"
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "normal_bai",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam.bai"
       ],
       "help": ""
     },
@@ -47,7 +87,8 @@
       "name": "vcf",
       "class": "file",
       "patterns": [
-        "*"
+        "*.vcf",
+        "*.vcf.gz"
       ],
       "help": ""
     },
@@ -55,7 +96,7 @@
       "name": "vcf_index",
       "class": "file",
       "patterns": [
-        "*"
+        "*.vcf.gz.tbi"
       ],
       "help": ""
     }
@@ -76,10 +117,10 @@
     "project": "CONTRIBUTE"
   },
   "regionalOptions": {
-    "aws:us-east-1": {
+    "aws:eu-west-2": {
       "systemRequirements": {
         "*": {
-          "instanceType": "mem1_ssd1_v2_x4"
+          "instanceType": "mem1_ssd1_v2_x2"
         }
       }
     }

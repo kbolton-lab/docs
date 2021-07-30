@@ -1,0 +1,37 @@
+Apollo
+
+dxdata
+koalas
+pyspark
+
+
+import pandas as pd
+import numpy as np
+import databricks.koalas as ks
+from pyspark.sql import SparkSession
+
+dxdata, sparkcluster
+single mode, sparkcluster
+time for this many hours
+
+dxjupyterlab
+setup time and charge to use, python nb and r nb
+
+Cloud Work Station
+Instance Type spin up
+dx run app-cloud_workstation --ssh --instance-type mem2....
+15GB BIG
+
+dx-su-contrib
+
+unset DX_WORKSPACE_ID
+dx cd $DX_PROJECT_CONTEXT_ID:
+
+dx download mutect2.wdl # from folder
+WDL -> dx-app-wizard
+    also wrap other scripts
+
+resources/usr/bin/my_cool_helper_script.py
+docker run --rm -v /home/dnanexus:/home/dnanexus -v /usr/bin:/usr/bin
+
+Raptor Workflows
