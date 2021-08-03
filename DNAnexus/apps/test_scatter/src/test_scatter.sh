@@ -198,7 +198,9 @@ process() {
     # finish using the depends_on argument (this is already done for
     # you in the invocation of the "postprocess" job in "main").
 
-    dx-jobutil-add-output process_output "process placeholder output"
+    dx-jobutil-add-output process_output "process placeholder output" # singular
+    dx-jobutil-add-output vcf
+    dx-jobutil-add-output vcf_index
 }
 
 postprocess() {

@@ -63,7 +63,7 @@ main() {
     bai_out=$(dx upload ${bam_out}.bai --brief)
     #bam_out=$(dx upload $bam_out --brief --destination "UKBB_Exome_2021:/CH_Exome/BAMS/")
     bam_out=$(dx upload $bam_out --brief)
-
+    
     
     #bai_out=$(dx upload bai_out --brief)
 
@@ -71,7 +71,8 @@ main() {
     # add output variables to your job's output as appropriate for the output
     # class.  Run "dx-jobutil-add-output -h" for more information on what it
     # does.
-
+    echo $sample_name
     dx-jobutil-add-output bam_out "$bam_out" --class=file
     dx-jobutil-add-output bai_out "$bai_out" --class=file
+    dx-jobutil-add-output sample_name "$sample_name" --class=string
 }
