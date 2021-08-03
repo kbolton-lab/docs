@@ -8,3 +8,5 @@ dx run /test/tools/mutect \
     -inormal_bai="/CH_Exome/BAMS/1006108_23153_0_0_chr22.bam.bai" \
     -iinterval_list="/CH_Exome/Inputs/xgen_plus_spikein.GRCh38_chr22.interval_list" \
     --destination /CH_Exome/Mutect2/
+
+dx run /test/tools/mutect -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/mutect/mutect_test_inputs.json --destination /CH_Exome/Mutect2/

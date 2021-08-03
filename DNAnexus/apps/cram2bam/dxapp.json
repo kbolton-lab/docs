@@ -45,6 +45,15 @@
         "*.bam.bai"
       ],
       "help": ""
+    },
+    {
+      "name": "sample_name",
+      "label": "get name of sample from bam or cram",
+      "class": "string",
+      "patterns": [
+        "UKB*"
+      ],
+      "help": ""
     }
   ],
   "runSpec": {

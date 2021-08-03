@@ -33,9 +33,15 @@ main() {
 
     #dx download "$exclude_vcf" -o exclude_vcf
     dx-download-all-inputs --parallel
-    mv $vcf_in_index_path ~/in/exclude_vcf
-    mv $exclude_vcf_index_path ~/in/vcf_in
-
+    echo $vcf_in_index_path
+    mv $vcf_in_index_path ~/in/vcf_in
+    echo "ls ~/in/vcf_in"
+    ls ~/in/vcf_in
+    echo
+    
+    mv $exclude_vcf_index_path ~/in/exclude_vcf
+    echo "ls ~/in/exclude_vcf"
+    ls ~/in/exclude_vcf
     # Fill in your application code here.
     #
     # To report any recognized errors in the correct format in
@@ -53,7 +59,7 @@ main() {
 
     # docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/sam_bcftools_tabix_bgzip:1.0 which bcftools
 
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/sam_bcftools_tabix_bgzip:1.0 bash -c "/usr/local/bin/bcftools isec -C -w1 ${vcf_in_path} ${exclude_vcf} -O${output_type} -o ${output_vcf_name} && tabix ${output_vcf_name}" 
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/sam_bcftools_tabix_bgzip:1.0 bash -c "/usr/local/bin/bcftools isec -C -w1 ${vcf_in_path} ${exclude_vcf_path} -O${output_type} -o ${output_vcf_name} && tabix ${output_vcf_name}" 
 
 
 
