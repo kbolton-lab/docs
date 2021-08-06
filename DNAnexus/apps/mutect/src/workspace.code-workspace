@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../../../analysis-workflows"
+		},
+		{
+			"path": "../../../../../../../JHU_Summer"
+		}
+	],
+	"settings": {}
+}

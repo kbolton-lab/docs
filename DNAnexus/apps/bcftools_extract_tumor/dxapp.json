@@ -1,0 +1,135 @@
+{
+  "name": "bcftools_extract_tumor",
+  "title": "extract tumor from tumor normal",
+  "summary": "bcftools_extract_tumor",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "vcf",
+      "label": "input vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_index",
+      "label": "the index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_sample_name",
+      "label": "sample name",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "output_type",
+      "label": "type of file output",
+      "class": "string",
+      "optional": true,
+      "default": "z",
+      "help": ""
+    },
+    {
+      "name": "output_name",
+      "label": "name of file output",
+      "class": "string",
+      "optional": true,
+      "default": "tumor.vcf.gz",
+      "help": ""
+    },
+    {
+      "name": "dockerimage_bcftools",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G45zpP0J6XGJv4VyK3xb9vB8"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "dockerimage_gatk",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G45zpP0J6XGF55ZZ5xFfYXyx"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "tumor_bam",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "tumor_only_vcf",
+      "label": "tumor only vcf",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_only_vcf_index",
+      "label": "index of output",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/bcftools_extract_tumor.sh",
+    "execDepends": [
+      {"name": "default-jre"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "network": [
+      "*"
+    ],
+    "project": "CONTRIBUTE"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x2"
+        }
+      }
+    }
+  }
+}

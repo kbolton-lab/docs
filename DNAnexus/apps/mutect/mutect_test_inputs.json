@@ -46,5 +46,67 @@
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
             "id": "file-G41XqV0J6XGPYJzK3Pjvy64P"
         }
-    }
+    },
+    "interval_lists_22": [
+        {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4650VQJ6XG8kvZ5B7Gp8F4p"
+            }
+        },
+        {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4650XjJ6XGJ3G375z6B2qz6"
+            }
+        },
+        {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4650Y8J6XGF55ZZ5xFfZGBX"
+            }
+        },
+        {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4650YQJ6XGJ3G375z6B2qz8"
+            }
+        },
+        {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4650Z0J6XG3xJfZ81VjBpFV"
+            }
+        },
+        {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4650Z8J6XG7Z8gJ5yGyJ4yQ"
+            }
+        },
+        {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4650ZQJ6XGJ3G375z6B2qzB"
+            }
+        },
+        {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4650ZjJ6XGGQ1qpB6Z5g92G"
+            }
+        },
+        {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4650ZjJ6XGF55ZZ5xFfZGBv"
+            }
+        },
+        {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4650b0J6XGJ3G375z6B2qzG"
+            }
+        }
+    ]
 }

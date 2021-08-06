@@ -77,8 +77,54 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*"
+        "*.interval_list"
       ],
+      "help": ""
+    },
+    {
+      "name": "interval_lists_22",
+      "class": "array:file",
+      "optional": false,
+      "patterns": [
+        "*.interval_list"
+      ],
+      
+      "help": ""
+    },
+    {
+      "name": "dockerimage_picard",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G45zk80J6XGF9205K3kBKfj9"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "dockerimage_gatk",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G464PjQJ6XGK5YYg78FP1z1k"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "dockerimage_bcftools",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G45zpP0J6XGJv4VyK3xb9vB8"
+        }
+      },
       "help": ""
     }
   ],
@@ -109,18 +155,35 @@
     },
     "interpreter": "bash",
     "file": "src/mutect.sh",
+    "execDepends":[
+      {"name": "tabix", "stages": ["postprocess"]},
+      {"name": "bcftools", "stages": ["postprocess"]}
+    ],
     "distribution": "Ubuntu",
     "release": "20.04",
     "version": "0"
   },
   "access": {
-    "project": "CONTRIBUTE"
+    "project": "CONTRIBUTE",
+    "allProjects": "VIEW"
   },
   "regionalOptions": {
     "aws:eu-west-2": {
       "systemRequirements": {
         "*": {
           "instanceType": "mem1_ssd1_v2_x2"
+        },
+        "process": {
+          "execDepends":[
+            {"name": "openjdk-8-jdk"},
+            {"name": "samtools"}
+          ]
+        },
+        "postprocess": {
+          "execDepends":[
+            {"name": "tabix"},
+            {"name": "bcftools"}
+          ]
         }
       }
     }
