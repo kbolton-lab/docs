@@ -60,7 +60,7 @@ main() {
     # docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/sam_bcftools_tabix_bgzip:1.0 which bcftools
 
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/sam_bcftools_tabix_bgzip:1.0 bash -c "/usr/local/bin/bcftools isec -C -w1 ${vcf_in_path} ${exclude_vcf_path} -O${output_type} -o ${output_vcf_name} && tabix ${output_vcf_name}" 
-
+    
 
 
     # The following line(s) use the dx command-line tool to upload your file
