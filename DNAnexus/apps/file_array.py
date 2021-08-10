@@ -13,7 +13,6 @@ args = parser.parse_args()
 # for line in sys.stdin:
 #     sys.stdout.write(line)
 txt = [{"$dnanexus_link": line.strip()} for line in sys.stdin]
-print(txt)
 
 
 # with open('file_id.txt') as f:

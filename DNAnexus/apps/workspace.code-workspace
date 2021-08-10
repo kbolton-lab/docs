@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../JHU_Summer"
+		},
+		{
+			"path": "../../../../../../../Library/WebServer"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../analysis-workflows"
+		},
+		{
+			"path": "../../../../R_docker3"
+		}
+	],
+	"settings": {}
+}

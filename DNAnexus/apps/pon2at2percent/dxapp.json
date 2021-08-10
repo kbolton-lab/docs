@@ -1,0 +1,101 @@
+{
+  "name": "pon2at2percent",
+  "title": "extract tumor from tumor normal",
+  "summary": "bcftools_extract_tumor",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "vcf",
+      "label": "input vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf2PON",
+      "label": "file to intersect",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf2PON_index",
+      "label": "file to intersect",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    },
+    {
+      "name": "caller",
+      "label": "caller",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "tumor_sample_name",
+      "label": "name of file output",
+      "class": "string",
+      "optional": true,
+      "default": "tumor",
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "annotated_pon2_vcf",
+      "label": "annotated_pon2_vcf",
+      "class": "file",
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "annotated_pon2_vcf_index",
+      "label": "index of annotated_pon2_vcf",
+      "class": "file",
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/pon2at2percent.sh",
+    "execDepends": [
+      {"name": "bcftools"},
+      {"name": "tabix"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x2"
+        }
+      }
+    }
+  }
+}

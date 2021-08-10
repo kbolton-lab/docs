@@ -9,7 +9,7 @@
       "name": "reference",
       "label": "reference assembly fasta",
       "class": "file",
-      "optional": false,
+      "optional": true,
       "patterns": [
         "*.fa",
         "*.fasta"
@@ -20,7 +20,7 @@
       "name": "reference_index",
       "label": "reference assembly index",
       "class": "file",
-      "optional": false,
+      "optional": true,
       "patterns": [
         "*.fai"
       ],
@@ -30,7 +30,7 @@
       "name": "reference_dict",
       "label": "reference assembly dict",
       "class": "file",
-      "optional": false,
+      "optional": true,
       "patterns": [
         "*.dict"
       ],
@@ -126,6 +126,14 @@
         }
       },
       "help": ""
+    },
+    {
+      "name": "output_name",
+      "label": "output_name",
+      "class": "string",
+      "optional": true,
+      "default": "merged.mutect.filtered.vcf.gz",
+      "help": ""
     }
   ],
   "outputSpec": [
@@ -145,6 +153,11 @@
         "*.vcf.gz.tbi"
       ],
       "help": ""
+    },
+    {
+      "name": "tumor_sample_name",
+      "class": "string",
+      "help": ""
     }
   ],
   "runSpec": {
@@ -156,6 +169,7 @@
     "interpreter": "bash",
     "file": "src/mutect.sh",
     "execDepends":[
+      {"name": "samtools", "stages": ["main"]},
       {"name": "tabix", "stages": ["postprocess"]},
       {"name": "bcftools", "stages": ["postprocess"]}
     ],

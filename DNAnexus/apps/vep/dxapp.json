@@ -1,0 +1,174 @@
+{
+  "name": "vep",
+  "title": "variant effect predictor",
+  "summary": "runs vep with frameshift, wildtype and dbNSFP plugins",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "synonyms",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G46qvVjJ6XG7GYy908bk63Xb"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "gnomad_file",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G46qqJ8J6XGKP0v42VYfBFxK"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "gnomad_file_index",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48jkGQJ6XGB107g64pfBB26"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "clinvar_file",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G46qv30J6XGFYkX6Kv9j7gG5"
+        }
+      }, 
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "clinvar_file_index",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48jkj0J6XG8ZYjZJp3GB9JK"
+        }
+      }, 
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "species",
+      "class": "string",
+      "optional": true,
+      "default": "homo_sapiens",
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "annotated_vcf",
+      "class": "file",
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "annotated_vcf_index",
+      "class": "file",
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/vep.sh",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "network": [
+      "*"
+    ],
+    "project": "CONTRIBUTE"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x8"
+        }
+      }
+    }
+  }
+}
