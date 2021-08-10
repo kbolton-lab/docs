@@ -59,7 +59,7 @@ main() {
 
     docker load -i /picard.tar.gz
 
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin:/usr/bin -w /home/dnanexus broadinstitute/picard:2.23.6 /usr/bin/qc_helper.sh $bam_path $reference_path $reference_index_path $picard_metric_accumulation_level $bait_intervals_path $target_intervals_path $per_target_coverage $per_base_coverage $minimum_mapping_quality $minimum_base_quality $alignment_summary_metrics $hs_metrics
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/bin:/usr/local/bin -w /home/dnanexus broadinstitute/picard:2.23.6 /usr/local/bin/qc_helper.sh $bam_path $reference_path $reference_index_path $picard_metric_accumulation_level $bait_intervals_path $target_intervals_path $per_target_coverage $per_base_coverage $minimum_mapping_quality $minimum_base_quality $alignment_summary_metrics $hs_metrics
 
     # Fill in your application code here.
     #

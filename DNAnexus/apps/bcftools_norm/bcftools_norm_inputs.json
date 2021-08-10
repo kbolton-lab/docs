@@ -1,0 +1,17 @@
+{
+    "vcf": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G46pXKjJp2gKvzjg6Q7y30Yk"
+        }
+    },
+    "vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G46pXP0Jp2g1Gj8053Bj9KG4"
+        }
+    },
+    "output_type": "z",
+    "output_name": "mutect_full.vcf.gz",
+    "tumor_sample_name": "UKB_5666276_233029566"
+}

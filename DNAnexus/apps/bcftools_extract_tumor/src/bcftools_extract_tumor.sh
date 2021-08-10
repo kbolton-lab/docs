@@ -16,24 +16,17 @@
 # to modify this file.
 
 main() {
-    echo $(which java)
     echo "Value of vcf: '$vcf'"
     echo "Value of vcf_index: '$vcf_index'"
     echo "Value of tumor_sample_name: '$tumor_sample_name'"
     echo "Value of output_type: '$output_type'"
     echo "Value of output_name: '$output_name'"
     echo "Value of dockerimage_bcftools: '$dockerimage_bcftools'"
-    echo "Value of dockerimage_gatk: '$dockerimage_gatk'"
     echo "Value of tumor_bam: '$tumor_bam'"
 
     dx-download-all-inputs --parallel
-    mv $vcf_index_path ~/in/vcf
-    which perl
-    
-    docker load -i $dockerimage_gatk_path
-    # docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin/:/usr/local/bin -w /home/dnanexus broadinstitute/gatk:4.2.0.0 /bin/bash -c "which perl && perl -v; TUMOR=$(samtools view -H $tumor_bam_path | /usr/bin/perl -nE 'say $1 if /^\@RG.+\tSM:([ -~]+)/' | head -n 1); echo $TUMOR"
-    # docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin/:/usr/local/bin -w /home/dnanexus broadinstitute/gatk:4.2.0.0 /bin/bash /bin/bash /usr/local/bin/Mutect2.sh $tumor_bam_path
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/bin/:/usr/local/bin -w /home/dnanexus broadinstitute/gatk:4.2.0.0 /bin/bash /usr/local/bin/Mutect2.sh $tumor_bam_path
+    mv $vcf_index_path ~/in/vcf   
+  
     
     docker load -i $dockerimage_bcftools_path
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/sam_bcftools_tabix_bgzip:1.0 \

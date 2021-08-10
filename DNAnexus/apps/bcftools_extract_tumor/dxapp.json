@@ -61,18 +61,6 @@
       "help": ""
     },
     {
-      "name": "dockerimage_gatk",
-      "class": "file",
-      "optional": true,
-      "default": {
-        "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G45zpP0J6XGF55ZZ5xFfYXyx"
-        }
-      },
-      "help": ""
-    },
-    {
       "name": "tumor_bam",
       "class": "file",
       "optional": false,
@@ -110,9 +98,6 @@
     },
     "interpreter": "bash",
     "file": "src/bcftools_extract_tumor.sh",
-    "execDepends": [
-      {"name": "default-jre"}
-    ],
     "distribution": "Ubuntu",
     "release": "20.04",
     "version": "0"
