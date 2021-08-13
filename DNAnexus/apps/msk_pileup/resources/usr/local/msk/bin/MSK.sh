@@ -26,4 +26,4 @@ bcftools annotate -a RD_AD.vcf.gz -h pileup.header -c PON_RefDepth,PON_AltDepth 
 ## don't need index for VEP?
 bcftools annotate -a RD_AD.vcf.gz -c PON_RefDepth,PON_AltDepth $nameroot.sample.vcf.gz -Oz -o $nameroot.sample.pileup.vcf.gz && tabix $nameroot.sample.pileup.vcf.gz;
 
-bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%INFO/PON_RefDepth\t%INFO/PON_AltCounts\t[%AD]\n' $nameroot.sample.pileup.vcf.gz > $nameroot.fisher.input;
+bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%INFO/PON_RefDepth\t%INFO/PON_AltDepth\t[%AD]\n' $nameroot.sample.pileup.vcf.gz > $nameroot.fisher.input;
