@@ -1,0 +1,147 @@
+{
+  "name": "msk_pileup",
+  "title": "msk_pileup",
+  "summary": "msk_pileup",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "vcf",
+      "label": "vcf in",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        ".vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_index",
+      "label": "vcf index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        ".vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "label": "reference",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_index",
+      "label": "index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mapq",
+      "label": "map qual min",
+      "class": "int",
+      "optional": true,
+      "default": 5,
+      "help": ""
+    },
+    {
+      "name": "baseq",
+      "label": "base qual min",
+      "class": "int",
+      "optional": true,
+      "default": 5,
+      "help": ""
+    },
+    {
+      "name": "normal_bams",
+      "class": "array:file",
+      "optional": false,
+      "patterns": [
+        "*.bam",
+        "*.bam.bai"
+      ],
+      
+      "help": ""
+    },
+    {
+      "name": "dockerimage_msk_getbasecounts",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Bj698J6XGG8fp03jJG3zPf"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "dockerimage_fisher_julia",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4FJBxQJ6XG5fyqj04zzK14Q"
+        }
+      },
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "vcf_out",
+      "label": "vcf with total PoN ref and alt counts for fisher test",
+      "class": "file",
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_out_index",
+      "label": "vcf index",
+      "class": "file",
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/msk_pileup.sh",
+    "execDepends":[
+      {"name": "samtools"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x8"
+        }
+      }
+    }
+  }
+}

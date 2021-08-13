@@ -16,7 +16,7 @@
 # to modify this file.
 
 main() {
-
+    set -ex -o pipefail
     echo "Value of vcf: '$vcf'"
     echo "Value of vcf_index: '$vcf_index'"
     echo "Value of reference: '$reference'"
@@ -27,6 +27,7 @@ main() {
     echo "Value of clinvar_file: '$clinvar_file'"
     echo "Value of clinvar_file_index: '$clinvar_file_index'"
     echo "Value of species: '$species'"
+    echo "Value of dockerimage_vep: '$dockerimage_vep'"
 
     # The following line(s) use the dx command-line tool to download your file
     # inputs to the local file system using variable names for the filenames. To
@@ -37,6 +38,7 @@ main() {
     dx download "$vcf_index"
     dx download "$reference"
     dx download "$reference_index"
+    dx download "$dockerimage_vep"
 
     if [ -n "$synonyms" ]
     then
@@ -73,8 +75,9 @@ main() {
     # reported in the job_error.json file, then the failure reason
     # will be AppInternalError with a generic error message.
     #dx load -i /vep.tar.gz
+    docker load -i $dockerimage_vep_name
 
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/vep2 \
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/vep3 \
         /bin/bash -c "/opt/vep/src/ensembl-vep/vep \
             --format vcf \
             -i $vcf_name \
@@ -85,7 +88,7 @@ main() {
             --cache \
             --symbol \
             --vcf \
-            -o $vcf_prefix.annotated.vcf \
+            -o $vcf_prefix.annotated5.vcf \
             --fasta $reference_name \
             --dir /opt/vep/.vep/ \
             --synonyms $synonyms_name \
@@ -102,7 +105,7 @@ main() {
             --check_existing \
             --custom $gnomad_file_name,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
             --custom $clinvar_file_name,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
-            --force_overwrite && bgzip $vcf_prefix.annotated.vcf && tabix $vcf_prefix.annotated.vcf.gz"
+            --force_overwrite && bgzip $vcf_prefix.annotated5.vcf && tabix $vcf_prefix.annotated5.vcf.gz"
 
     # The following line(s) use the dx command-line tool to upload your file
     # outputs after you have created them on the local file system.  It assumes
@@ -110,8 +113,8 @@ main() {
     # but you can change that behavior to suit your needs.  Run "dx upload -h"
     # to see more options to set metadata.
 
-    annotated_vcf=$(dx upload  $vcf_prefix.annotated.vcf.gz --brief)
-    annotated_vcf_index=$(dx upload  $vcf_prefix.annotated.vcf.gz.tbi --brief)
+    annotated_vcf=$(dx upload  $vcf_prefix.annotated5.vcf.gz --brief)
+    annotated_vcf_index=$(dx upload  $vcf_prefix.annotated5.vcf.gz.tbi --brief)
 
     # The following line(s) use the utility dx-jobutil-add-output to format and
     # add output variables to your job's output as appropriate for the output

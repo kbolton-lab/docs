@@ -1,4 +1,22 @@
 {
+    "reference": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        }
+    },
+    "reference_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        }
+    },
+    "reference_dict": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+        }
+    },
     "tumor_bam": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
