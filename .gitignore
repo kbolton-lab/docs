@@ -2,3 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
+*.tar.gz
+*.zip
+DNAnexus/apps/mutect/resources/gatk
+*.fa
+*.fa.fai
+*.dict

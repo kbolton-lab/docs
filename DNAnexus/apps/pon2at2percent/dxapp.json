@@ -1,6 +1,6 @@
 {
   "name": "pon2at2percent",
-  "title": "extract tumor from tumor normal",
+  "title": "pon2at2percent",
   "summary": "bcftools_extract_tumor",
   "dxapi": "1.0.0",
   "version": "0.0.1",

@@ -123,6 +123,18 @@
       "optional": true,
       "default": "homo_sapiens",
       "help": ""
+    },
+    {
+      "name": "dockerimage_vep",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Bj59QJ6XG9zg6Q4fBvjV3p"
+        }
+      },
+      "help": ""
     }
   ],
   "outputSpec": [
@@ -155,12 +167,6 @@
     "distribution": "Ubuntu",
     "release": "20.04",
     "version": "0"
-  },
-  "access": {
-    "network": [
-      "*"
-    ],
-    "project": "CONTRIBUTE"
   },
   "regionalOptions": {
     "aws:eu-west-2": {

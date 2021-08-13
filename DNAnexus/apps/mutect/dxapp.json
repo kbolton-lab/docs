@@ -9,7 +9,7 @@
       "name": "reference",
       "label": "reference assembly fasta",
       "class": "file",
-      "optional": true,
+      "optional": false,
       "patterns": [
         "*.fa",
         "*.fasta"
@@ -20,7 +20,7 @@
       "name": "reference_index",
       "label": "reference assembly index",
       "class": "file",
-      "optional": true,
+      "optional": false,
       "patterns": [
         "*.fai"
       ],
@@ -30,7 +30,7 @@
       "name": "reference_dict",
       "label": "reference assembly dict",
       "class": "file",
-      "optional": true,
+      "optional": false,
       "patterns": [
         "*.dict"
       ],
