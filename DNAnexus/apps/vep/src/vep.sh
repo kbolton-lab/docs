@@ -27,6 +27,7 @@ main() {
     echo "Value of clinvar_file: '$clinvar_file'"
     echo "Value of clinvar_file_index: '$clinvar_file_index'"
     echo "Value of species: '$species'"
+    echo "Value of fork: '$fork'"
     echo "Value of dockerimage_vep: '$dockerimage_vep'"
 
     # The following line(s) use the dx command-line tool to download your file
@@ -81,7 +82,7 @@ main() {
         /bin/bash -c "/opt/vep/src/ensembl-vep/vep \
             --format vcf \
             -i $vcf_name \
-            --fork 4 \
+            --fork $fork \
             --terms SO \
             --transcript_version \
             --offline \

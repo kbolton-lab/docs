@@ -8,3 +8,10 @@ DNAnexus/apps/mutect/resources/gatk
 *.fa
 *.fa.fai
 *.dict
+*.cram*
+*.bam*
+*.bam
+*.cram
+*.vcf
+*.vcf.gz
+*.vcf.gz.tbi
