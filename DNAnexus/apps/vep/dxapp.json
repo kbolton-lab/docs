@@ -125,6 +125,13 @@
       "help": ""
     },
     {
+      "name": "fork",
+      "class": "string",
+      "optional": true,
+      "default": "4",
+      "help": ""
+    },
+    {
       "name": "dockerimage_vep",
       "class": "file",
       "optional": true,
