@@ -74,7 +74,7 @@ main() {
 
     docker load -i $dockerimage_fisher_julia_path
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/msk/bin/:/usr/local/msk/bin -w /home/dnanexus kboltonlab/fisher_julia \
-        /bin/bash /usr/local/msk/bin/fisher.R  $nameroot.fisher.input $nameroot.fisher.output
+        /usr/local/msk/bin/fisher.R $nameroot.fisher.input $nameroot.fisher.output
  
 
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/msk/bin/:/usr/local/msk/bin -w /home/dnanexus kboltonlab/msk_getbasecounts:2.0 \
