@@ -15,7 +15,8 @@ df <- cbind(df, data.frame(do.call("rbind", strsplit(as.character(df$V7), ",", f
 if (length(colnames(df)) != 8) {
   stop("Must supply file with 7 columns to split to 8: %CHROM\t%POS\t%REF\t%ALTt%INFO/PON_RefDepth\t%INFO/PON_AltDepth\\t[%AD]", call.=FALSE)
 }
-
+df$X1 <- as.integer(df$X1)
+df$X2 <- as.integer(df$X2)
 Sys.setenv(JULIA_NUM_THREADS = "6")
 library(JuliaConnectoR)
 juliaEval("Threads.nthreads()")
@@ -33,7 +34,7 @@ fisherstestjulia <- juliaEval('function fisherstestjulia(a,b,c,d)
       try
         ls[i] = pvalue( FisherExactTest(a[i], b[i], c[i], d[i] ), method = :minlike )
       catch
-        ls[i] = pvalue( FisherExactTest(a[i]+1, b[i], c[i], d[i]), method = :minlike )
+        ls[i] = pvalue( FisherExactTest(a[i], b[i]+1, c[i], d[i]), method = :minlike )
       end
     end
   end
