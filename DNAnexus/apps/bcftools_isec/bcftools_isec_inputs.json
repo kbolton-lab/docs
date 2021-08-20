@@ -1,0 +1,28 @@
+{
+    "vcf1": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Kgp58J4J3q6p6p3jQB79fQ"
+        }
+    },
+    "vcf1_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Kgp5jJ4J3pXZG749pGKY9q"
+        }
+    },
+    "vcf2": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4KZX3jJb112VBK860YqfqzX"
+        }
+    },
+    "vcf2_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4KZX48Jb11FKx6f3gbJ2v4j"
+        }
+    },
+    "output_type": "z",
+    "output_vcf_name": "vardict.intersect.mutect.vcf.gz"
+}

@@ -44,11 +44,11 @@
     "interval_list": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G41XqV0J6XGPYJzK3Pjvy64P"
+            "id": "file-G3jP4X8J6XGGQgpz3F4bfQqY"
         }
     },
     "output_name": "25.merged.mutect.filtered.vcf.gz",
-    "interval_lists_22": [
+    "interval_lists_array": [
         {
             "$dnanexus_link": "file-G46g40jJ6XGGbg8q6J534xGb"
         },

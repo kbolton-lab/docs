@@ -1,7 +1,7 @@
 {
   "name": "pon2at2percent",
   "title": "pon2at2percent",
-  "summary": "bcftools_extract_tumor",
+  "summary": "pon2at2percent",
   "dxapi": "1.0.0",
   "version": "0.0.1",
   "inputSpec": [
@@ -45,7 +45,7 @@
     },
     {
       "name": "tumor_sample_name",
-      "label": "name of file output",
+      "label": "sample name for file output",
       "class": "string",
       "optional": true,
       "default": "tumor",

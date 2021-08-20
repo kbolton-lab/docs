@@ -1,0 +1,284 @@
+{
+  "name": "annotate_ch_pd",
+  "title": "R_annotate_mutect_vardict_single_pon_run",
+  "summary": "change to just running mutect and vardict while only running PoN on mutect",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "mutect_vcf",
+      "label": "mutect_vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz",
+        "*.mutect.final.annotated.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vardict_vcf",
+      "label": "vardict_vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz",
+        "*.vardict.final.annotated.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_sample_name",
+      "label": "sample_name",
+      "class": "string",
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "impact_annotation",
+      "label": "impact_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48Zx1jJ6XGGjFYgF8fyp3q8"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "topmed_annotation",
+      "label": "topmed_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Kf0G8J6XG5B77Q6QxKPzv9"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "cosmic_annotation",
+      "label": "cosmic_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48Zy88J6XG22P06FQ789XYY"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": "default hg38 liftover"
+    },
+    {
+      "name": "tsg_annotation",
+      "label": "tsg_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyPQJ6XG7QB5jJ35VJ1Zx"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "oncoKB_annotation",
+      "label": "oncoKB_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyPQJ6XGB107g64pf9ZKv"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "pd_table_annotation",
+      "label": "pd_table_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48Zyp0J6XG9yf8v32QV14G0"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "panmyeloid_annotation",
+      "label": "panmyeloid_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyPjJ6XGKpyYyBF4387f7"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "blacklist_annotation",
+      "label": "blacklist_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyPjJ6XGKpyYyBF4387f9"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "segemental_duplications_annotation",
+      "label": "segemental_duplications_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyQ0J6XG7QB5jJ35VJ1Zz"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "simple_repeats_annotation",
+      "label": "simple_repeats_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyQ8J6XG9yf8v32QV14BK"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "repeat_masker_annotation",
+      "label": "repeat_masker_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyXQJ6XGKpyYyBF4387fp"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "intervals",
+      "label": "intervals file for confirming length of targets for p-value correction",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "dockerimage_annotate_PD",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4KjGZQJ6XGP32PJ704VqBX4"
+        }
+      },
+      "help": "R installed"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "final_tsv",
+      "class": "file",
+      "patterns": [
+        "*.tsv"
+      ],
+      "help": ""
+    },
+    {
+      "name": "column_check",
+      "label": "list of columns in final_tsv",
+      "class": "file",
+      "patterns": [
+        "*.txt"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/annotate_CH_pd.sh",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "network": [
+      "*"
+    ],
+    "project": "CONTRIBUTE"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x8"
+        }
+      }
+    }
+  }
+}

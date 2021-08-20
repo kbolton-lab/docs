@@ -1,0 +1,144 @@
+{
+  "name": "msk_pileup",
+  "title": "msk_pileup",
+  "summary": "msk_pileup",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "vcf",
+      "label": "vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        ".vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_index",
+      "label": "vcf_index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        ".vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "label": "reference",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_index",
+      "label": "reference_index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa.fai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mapq",
+      "label": "map qual min",
+      "class": "int",
+      "optional": true,
+      "default": 5,
+      "help": ""
+    },
+    {
+      "name": "baseq",
+      "label": "base qual min",
+      "class": "int",
+      "optional": true,
+      "default": 5,
+      "help": ""
+    },
+    {
+      "name": "normal_bams",
+      "class": "array:file",
+      "optional": false,
+      "patterns": [
+        "*.bam",
+        "*.bam.bai"
+      ],
+      
+      "help": ""
+    },
+    {
+      "name": "dockerimage_msk_getbasecountsR",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4K54K8J6XG9BKKJ6yZyXg9V"
+        }
+      },
+      "help": "MSK get base counts counts with R installed"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "vcf_out",
+      "label": "vcf_out",
+      "class": "file",
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_out_index",
+      "label": "vcf_out_index",
+      "class": "file",
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_normal_out",
+      "label": "vcf_normal_out",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/msk_pileup.sh",
+    "execDepends":[
+      {"name": "samtools"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x8"
+        }
+      }
+    }
+  }
+}

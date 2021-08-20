@@ -50,6 +50,7 @@
       "class": "file",
       "optional": false,
       "patterns": [
+        "*.bai",
         "*.bam.bai"
       ],
       "help": ""
@@ -82,7 +83,7 @@
       "help": ""
     },
     {
-      "name": "interval_lists_22",
+      "name": "interval_lists_array",
       "class": "array:file",
       "optional": false,
       "patterns": [

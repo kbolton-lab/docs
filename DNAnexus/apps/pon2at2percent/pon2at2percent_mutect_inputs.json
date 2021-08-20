@@ -1,0 +1,22 @@
+{
+    "vcf": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Kfbq0J6XGJZGB842qJVBz5"
+        }
+    },
+    "caller": "mutect",
+    "tumor_sample_name": "UKB_5666276_233029566",
+    "vcf2PON": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G49JzJ8J6XG7pk0p2vGp75p5"
+        }
+    },
+    "vcf2PON_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G49JzK8J6XG1fBpx2JZJ00KZ"
+        }
+    }
+}

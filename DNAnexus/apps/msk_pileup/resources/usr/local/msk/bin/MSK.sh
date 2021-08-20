@@ -27,3 +27,13 @@ bcftools annotate -a RD_AD.vcf.gz -h pileup.header -c PON_RefDepth,PON_AltDepth 
 bcftools annotate -a RD_AD.vcf.gz -c PON_RefDepth,PON_AltDepth $nameroot.sample.vcf.gz -Oz -o $nameroot.sample.pileup.vcf.gz && tabix $nameroot.sample.pileup.vcf.gz;
 
 bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%INFO/PON_RefDepth\t%INFO/PON_AltDepth\t[%AD]\n' $nameroot.sample.pileup.vcf.gz > $nameroot.fisher.input;
+
+
+
+
+
+
+# /usr/local/msk/bin/fisher.R $nameroot.fisher.input $nameroot.fisher.output
+# bgzip -f $nameroot.fisher.output
+# tabix -f -s1 -b2 -e2 $nameroot.fisher.output.gz
+# bcftools annotate -a $nameroot.fisher.output.gz -h fisher.header -c CHROM,POS,REF,ALT,-,-,-,-,PON_FISHER $nameroot.sample.pileup.vcf.gz -Oz -o $nameroot.fisherPON.vcf.gz && tabix $nameroot.fisherPON.vcf.gz

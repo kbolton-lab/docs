@@ -48,7 +48,7 @@
         }
     },
     "output_name": "50.merged.mutect.filtered.vcf.gz",
-    "interval_lists_22": [
+    "interval_lists_array": [
         {
             "$dnanexus_link": "file-G46pkQQJ6XG5jfB64kyFyPKQ"
         },

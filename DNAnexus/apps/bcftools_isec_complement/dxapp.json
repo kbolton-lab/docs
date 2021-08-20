@@ -44,14 +44,15 @@
     {
       "name": "output_type",
       "class": "string",
-      "optional": false,
+      "optional": true,
+      "default": "z",
       "help": ""
     },
     {
       "name": "output_vcf_name",
       "class": "string",
       "optional": true,
-      "default": "\"bcftools_isec.vcf.gz\"",
+      "default": "bcftools_isec.vcf.gz",
       "help": ""
     }
   ],
@@ -60,7 +61,8 @@
       "name": "complement_vcf",
       "class": "file",
       "patterns": [
-        "*"
+        "*.vcf",
+        "*.vcf.gz"
       ],
       "help": ""
     },
@@ -68,7 +70,7 @@
       "name": "complement_vcf_index",
       "class": "file",
       "patterns": [
-        "*"
+        "*.vcf.gz.tbi"
       ],
       "help": ""
     }

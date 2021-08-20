@@ -7,7 +7,7 @@
   "inputSpec": [
     {
       "name": "vcf",
-      "label": "vcf in",
+      "label": "vcf",
       "class": "file",
       "optional": false,
       "patterns": [
@@ -18,12 +18,11 @@
     },
     {
       "name": "vcf_index",
-      "label": "vcf index",
+      "label": "vcf_index",
       "class": "file",
       "optional": false,
       "patterns": [
-        "*.vcf",
-        ".vcf.gz"
+        ".vcf.gz.tbi"
       ],
       "help": ""
     },
@@ -33,17 +32,17 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*"
+        "*.fa"
       ],
       "help": ""
     },
     {
       "name": "reference_index",
-      "label": "index",
+      "label": "reference_index",
       "class": "file",
       "optional": false,
       "patterns": [
-        "*"
+        "*.fa.fai"
       ],
       "help": ""
     },
@@ -75,47 +74,43 @@
       "help": ""
     },
     {
-      "name": "dockerimage_msk_getbasecounts",
+      "name": "dockerimage_msk_getbasecountsR",
       "class": "file",
       "optional": true,
       "default": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4Bj698J6XGG8fp03jJG3zPf"
+            "id": "file-G4K54K8J6XG9BKKJ6yZyXg9V"
         }
       },
-      "help": ""
-    },
-    {
-      "name": "dockerimage_fisher_julia",
-      "class": "file",
-      "optional": true,
-      "default": {
-        "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4FQg88J6XGJB09J8jVXV7ZQ"
-        }
-      },
-      "help": ""
+      "help": "MSK get base counts counts with R installed"
     }
   ],
   "outputSpec": [
     {
-      "name": "vcf_out",
-      "label": "vcf with total PoN ref and alt counts for fisher test",
+      "name": "vcf_normal_out",
+      "label": "vcf_normal_out",
       "class": "file",
       "patterns": [
-        "*.vcf",
-        "*.vcf.gz"
+        "*"
       ],
       "help": ""
     },
     {
-      "name": "vcf_out_index",
-      "label": "vcf index",
+      "name": "sample_vcf",
+      "label": "sample_vcf",
       "class": "file",
       "patterns": [
-        "*.vcf.gz.tbi"
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "fisher_input",
+      "label": "fisher_input",
+      "class": "file",
+      "patterns": [
+        "*"
       ],
       "help": ""
     }
