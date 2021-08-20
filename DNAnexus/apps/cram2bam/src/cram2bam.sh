@@ -20,58 +20,17 @@ main() {
     echo "Value of cram_in: '$cram_in'"
     echo "Value of ref_fasta: '$ref_fasta'"
 
-    # The following line(s) use the dx command-line tool to download your file
-    # inputs to the local file system using variable names for the filenames. To
-    # recover the original filenames, you can use the output of "dx describe
-    # "$variable" --name".
-
-    #dx download "$cram_in" -o cram_in # "~/in/name_of_input_field/" e.x. "~/in/cram_in/4384617_23153_0_0.cram"
-    #dx download "$ref_fasta" -o ref_fasta # "~/in/ref_fasta/GRCh38_full_analysis_set_plus_decoy_hla.fa"
-    dx-download-all-inputs --parallel # https://documentation.dnanexus.com/developer/apps/bash
-
-    # Fill in your application code here.
-    #
-    # To report any recognized errors in the correct format in
-    # $HOME/job_error.json and exit this script, you can use the
-    # dx-jobutil-report-error utility as follows:
-    #
-    #   dx-jobutil-report-error "My error message"
-    #
-    # Note however that this entire bash script is executed with -e
-    # when running in the cloud, so any line which returns a nonzero
-    # exit code will prematurely exit the script; if no error was
-    # reported in the job_error.json file, then the failure reason
-    # will be AppInternalError with a generic error message.
+    dx-download-all-inputs --parallel
+ 
     bam_out="${cram_in_prefix}.bam"
 	
-
-	
-    docker load -i /samtools.tar.gz
-    #docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus quay.io/biocontainers/samtools:1.11--h6270b1f_0 /bin/bash -c \
-    #    "/usr/local/bin/samtools view -b -T $ref_fasta_path $cram_in_path -o $bam_out; /usr/local/bin/samtools index $bam_out"
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin:/usr/bin -w /home/dnanexus quay.io/biocontainers/samtools:1.11--h6270b1f_0 /usr/bin/cram2bam_helper.sh $ref_fasta_path $cram_in_path $bam_out
+    #docker load -i $samtools_path # path to samtools docker
+    # docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/bin:/usr/bin -w /home/dnanexus quay.io/biocontainers/samtools:1.11--h6270b1f_0 /usr/bin/cram2bam_helper.sh $ref_fasta_path $cram_in_path $bam_out
+    /usr/bin/cram2bam_helper.sh $ref_fasta_path $cram_in_path $bam_out
     
-    echo "completed docker..."
-    # The following line(s) use the dx command-line tool to upload your file
-    # outputs after you have created them on the local file system.  It assumes
-    # that you have used the output field name for the filename for each output,
-    # but you can change that behavior to suit your needs.  Run "dx upload -h"
-    # to see more options to set metadata.
-
-    ## must do bai first or do: bai_out=${bam_out}.bai then bai_out=$(dx upload $bai_out --brief --destination "/CH_Exome/BAMS/")
-    #bai_out=$(dx upload ${bam_out}.bai --brief --destination "UKBB_Exome_2021:/CH_Exome/BAMS/")
     bai_out=$(dx upload ${bam_out}.bai --brief)
-    #bam_out=$(dx upload $bam_out --brief --destination "UKBB_Exome_2021:/CH_Exome/BAMS/")
     bam_out=$(dx upload $bam_out --brief)
-    
-    
-    #bai_out=$(dx upload bai_out --brief)
-
-    # The following line(s) use the utility dx-jobutil-add-output to format and
-    # add output variables to your job's output as appropriate for the output
-    # class.  Run "dx-jobutil-add-output -h" for more information on what it
-    # does.
-    echo $sample_name
+   
     dx-jobutil-add-output bam_out "$bam_out" --class=file
     dx-jobutil-add-output bai_out "$bai_out" --class=file
     dx-jobutil-add-output sample_name "$sample_name" --class=string

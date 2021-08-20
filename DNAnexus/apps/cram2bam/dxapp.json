@@ -3,7 +3,7 @@
   "title": "CRAM2BAM",
   "summary": "Converts cram file to bam file and indexes the bam.",
   "dxapi": "1.0.0",
-  "folder": "/CH_Exome/BAMS",
+  "folder": "/CH_Exome/Workflow/BAMS/",
   "version": "0.0.1",
   "inputSpec": [
     {
@@ -64,6 +64,9 @@
     },
     "interpreter": "bash",
     "file": "src/cram2bam.sh",
+    "execDepends":[
+      {"name": "samtools"}
+    ],
     "distribution": "Ubuntu",
     "release": "20.04",
     "version": "0"

@@ -1,6 +1,6 @@
 {
   "name": "vep",
-  "title": "variant effect predictor",
+  "title": "VEP variant effect predictor",
   "summary": "runs vep with frameshift, wildtype and dbNSFP plugins",
   "dxapi": "1.0.0",
   "version": "0.0.1",
@@ -29,7 +29,7 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*"
+        "*.fa"
       ],
       "help": ""
     },
@@ -38,7 +38,7 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*"
+        "*.fa.fai"
       ],
       "help": ""
     },

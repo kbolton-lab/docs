@@ -17,7 +17,6 @@
 
 main() {
     set -ex -o pipefail
-    
 
     echo "Value of vcf: '$vcf'"
     echo "Value of reference: '$reference'"
@@ -26,10 +25,6 @@ main() {
     echo "Value of baseq: '$baseq'"
     echo "Value of normal_bams: '${normal_bams[@]}'"
 
-    # The following line(s) use the dx command-line tool to download your file
-    # inputs to the local file system using variable names for the filenames. To
-    # recover the original filenames, you can use the output of "dx describe
-    # "$variable" --name".
     dx-download-all-inputs --parallel
   
     mv $vcf_path .
@@ -38,9 +33,15 @@ main() {
     ls $reference_name
     mv $reference_index_path .
     ls $reference_index_name
-    mv $dockerimage_msk_getbasecounts_path .
-    ls $dockerimage_msk_getbasecounts_name
-    ls $dockerimage_fisher_julia_path
+    # mv $dockerimage_msk_getbasecounts_path .
+    # ls $dockerimage_msk_getbasecounts_name
+    # ls $dockerimage_fisher_julia_path
+    # mv $dockerimage_R_path .
+    # ls $dockerimage_R_name .
+    mv $dockerimage_msk_getbasecountsR_path .
+    ls $dockerimage_msk_getbasecountsR_name .
+
+
     
     msk_out="dnanexus.pileup.vcf"
     vcf_filename=$(basename -- "$vcf_name")
@@ -67,26 +68,28 @@ main() {
     done
 
    
-    docker load -i $dockerimage_msk_getbasecounts_name
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/msk/bin/:/usr/local/msk/bin -w /home/dnanexus kboltonlab/msk_getbasecounts:2.0 \
-        /bin/bash /usr/local/msk/bin/MSK.sh $reference_name "$bams" $vcf_filename $msk_out 
-        #$sample
+    #docker load -i $dockerimage_msk_getbasecounts_name
+    docker load -i $dockerimage_msk_getbasecountsR_name
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/msk/bin/:/usr/local/msk/bin -w /home/dnanexus kboltonlab/msk_getbasecounts:3.0 \
+        /bin/bash /usr/local/msk/bin/MSK.sh $reference_name "$bams" $vcf_filename $msk_out
 
-    docker load -i $dockerimage_fisher_julia_path
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/msk/bin/:/usr/local/msk/bin -w /home/dnanexus kboltonlab/fisher_julia \
-        /usr/local/msk/bin/fisher.R $nameroot.fisher.input $nameroot.fisher.output
- 
-
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/msk/bin/:/usr/local/msk/bin -w /home/dnanexus kboltonlab/msk_getbasecounts:2.0 \
-        /bin/bash -c 
-            "bgzip -f $nameroot.fisher.output
-            tabix -f -s1 -b2 -e2 $nameroot.fisher.output.gz
-            bcftools annotate -a $nameroot.fisher.output.gz -h fisher.header -c CHROM,POS,REF,ALT,-,-,-,-,PON_FISHER $nameroot.sample.pileup.vcf.gz -Oz -o $nameroot.fisherPON.vcf.gz && tabix $nameroot.fisherPON.vcf.gz"
+  
 
 
-    vcf_out=$(dx upload $nameroot.fisherPON.vcf.gz --brief)
-    vcf_out_index=$(dx upload $nameroot.fisherPON.vcf.gz.tbi --brief)
+    # vcf_out=$(dx upload $nameroot.fisherPON.vcf.gz --brief)
+    # vcf_out_index=$(dx upload $nameroot.fisherPON.vcf.gz.tbi --brief)
 
-    dx-jobutil-add-output vcf_out "$vcf_out" --class=file
-    dx-jobutil-add-output vcf_out_index "$vcf_out_index" --class=file
+
+    vcf_normal_out=$(dx upload $msk_out.gz --brief)
+    sample_vcf=$(dx upload $nameroot.sample.pileup.vcf.gz --brief)
+    fisher_input=$(dx upload $nameroot.fisher.input --brief)
+
+    
+    # dx-jobutil-add-output vcf_out "$vcf_out" --class=file
+    # dx-jobutil-add-output vcf_out_index "$vcf_out_index" --class=file
+    
+    
+    dx-jobutil-add-output vcf_normal_out "$vcf_normal_out" --class=file
+    dx-jobutil-add-output sample_vcf "$sample_vcf" --class=file
+    dx-jobutil-add-output fisher_input "$fisher_input" --class=file
 }

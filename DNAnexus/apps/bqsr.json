@@ -1,0 +1,30 @@
+{
+    "inputs":
+    {
+        "mappings_sorted_bam": {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G4Kqgv8JQ56P3V9V6143qJFY"
+            }
+        },
+        "genome_fastagz": {
+            "$dnanexus_link": {
+                "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+                "id": "file-G3zP530J6XG20Fv278Y08PQq"
+            }
+        },
+        "known_vcfgzs": [
+            {
+                "$dnanexus_link": "file-G3zPJg0J6XG8j2fy4XKPF8pZ"
+            },
+            {
+                "$dnanexus_link": "file-G3zPJV8J6XG5Y1JBPjgFbQQf"
+            },
+            {
+                "$dnanexus_link": "file-G3zPGgQJ6XGKy6V90xB23Gg9"
+            }
+        ],
+        "extra_br_options": "--use-original-qualities --verbosity ERROR",
+        "extra_ab_options": "--static-quantized-quals 10 --static-quantized-quals 20 --static-quantized-quals 30 --add-output-sam-program-record --use-original-qualities --verbosity ERROR"
+    }
+}

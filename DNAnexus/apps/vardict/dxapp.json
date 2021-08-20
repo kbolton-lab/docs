@@ -50,6 +50,7 @@
       "class": "file",
       "optional": false,
       "patterns": [
+        "*.bai",
         "*.bam.bai"
       ],
       "help": ""
@@ -82,11 +83,11 @@
       "help": ""
     },
     {
-      "name": "interval_beds",
+      "name": "interval_beds_array",
       "class": "array:file",
       "optional": false,
       "patterns": [
-        "*.interval_list"
+        "*.bed"
       ],
       
       "help": ""

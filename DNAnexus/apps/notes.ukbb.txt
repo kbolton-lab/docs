@@ -1,0 +1,9 @@
+The normal cram file is: 4384617_23153_0_0.cram
+The file id on DNAnexus is: file-FybyKjjJ268vJ1Bv3jzp0PYg
+
+The normal bam file is 
+
+Mutect tumor file: 1218926_23153_0_0.cram
+Mutect tumor sample: UKB_5666276_233029566
+Mutect normal file: 4384617_23153_0_0.cram
+Mutect normal sample: UKB_5154445_233122979

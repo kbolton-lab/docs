@@ -12,7 +12,7 @@ main() {
     echo "Value of reference_index: '${reference_index}'"
     echo "Value of reference_dict: '${reference_dict}'"
     echo "Value of dockerimage_vardict: '${dockerimage_vardict}'"
-    echo "Value of array_of_scattered_input: '${interval_beds[@]}'" 
+    echo "Value of array_of_scattered_input: '${interval_beds_array[@]}'" 
     echo "Value of dockerimage_vardict: '${dockerimage_vardict}'" 
 
     dx download "$tumor_bam"
@@ -25,7 +25,7 @@ main() {
     echo $normal_sample_name
    
     interval_files=()
-    for file in "${interval_beds[@]}"; do
+    for file in "${interval_beds_array[@]}"; do
         interval_files+=("-iarray_of_scattered_input=${file}")
     done
 
@@ -44,8 +44,10 @@ main() {
         -i "tumor_sample_name=${tumor_sample_name}" \
         -i "normal_sample_name=${normal_sample_name}")
 
+    ## add tumor_sample_name for extracting without need to create new instance for "bcftools_extract_tumor" app
     postprocess_job=$(dx-jobutil-new-job postprocess \
         -i process_outputs:array:jobref=${map_job}:process_outputs \
+        -i tumor_sample_name:string=${tumor_sample_name} \
         -i output_name:string=${output_name} \
         --depends-on $map_job)
 
@@ -54,27 +56,6 @@ main() {
     dx-jobutil-add-output vcf_index --class=jobref "$postprocess_job":vcf_index
     dx-jobutil-add-output tumor_sample_name --class=string "$tumor_sample_name"
 }
-
-# scatter() {
-#     set -ex -o pipefail
-#     echo "Value of input_to_scatter: '${input_to_scatter}'"
-
-#     echo "scattering"
-#     dx-download-all-inputs --parallel
-  
-#     output_dir="out"
-#     mkdir $output_dir
-#     scatter_count=10
-
-#     /usr/bin/perl /usr/local/bin/split_interval_list_helper.pl /home/dnanexus/${output_dir} ${input_to_scatter_path} ${scatter_count}
-
-#     scattered_input=( $(ls ${output_dir}/*.interval_list) )
-    
-#     for piece in "${scattered_input[@]}"
-#     do
-#         dx-jobutil-add-output array_of_scattered_input $(dx upload --brief $piece) --class=array:file --array
-#     done 
-# }
 
 map() {
     set -ex -o pipefail
@@ -122,20 +103,10 @@ process() {
 
     docker load -i ${dockerimage_vardict_path}
 
-    #REF="$1"
-    #AF_THR="$2"
-    #tumor_bam="$3"
-    #tumor_sample_name="$4"
-    #bed="$5"
-    #normal_bam="$6"
-    #normal_sample_name="$7"
-    #out="$8"
-  
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/bin/:/usr/local/bin -w /home/dnanexus kboltonlab/vardictjava:1.0 \
         /bin/bash /usr/local/bin/VardictJava.sh ${reference_path} ${AF_THR} ${tumor_bam_path} ${tumor_sample_name} ${interval_file_path} ${normal_bam_path} ${normal_sample_name} ${shard}.vardict.vcf
 
     ls
-    #docker save kboltonlab/vardictjava:1.0 | gzip - > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/dockers/vardict.tar.gz
 
     vcf=$(dx upload ${shard}.vardict.vcf.gz --brief)
     dx-jobutil-add-output vcf --class=file "$vcf" 
@@ -154,6 +125,7 @@ postprocess() {
     fi
     echo "Value of process_outputs: '${process_outputs[@]}'"
     echo "Value of output_name: '${output_name}'"
+    echo "Value of tumor_sample_name: '${tumor_sample_name}'"
 
     # download vcfs and vcf indices
     mkdir -p /tmp/vardict
@@ -166,13 +138,14 @@ postprocess() {
     ls -1sh /tmp/vardict/*.vcf.gz*
 
     cd /home/dnanexus
- 
-    /usr/bin/bcftools concat --allow-overlaps --remove-duplicates --threads 8 /tmp/vardict/*.vcf.gz | /usr/bin/bcftools filter -i "((FMT/AF * FMT/DP < 6) && ((FMT/MQ < 55.0 && FMT/NM > 1.0) || (FMT/MQ < 60.0 && FMT/NM > 2.0) || (FMT/DP < 10) || (FMT/QUAL < 45)))" -m+ -s "BCBIO" -Oz -o ${output_name} && /usr/bin/tabix ${output_name} 
+    
+    # extract tumor before bcbio filter or both normal and tumor will be canidates for the filter
+    /usr/bin/bcftools concat --allow-overlaps --remove-duplicates --threads 8 /tmp/vardict/*.vcf.gz | /usr/bin/bcftools view -s ${tumor_sample_name} | /usr/bin/bcftools filter -i "((FMT/AF * FMT/DP < 6) && ((FMT/MQ < 55.0 && FMT/NM > 1.0) || (FMT/MQ < 60.0 && FMT/NM > 2.0) || (FMT/DP < 10) || (FMT/QUAL < 45)))" -m+ -s "BCBIO" -Oz -o $tumor_sample_name.$output_name && /usr/bin/tabix $tumor_sample_name.$output_name 
 
-    vcf=$(dx upload "${output_name}" --brief)
+    vcf=$(dx upload "$tumor_sample_name.$output_name" --brief)
     dx-jobutil-add-output vcf --class=file "$vcf" 
 
-    vcf_index=$(dx upload "${output_name}.tbi" --brief)
+    vcf_index=$(dx upload "$tumor_sample_name.$output_name.tbi" --brief)
     dx-jobutil-add-output vcf_index --class=file "$vcf_index"
 
 }

@@ -89,7 +89,7 @@ main() {
             --cache \
             --symbol \
             --vcf \
-            -o $vcf_prefix.annotated5.vcf \
+            -o $vcf_prefix.annotated.vcf \
             --fasta $reference_name \
             --dir /opt/vep/.vep/ \
             --synonyms $synonyms_name \
@@ -106,21 +106,11 @@ main() {
             --check_existing \
             --custom $gnomad_file_name,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
             --custom $clinvar_file_name,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
-            --force_overwrite && bgzip $vcf_prefix.annotated5.vcf && tabix $vcf_prefix.annotated5.vcf.gz"
+            --force_overwrite && bgzip $vcf_prefix.annotated.vcf && tabix $vcf_prefix.annotated.vcf.gz"
 
-    # The following line(s) use the dx command-line tool to upload your file
-    # outputs after you have created them on the local file system.  It assumes
-    # that you have used the output field name for the filename for each output,
-    # but you can change that behavior to suit your needs.  Run "dx upload -h"
-    # to see more options to set metadata.
 
-    annotated_vcf=$(dx upload  $vcf_prefix.annotated5.vcf.gz --brief)
-    annotated_vcf_index=$(dx upload  $vcf_prefix.annotated5.vcf.gz.tbi --brief)
-
-    # The following line(s) use the utility dx-jobutil-add-output to format and
-    # add output variables to your job's output as appropriate for the output
-    # class.  Run "dx-jobutil-add-output -h" for more information on what it
-    # does.
+    annotated_vcf=$(dx upload  $vcf_prefix.annotated.vcf.gz --brief)
+    annotated_vcf_index=$(dx upload  $vcf_prefix.annotated.vcf.gz.tbi --brief)
 
     dx-jobutil-add-output annotated_vcf "$annotated_vcf" --class=file
     dx-jobutil-add-output annotated_vcf_index "$annotated_vcf_index" --class=file

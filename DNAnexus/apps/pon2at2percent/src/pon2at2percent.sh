@@ -13,10 +13,13 @@ main() {
 
 
     dx-download-all-inputs --parallel
-    #dx-download-all-inputs
     mv $vcf2PON_index_path ~/in/vcf2PON   
   
-    export name="$caller"."$tumor_sample_name".final.annotated.vcf.gz
+    # export name="$caller"."$tumor_sample_name".final.annotated.vcf.gz
+    #export name="caller".$(${vcf_prefix/)
+    bcftools_tumor_sample_name=$(/usr/bin/bcftools query -l $vcf_path)
+    #export name="$caller"."$bcftools_tumor_sample_name".final.annotated.vcf.gz
+    export name="$bcftools_tumor_sample_name"."$caller".final.annotated.vcf.gz
 
     printf "##INFO=<ID=PON_2AT2_percent,Number=1,Type=Integer,Description=\"If 2 PoN samples have variant at >=2 percent\">\n" > pon2.header;
     /usr/bin/bcftools query -f "%CHROM\t%POS\t%REF\t%REF\t1\n" $vcf2PON_path > normal2.txt

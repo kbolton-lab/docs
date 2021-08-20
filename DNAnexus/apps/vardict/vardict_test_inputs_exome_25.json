@@ -20,25 +20,25 @@
     "tumor_bam": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G42JBBjJK42GpVXv9353yBK6"
+            "id": "file-G4Kg650JvfZBy4Kf6FPj3YF6"
         }
     },
     "tumor_bai": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G42JBB8JK4252Bfg4k5vX4KJ"
+            "id": "file-G4Kg64QJvfZBFqxB3YyQzP69"
         }
     },
     "normal_bam": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id":  "file-G49QPJ0J4V2J4G2Y6QG7Qkb4"
+            "id":  "file-G42JBBjJK42GpVXv9353yBK6"
         }
     },
     "normal_bai": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id":  "file-G49QPGQJ4V2837P1Jx4kBXQv"
+            "id":  "file-G42JBB8JK4252Bfg4k5vX4KJ"
         }
     },
     "interval_list": {
@@ -48,7 +48,7 @@
         }
     },
     "output_name": "25.merged.vardict.bcbio_filtered.vcf.gz",
-    "interval_beds": [
+    "interval_beds_array": [
         {
             "$dnanexus_link": "file-G49PXP0J6XGBz8gyPJj8Q6v6"
         },
