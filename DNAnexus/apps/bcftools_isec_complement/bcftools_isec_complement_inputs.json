@@ -2,13 +2,13 @@
     "vcf_in": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4Kp9g8JXv2b61vY738yfvp4"
+            "id": "file-G4X6JGQJ2k4YVg502qXbJQPY"
         }
     },
     "vcf_in_index": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4Kp9gjJXv2z0G0y0y03p8V6"
+            "id": "file-G4X6JJ0J2k4Q0qBxG4QY38Z2"
         }
     },
     "exclude_vcf": {
@@ -24,5 +24,6 @@
         }
     },
     "output_type": "z",
-    "output_vcf_name": "mutect.sampleID.gnomAD_AF_filter3.vcf.gz"
+    "caller": "mutect",
+    "output_vcf_suffix": "gnomAD_AF_filter.vcf.gz"
 }

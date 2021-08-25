@@ -1,7 +1,7 @@
 {
-  "name": "bqsr",
-  "title": "bqsr",
-  "summary": "bqsr",
+  "name": "bqsr_full_parallel",
+  "title": "bqsr_full_parallel",
+  "summary": "bqsr_full_parallel",
   "dxapi": "1.0.0",
   "version": "0.0.1",
   "inputSpec": [
@@ -127,7 +127,10 @@
       }
     },
     "interpreter": "bash",
-    "file": "src/bqsr.sh",
+    "file": "src/bqsr_full_parallel.sh",
+    "execDepends": [
+      {"name": "samtools", "stages": ["postprocess"]}
+    ],
     "distribution": "Ubuntu",
     "release": "20.04",
     "version": "0"
@@ -148,7 +151,7 @@
           "instanceType": "mem1_ssd1_v2_x2"
         },
         "postprocess": {
-          "instanceType": "mem1_ssd1_v2_x4"
+          "instanceType": "mem1_ssd1_v2_x2"
         }
 
       }

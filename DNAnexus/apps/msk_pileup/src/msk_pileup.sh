@@ -43,17 +43,20 @@ main() {
 
 
     
-    msk_out="dnanexus.pileup.vcf"
+   
     vcf_filename=$(basename -- "$vcf_name")
     extension="${vcf_filename##*.}"
     if [[ $extension == "gz" ]]; then
         gunzip $vcf_name
         vcf_filename=$(basename $vcf_name .gz)
-        #vcf_filename="${vcf_name%.*}"
     fi
 
     ## get basename of <nameroot>.vcf file
-    nameroot="${vcf_filename%.*}"
+    ## get <eid>_23153_0_0 from <eid>_23153_0_0.<suffix>
+    eid_nameroot=$(echo $vcf_name | cut -d'.' -f1)
+    # nameroot="${vcf_filename%.*}"
+
+    msk_out="$eid_nameroot.normal.pileup.vcf"
 
     bams=""
     for bam in "${normal_bams_path[@]}"; do
@@ -71,25 +74,24 @@ main() {
     #docker load -i $dockerimage_msk_getbasecounts_name
     docker load -i $dockerimage_msk_getbasecountsR_name
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/msk/bin/:/usr/local/msk/bin -w /home/dnanexus kboltonlab/msk_getbasecounts:3.0 \
-        /bin/bash /usr/local/msk/bin/MSK.sh $reference_name "$bams" $vcf_filename $msk_out
+        /bin/bash /usr/local/msk/bin/MSK.sh $reference_name "$bams" $vcf_filename $msk_out $eid_nameroot
 
-  
-
-
-    # vcf_out=$(dx upload $nameroot.fisherPON.vcf.gz --brief)
-    # vcf_out_index=$(dx upload $nameroot.fisherPON.vcf.gz.tbi --brief)
-
-
+    vcf_out=$(dx upload $eid_nameroot.fisherPON.vcf.gz --brief)
+    vcf_out_index=$(dx upload $eid_nameroot.fisherPON.vcf.gz.tbi --brief)
     vcf_normal_out=$(dx upload $msk_out.gz --brief)
-    sample_vcf=$(dx upload $nameroot.sample.pileup.vcf.gz --brief)
-    fisher_input=$(dx upload $nameroot.fisher.input --brief)
+
+
+    # vcf_normal_out=$(dx upload $msk_out.gz --brief)
+    # sample_vcf=$(dx upload $nameroot.sample.pileup.vcf.gz --brief)
+    # fisher_input=$(dx upload $nameroot.fisher.input --brief)
 
     
-    # dx-jobutil-add-output vcf_out "$vcf_out" --class=file
-    # dx-jobutil-add-output vcf_out_index "$vcf_out_index" --class=file
-    
-    
+    dx-jobutil-add-output vcf_out "$vcf_out" --class=file
+    dx-jobutil-add-output vcf_out_index "$vcf_out_index" --class=file
     dx-jobutil-add-output vcf_normal_out "$vcf_normal_out" --class=file
-    dx-jobutil-add-output sample_vcf "$sample_vcf" --class=file
-    dx-jobutil-add-output fisher_input "$fisher_input" --class=file
+    
+    
+    # dx-jobutil-add-output vcf_normal_out "$vcf_normal_out" --class=file
+    # dx-jobutil-add-output sample_vcf "$sample_vcf" --class=file
+    # dx-jobutil-add-output fisher_input "$fisher_input" --class=file
 }

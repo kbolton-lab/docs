@@ -5,6 +5,7 @@
 *.tar.gz
 *.zip
 DNAnexus/apps/mutect/resources/gatk
+DNAnexus/apps/test_annotate
 *.fa
 *.fa.fai
 *.dict

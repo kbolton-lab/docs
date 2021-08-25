@@ -2,11 +2,10 @@
     "vcf": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4Kfbq0J6XGJZGB842qJVBz5"
+            "id": "file-G4X2Y5QJbYf4gPvZ48pXjZPy"
         }
     },
     "caller": "mutect",
-    "tumor_sample_name": "UKB_5666276_233029566",
     "vcf2PON": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",

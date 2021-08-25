@@ -1,6 +1,7 @@
 {
   "name": "Mutect_Vardict_CH_WITH_BQSR",
   "title": "Mutect_Vardict_CH_WITH_BQSR",
+  "summary": "includes BQSR",
   "stages": [
     {
       "id": "stage-G4KgZPjJ6XGGp14b2zgjjpqf",
@@ -10,133 +11,10 @@
       "input": {
         "ref_fasta": {
           "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        },
+        "cram_in": {
+          "$dnanexus_link": "file-Fyf12bjJ79zB2P0F3P9JX4KX"
         }
-      }
-    },
-    {
-      "id": "stage-G4PzzQ8J6XG7BVxQGkypbGP4",
-      "executable": "applet-G4Q03B8J6XG45kFG4gf8q7px",
-      "input": {
-        "bam": {
-          "$dnanexus_link": {
-            "stage": "stage-G4KgZPjJ6XGGp14b2zgjjpqf",
-            "outputField": "bam_out"
-          }
-        },
-        "bam_index": {
-          "$dnanexus_link": {
-            "stage": "stage-G4KgZPjJ6XGGp14b2zgjjpqf",
-            "outputField": "bai_out"
-          }
-        },
-        "reference": {
-          "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
-        },
-        "reference_index": {
-          "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
-        },
-        "reference_dict": {
-          "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
-        },
-        "known_sites": [
-          {
-            "$dnanexus_link": "file-G3zPJg0J6XG8j2fy4XKPF8pZ"
-          },
-          {
-            "$dnanexus_link": "file-G3zPJV8J6XG5Y1JBPjgFbQQf"
-          },
-          {
-            "$dnanexus_link": "file-G3zPGgQJ6XGKy6V90xB23Gg9"
-          }
-        ],
-        "known_sites_index": [
-          {
-            "$dnanexus_link": "file-G4KgzyjJ6XGP2F6B9Gpj6z94"
-          },
-          {
-            "$dnanexus_link": "file-G4Kj1kQJ6XG4z8J45x2fP49b"
-          },
-          {
-            "$dnanexus_link": "file-G3zPQyQJ6XG448K8Kp7Xq3kY"
-          }
-        ],
-        "interval_lists_array": [
-          {
-            "$dnanexus_link": "file-G46g40jJ6XGGbg8q6J534xGb"
-          },
-          {
-            "$dnanexus_link": "file-G46g41QJ6XG4PFV2KK6PPxXk"
-          },
-          {
-            "$dnanexus_link": "file-G46g3y0J6XGGbg8q6J534xGF"
-          },
-          {
-            "$dnanexus_link": "file-G46g3yQJ6XG4PFV2KK6PPxXY"
-          },
-          {
-            "$dnanexus_link": "file-G46g40QJ6XGB964ZGy870FJy"
-          },
-          {
-            "$dnanexus_link": "file-G46g41QJ6XGB964ZGy870FK3"
-          },
-          {
-            "$dnanexus_link": "file-G46g3y8J6XG0BVYJKp0Q94qg"
-          },
-          {
-            "$dnanexus_link": "file-G46g400J6XGB964ZGy870FJv"
-          },
-          {
-            "$dnanexus_link": "file-G46g3zjJ6XG0B4f8KV7z8v4j"
-          },
-          {
-            "$dnanexus_link": "file-G46g418J6XG4PFV2KK6PPxXg"
-          },
-          {
-            "$dnanexus_link": "file-G46g3xQJ6XGB964ZGy870FJf"
-          },
-          {
-            "$dnanexus_link": "file-G46g3z0J6XGGbg8q6J534xGP"
-          },
-          {
-            "$dnanexus_link": "file-G46g40jJ6XGJKK2bFqBqB6Q4"
-          },
-          {
-            "$dnanexus_link": "file-G46g418J6XGGbg8q6J534xGk"
-          },
-          {
-            "$dnanexus_link": "file-G46g3v8J6XG2fB0513Q270Q3"
-          },
-          {
-            "$dnanexus_link": "file-G46g3yjJ6XGGbg8q6J534xGJ"
-          },
-          {
-            "$dnanexus_link": "file-G46g410J6XGGbg8q6J534xGg"
-          },
-          {
-            "$dnanexus_link": "file-G46g3z8J6XGB964ZGy870FJj"
-          },
-          {
-            "$dnanexus_link": "file-G46g40QJ6XGGbg8q6J534xGY"
-          },
-          {
-            "$dnanexus_link": "file-G46g408J6XG3jF921jZVbxX9"
-          },
-          {
-            "$dnanexus_link": "file-G46g3z8J6XG4PFV2KK6PPxXb"
-          },
-          {
-            "$dnanexus_link": "file-G46g3zjJ6XG2fB0513Q270Q5"
-          },
-          {
-            "$dnanexus_link": "file-G46g400J6XG2fB0513Q270Q7"
-          },
-          {
-            "$dnanexus_link": "file-G46g408J6XGGbg8q6J534xGV"
-          },
-          {
-            "$dnanexus_link": "file-G46g3zQJ6XGB964ZGy870FJp"
-          }
-        ]
       }
     },
     {
@@ -155,6 +33,12 @@
           "$dnanexus_link": "file-G3zPG58J6XG2z5Qb8yGfPfP2"
         },
         "picard_metric_accumulation_level": "LIBRARY",
+        "bam": {
+          "$dnanexus_link": {
+            "stage": "stage-G4KgZPjJ6XGGp14b2zgjjpqf",
+            "outputField": "bam_out"
+          }
+        },
         "bait_intervals": {
           "$dnanexus_link": "file-G3jP4X8J6XGGQgpz3F4bfQqY"
         },
@@ -166,19 +50,13 @@
         },
         "per_target_intervals": {
           "$dnanexus_link": "file-G3jP4X8J6XGGQgpz3F4bfQqY"
-        },
-        "bam": {
-          "$dnanexus_link": {
-            "stage": "stage-G4PzzQ8J6XG7BVxQGkypbGP4",
-            "outputField": "bam_out"
-          }
         }
       }
     },
     {
       "id": "stage-G4KkV88J6XG340022vxq916x",
       "name": "mutect2",
-      "executable": "applet-G4PzZz0J6XG3vGB442ZvX0Z5",
+      "executable": "applet-G4PVZp0J6XGPQ335BfXg1xpY",
       "folder": "/CH_Exome/Workflow_with_BQSR/Mutect2",
       "input": {
         "reference": {
@@ -276,16 +154,16 @@
             "$dnanexus_link": "file-G46g3zQJ6XGB964ZGy870FJp"
           }
         ],
-        "tumor_bai": {
-          "$dnanexus_link": {
-            "stage": "stage-G4PzzQ8J6XG7BVxQGkypbGP4",
-            "outputField": "bam_out_index"
-          }
-        },
         "tumor_bam": {
           "$dnanexus_link": {
-            "stage": "stage-G4PzzQ8J6XG7BVxQGkypbGP4",
+            "stage": "stage-G4KgZPjJ6XGGp14b2zgjjpqf",
             "outputField": "bam_out"
+          }
+        },
+        "tumor_bai": {
+          "$dnanexus_link": {
+            "stage": "stage-G4KgZPjJ6XGGp14b2zgjjpqf",
+            "outputField": "bai_out"
           }
         }
       }
@@ -692,14 +570,14 @@
         ],
         "tumor_bam": {
           "$dnanexus_link": {
-            "stage": "stage-G4PzzQ8J6XG7BVxQGkypbGP4",
+            "stage": "stage-G4KgZPjJ6XGGp14b2zgjjpqf",
             "outputField": "bam_out"
           }
         },
         "tumor_bai": {
           "$dnanexus_link": {
-            "stage": "stage-G4PzzQ8J6XG7BVxQGkypbGP4",
-            "outputField": "bam_out_index"
+            "stage": "stage-G4KgZPjJ6XGGp14b2zgjjpqf",
+            "outputField": "bai_out"
           }
         }
       }
@@ -761,7 +639,7 @@
     {
       "id": "stage-G4KqPz0J6XGJZGB842qJVYQK",
       "name": "final_annotation",
-      "executable": "applet-G4Q0k28J6XG0y3Y9K717Jj5b",
+      "executable": "applet-G4PyQ1QJ6XG993yfFQBJZKVF",
       "folder": "/CH_Exome/Workflow_with_BQSR/Final_Outputs",
       "input": {
         "intervals": {

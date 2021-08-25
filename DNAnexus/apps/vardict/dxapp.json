@@ -193,8 +193,17 @@
   "regionalOptions": {
     "aws:eu-west-2": {
       "systemRequirements": {
-        "*": {
-          "instanceType": "mem1_ssd1_v2_x2"
+        "main": {
+          "instanceType": "mem3_ssd1_v2_x2"
+        },
+        "map": {
+          "instanceType": "mem3_ssd1_v2_x2"
+        },
+        "process": {
+          "instanceType": "mem3_ssd1_v2_x4"
+        },
+        "postprocess": {
+          "instanceType": "mem3_ssd1_v2_x4"
         }
       }
     }

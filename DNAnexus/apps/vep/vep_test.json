@@ -14,13 +14,13 @@
     "vcf": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G48fBYQJkfkKjf4z66YJFYzv"
+            "id": "file-G4X6ZzjJyqKXvg8F53yZF06k"
         }
     },
     "vcf_index": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G48fBZ0Jkfk07pgVFJp5vKFZ"
+            "id": "file-G4X6b08JyqKVPQ30J5xQBKQz"
         }
     }
    

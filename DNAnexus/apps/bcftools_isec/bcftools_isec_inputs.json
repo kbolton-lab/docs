@@ -2,27 +2,27 @@
     "vcf1": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4Kgp58J4J3q6p6p3jQB79fQ"
+            "id": "file-G4X0zz8Jz3jJzV80B0BZXkj8"
         }
     },
     "vcf1_index": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4Kgp5jJ4J3pXZG749pGKY9q"
+            "id": "file-G4X0zzjJz3jPXX0fKVp7ZBVY"
         }
     },
     "vcf2": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4KZX3jJb112VBK860YqfqzX"
+            "id": "file-G4X1F3QJKfYZ86yg6jbYB43k"
         }
     },
     "vcf2_index": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4KZX48Jb11FKx6f3gbJ2v4j"
+            "id": "file-G4X1F40JKfYqk0VJ7qYbJGJQ"
         }
     },
     "output_type": "z",
-    "output_vcf_name": "vardict.intersect.mutect.vcf.gz"
+    "output_vcf_suffix": "vardict.intersect.mutect.vcf.gz"
 }
