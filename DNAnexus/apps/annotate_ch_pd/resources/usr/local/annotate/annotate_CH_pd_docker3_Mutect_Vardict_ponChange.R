@@ -29,7 +29,7 @@ parser <- add_argument(parser, "--bick-file", type="character", help="bick's fil
 parser <- add_argument(parser, "--cosmic-file", type="character", help="oncoKB all_curated_genes_v2.0.tsv")
 parser <- add_argument(parser, "--variant-calls-files", type="character", help="variant caller files")
 parser <- add_argument(parser, "--TSG-file", type="character", help="tumor suppressor genes")
-parser <- add_argument(parser, "--output", type="character", help="final annotated combined output")
+parser <- add_argument(parser, "--eid", type="character", help="eid for output")
 parser <- add_argument(parser, "--oncoKB-curated", type="character", help="oncoKB all_curated_genes_v2.0.tsv")
 parser <- add_argument(parser, "--pd-annotation-file", type="character", help="PD annoation files from papaemmanuil lab")
 parser <- add_argument(parser, "--pan-myeloid", type="character", help="panmyeloid_variant_counts.tsv")
@@ -43,10 +43,10 @@ parser <- add_argument(parser, "--target-length", type="integer", help="total su
 args <- parse_args(parser)
 
 
-if (is.null(args$impact_file) || is.null(args$bick_file) || is.null(args$cosmic_file) || 
-    is.null(args$variant_calls_files) || is.null(args$TSG_file) || is.null(args$output) || 
-    is.null(args$oncoKB_curated) || is.null(args$pd_annotation_file) || 
-    is.null(args$pan_myeloid) || is.null(args$target_length)) {
+if (is.na(args$impact_file) || is.na(args$bick_file) || is.na(args$cosmic_file) || 
+    is.na(args$variant_calls_files) || is.na(args$TSG_file) || is.na(args$eid) || 
+    is.na(args$oncoKB_curated) || is.na(args$pd_annotation_file) || 
+    is.na(args$pan_myeloid) || is.na(args$target_length)) {
   stop("Missing one of the annotation files or output")
 }
 
@@ -291,7 +291,9 @@ final <- final[,!(colnames(final) %in% intersection.cols.y)]
 final <- final[!is.na(final$CSQ),]
 # VEP CSQ
 # using tidyr::separate to tidy CSQ column even further,sep="\\|"
-string <-"Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|STRAND|FLAGS|PICK|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|SOURCE|GENE_PHENO|SIFT|PolyPhen|DOMAINS|miRNA|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|AA_AF|EA_AF|gnomAD_AF|gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|MAX_AF|MAX_AF_POPS|CLIN_SIG|SOMATIC|PHENO|PUBMED|VAR_SYNONYMS|MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|FrameshiftSequence|WildtypeProtein|gnomADe|gnomADe_AF|gnomADe_AF_AFR|gnomADe_AF_AMR|gnomADe_AF_ASJ|gnomADe_AF_EAS|gnomADe_AF_FIN|gnomADe_AF_NFE|gnomADe_AF_OTH|gnomADe_AF_SAS|clinvar|clinvar_CLINSIGN|clinvar_PHENOTYPE|clinvar_SCORE|clinvar_RCVACC|clinvar_TESTEDINGTR|clinvar_PHENOTYPELIST|clinvar_NUMSUBMIT|clinvar_GUIDELINES"
+#string <-"Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|STRAND|FLAGS|PICK|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|SOURCE|GENE_PHENO|SIFT|PolyPhen|DOMAINS|miRNA|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|AA_AF|EA_AF|gnomAD_AF|gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|MAX_AF|MAX_AF_POPS|CLIN_SIG|SOMATIC|PHENO|PUBMED|VAR_SYNONYMS|MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|FrameshiftSequence|WildtypeProtein|gnomADe|gnomADe_AF|gnomADe_AF_AFR|gnomADe_AF_AMR|gnomADe_AF_ASJ|gnomADe_AF_EAS|gnomADe_AF_FIN|gnomADe_AF_NFE|gnomADe_AF_OTH|gnomADe_AF_SAS|clinvar|clinvar_CLINSIGN|clinvar_PHENOTYPE|clinvar_SCORE|clinvar_RCVACC|clinvar_TESTEDINGTR|clinvar_PHENOTYPELIST|clinvar_NUMSUBMIT|clinvar_GUIDELINES"
+## new VEP has 96 fields
+string <- "Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|STRAND|FLAGS|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE_SELECT|MANE_PLUS_CLINICAL|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|UNIPROT_ISOFORM|REFSEQ_MATCH|SOURCE|REFSEQ_OFFSET|GIVEN_REF|USED_REF|BAM_EDIT|GENE_PHENO|SIFT|PolyPhen|DOMAINS|miRNA|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|AA_AF|EA_AF|gnomAD_AF|gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|MAX_AF|MAX_AF_POPS|CLIN_SIG|SOMATIC|PHENO|PUBMED|MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|FrameshiftSequence|WildtypeProtein|gnomADe|gnomADe_AF|gnomADe_AF_AFR|gnomADe_AF_AMR|gnomADe_AF_ASJ|gnomADe_AF_EAS|gnomADe_AF_FIN|gnomADe_AF_NFE|gnomADe_AF_OTH|gnomADe_AF_SAS|clinvar|clinvar_CLINSIGN|clinvar_PHENOTYPE|clinvar_SCORE|clinvar_RCVACC|clinvar_TESTEDINGTR|clinvar_PHENOTYPELIST|clinvar_NUMSUBMIT|clinvar_GUIDELINES"
 CSQnames <- str_split(string, "\\|")[[1]]
 # CSQ has 91 columns, maybe we should suffix cols with VEP?
 final <- final %>% separate(CSQ, paste0(CSQnames, "_VEP"), sep="\\|", extra = "merge", fill = "right")
@@ -384,11 +386,11 @@ final.coding.gnomad.sorted.regions <- final.coding.gnomad.sorted.regions %>%
   mutate(Mutect2_SB = 
            ifelse(Mutect2_gt_alt_fwd/(Mutect2_gt_alt_fwd+Mutect2_gt_alt_rev)<.1 |
                     Mutect2_gt_alt_fwd/(Mutect2_gt_alt_fwd+Mutect2_gt_alt_rev)>.9,0,
-                  ifelse((Mutect2_gt_alt_fwd+Mutect2_gt_alt_rev)<3,0,1)),
+                  ifelse((Mutect2_gt_alt_fwd+Mutect2_gt_alt_rev)<1,0,1)),
          Vardict_SB = 
            ifelse(Vardict_gt_ALD_forw/(Vardict_gt_ALD_forw+Vardict_gt_ALD_rev)<.1 |
                     Vardict_gt_ALD_forw/(Vardict_gt_ALD_forw+Vardict_gt_ALD_rev)>.9,0,
-                  ifelse((Vardict_gt_ALD_forw+Vardict_gt_ALD_rev)<3,0,1)),
+                  ifelse((Vardict_gt_ALD_forw+Vardict_gt_ALD_rev)<1,0,1)),
   )
 
 ## Passed by both Mutect2 and vardict
@@ -593,7 +595,7 @@ annotate.PD <- function(x) {
   h = curl::new_handle()
   curl::handle_setopt(h, http_version = 2)
   httr::set_config(httr::config(http_version = 0))
-  cl = parallel::makeCluster(6)
+  cl = parallel::makeCluster(8)
   MUTS$oncoKB = parallel::parApply(cl, MUTS, 1, get_oncokb)
   parallel::stopCluster(cl)
   
@@ -723,6 +725,7 @@ final.df <-  left_join(final.passed,
                          dplyr::select("CHROM","POS","REF","ALT","SAMPLE","CosmicCount","heme_cosmic_count","MDS",
                                        "AML","MPN","ch_my_pd","ch_pd","ch_pd2","VariantClass","AAchange","Gene"),
                        by=c("CHROM","POS","REF","ALT","SAMPLE"))
-
-write.table(final.df, paste0(final.df$SAMPLE[1],".final.tsv"), row.names = F, sep = "\t", quote = F)
-write.table(colnames(final.df), paste0(final.df$SAMPLE[1],".columns.txt"), row.names = F, col.names = F)
+final.df$eid <- args$eid
+# write.table(final.df, paste0(final.df$SAMPLE[1],".final.tsv"), row.names = F, sep = "\t", quote = F)
+write.table(final.df, paste0(args$eid,".final.tsv"), row.names = F, sep = "\t", quote = F)
+write.table(colnames(final.df), paste0(args$eid,".columns.txt"), row.names = F, col.names = F)

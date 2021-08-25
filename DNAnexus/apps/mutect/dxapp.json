@@ -185,20 +185,17 @@
   "regionalOptions": {
     "aws:eu-west-2": {
       "systemRequirements": {
-        "*": {
-          "instanceType": "mem1_ssd1_v2_x2"
+        "main": {
+          "instanceType": "mem3_ssd1_v2_x2"
+        },
+        "map": {
+          "instanceType": "mem3_ssd1_v2_x2"
         },
         "process": {
-          "execDepends":[
-            {"name": "openjdk-8-jdk"},
-            {"name": "samtools"}
-          ]
+          "instanceType": "mem3_ssd1_v2_x2"
         },
         "postprocess": {
-          "execDepends":[
-            {"name": "tabix"},
-            {"name": "bcftools"}
-          ]
+          "instanceType": "mem3_ssd1_v2_x4"
         }
       }
     }

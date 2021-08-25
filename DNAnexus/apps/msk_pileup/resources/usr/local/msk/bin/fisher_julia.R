@@ -13,7 +13,7 @@ df = read.table(args[1], header=F)
 #https://statisticsglobe.com/split-data-frame-variable-into-multiple-columns-in-r
 df <- cbind(df, data.frame(do.call("rbind", strsplit(as.character(df$V7), ",", fixed = TRUE))))[,-7]
 if (length(colnames(df)) != 8) {
-  stop("Must supply file with 7 columns to split to 8: %CHROM\t%POS\t%REF\t%ALTt%INFO/PON_RefDepth\t%INFO/PON_AltDepth\\t[%AD]", call.=FALSE)
+  stop("Must supply file with 7 columns to split to 8: %CHROM\t%POS\t%REF\t%ALTt%INFO/PON_RefDepth\t%INFO/PON_AltDepth\t[%AD]", call.=FALSE)
 }
 
 df$fisher.exact.pval <- apply(df, 1, function(x) {

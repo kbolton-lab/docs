@@ -4,6 +4,7 @@
 
 main() {
     set -ex -o pipefail
+    echo "8/20/2021"
 
     echo "Value of mutect_vcf: '$mutect_vcf'"
     echo "Value of vardict_vcf: '$vardict_vcf'"
@@ -18,12 +19,12 @@ main() {
     if [ -z "$tumor_sample_name" ]
     then
         echo "\$tumor_sample_name is empty"
-        # vardict_vcf = tumor_sample_name.vardict.final.annotated.vcf.gz
-        # pattern = .vardict.final.annotated.vcf.gz
-        # prefix = tumor_sample_name
-        tumor_sample_name=$vardict_vcf_prefix
+        tumor_sample_name=$(/usr/bin/bcftools query -l $mutect_vcf_path)
         echo $tumor_sample_name
     fi
+
+    ## get <eid>_23153_0_0 from <eid>_23153_0_0.<suffix>
+    eid_nameroot=$(echo $mutect_vcf_name | cut -d'.' -f1)
 
     ls $mutect_vcf_path
     ls $vardict_vcf_path
@@ -59,10 +60,11 @@ main() {
         --segemental-duplications $segemental_duplications_annotation_path \
         --simple-repeats $simple_repeats_annotation_path \
         --repeat-masker $repeat_masker_annotation_path \
-        --target-length $target_length
+        --target-length $target_length \
+        -e $eid_nameroot
     
-    final_tsv=$(dx upload $tumor_sample_name.final.tsv --brief)
-    column_check=$(dx upload $tumor_sample_name.columns.txt --brief)
+    final_tsv=$(dx upload $eid_nameroot.final.tsv --brief)
+    column_check=$(dx upload $eid_nameroot.columns.txt --brief)
 
     dx-jobutil-add-output final_tsv "$final_tsv" --class=file
     dx-jobutil-add-output column_check "$column_check" --class=file

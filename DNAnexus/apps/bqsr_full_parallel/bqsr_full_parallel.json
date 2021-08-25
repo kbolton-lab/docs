@@ -1,0 +1,131 @@
+{
+    "bam": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Q2Zz0J9YkF9q07PpQyPB2P"
+        }
+    },
+    "bam_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Q2ZyQJ9YkB8yPv2JB6y3Q5"
+        }
+    },
+    "reference": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        }
+    },
+    "reference_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        }
+    },
+    "reference_dict": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+        }
+    },
+    "known_sites": [
+        {
+            "$dnanexus_link": "file-G3zPJg0J6XG8j2fy4XKPF8pZ"
+        },
+        {
+            "$dnanexus_link": "file-G3zPJV8J6XG5Y1JBPjgFbQQf"
+        },
+        {
+            "$dnanexus_link": "file-G3zPGgQJ6XGKy6V90xB23Gg9"
+        }
+    ],
+    "known_sites_index": [
+        {
+            "$dnanexus_link": "file-G4KgzyjJ6XGP2F6B9Gpj6z94"
+        },
+        {
+            "$dnanexus_link": "file-G4Kj1kQJ6XG4z8J45x2fP49b"
+        },
+        {
+            "$dnanexus_link": "file-G3zPQyQJ6XG448K8Kp7Xq3kY"
+        }
+    ],
+    "interval_lists_array": [
+        {
+            "$dnanexus_link": "file-G46g40jJ6XGGbg8q6J534xGb"
+        },
+        {
+            "$dnanexus_link": "file-G46g418J6XG4PFV2KK6PPxXg"
+        },
+        {
+            "$dnanexus_link": "file-G46g3xQJ6XGB964ZGy870FJf"
+        },
+        {
+            "$dnanexus_link": "file-G46g3z0J6XGGbg8q6J534xGP"
+        },
+        {
+            "$dnanexus_link": "file-G46g40jJ6XGJKK2bFqBqB6Q4"
+        },
+        {
+            "$dnanexus_link": "file-G46g418J6XGGbg8q6J534xGk"
+        },
+        {
+            "$dnanexus_link": "file-G46g3v8J6XG2fB0513Q270Q3"
+        },
+        {
+            "$dnanexus_link": "file-G46g3yjJ6XGGbg8q6J534xGJ"
+        },
+        {
+            "$dnanexus_link": "file-G46g410J6XGGbg8q6J534xGg"
+        },
+        {
+            "$dnanexus_link": "file-G46g3z8J6XGB964ZGy870FJj"
+        },
+        {
+            "$dnanexus_link": "file-G46g40QJ6XGGbg8q6J534xGY"
+        },
+        {
+            "$dnanexus_link": "file-G46g41QJ6XG4PFV2KK6PPxXk"
+        },
+        {
+            "$dnanexus_link": "file-G46g408J6XG3jF921jZVbxX9"
+        },
+        {
+            "$dnanexus_link": "file-G46g3z8J6XG4PFV2KK6PPxXb"
+        },
+        {
+            "$dnanexus_link": "file-G46g3zjJ6XG2fB0513Q270Q5"
+        },
+        {
+            "$dnanexus_link": "file-G46g400J6XG2fB0513Q270Q7"
+        },
+        {
+            "$dnanexus_link": "file-G46g408J6XGGbg8q6J534xGV"
+        },
+        {
+            "$dnanexus_link": "file-G46g3zQJ6XGB964ZGy870FJp"
+        },
+        {
+            "$dnanexus_link": "file-G46g3y0J6XGGbg8q6J534xGF"
+        },
+        {
+            "$dnanexus_link": "file-G46g3yQJ6XG4PFV2KK6PPxXY"
+        },
+        {
+            "$dnanexus_link": "file-G46g40QJ6XGB964ZGy870FJy"
+        },
+        {
+            "$dnanexus_link": "file-G46g41QJ6XGB964ZGy870FK3"
+        },
+        {
+            "$dnanexus_link": "file-G46g3y8J6XG0BVYJKp0Q94qg"
+        },
+        {
+            "$dnanexus_link": "file-G46g400J6XGB964ZGy870FJv"
+        },
+        {
+            "$dnanexus_link": "file-G46g3zjJ6XG0B4f8KV7z8v4j"
+        }
+    ]
+}

@@ -50,7 +50,7 @@
       "help": ""
     },
     {
-      "name": "output_vcf_name",
+      "name": "output_vcf_suffix",
       "class": "string",
       "optional": true,
       "default": "bcftools_isec.vcf.gz",
@@ -98,7 +98,7 @@
     "aws:eu-west-2": {
       "systemRequirements": {
         "*": {
-          "instanceType": "mem1_ssd1_v2_x2"
+          "instanceType": "mem3_ssd1_v2_x2"
         }
       }
     }

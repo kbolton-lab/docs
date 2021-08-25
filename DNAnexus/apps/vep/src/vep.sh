@@ -35,53 +35,48 @@ main() {
     # recover the original filenames, you can use the output of "dx describe
     # "$variable" --name".
 
-    dx download "$vcf"
-    dx download "$vcf_index"
-    dx download "$reference"
-    dx download "$reference_index"
-    dx download "$dockerimage_vep"
+    # dx download "$vcf"
+    # dx download "$vcf_index"
+    # dx download "$reference"
+    # dx download "$reference_index"
+    # dx download "$dockerimage_vep"
+    dx-download-all-inputs --parallel
+    mv $vcf_index_path ~/in/vcf
+    mv $reference_index_path ~/in/reference
+    mv $gnomad_file_index_path ~/in/gnomad_file
+    mv $clinvar_file_index_path ~/in/clinvar_file
 
-    if [ -n "$synonyms" ]
-    then
-        dx download "$synonyms"
-    fi
-    if [ -n "$gnomad_file" ]
-    then
-        dx download "$gnomad_file"
-    fi
-    if [ -n "$gnomad_file_index" ]
-    then
-        dx download "$gnomad_file_index"
-    fi
-    if [ -n "$clinvar_file" ]
-    then
-        dx download "$clinvar_file"
-    fi
-    if [ -n "$clinvar_file_index" ]
-    then
-        dx download "$clinvar_file_index"
-    fi
+    # if [ -n "$synonyms" ]
+    # then
+    #     dx download "$synonyms"
+    # fi
+    # if [ -n "$gnomad_file" ]
+    # then
+    #     dx download "$gnomad_file"
+    # fi
+    # if [ -n "$gnomad_file_index" ]
+    # then
+    #     dx download "$gnomad_file_index"
+    # fi
+    # if [ -n "$clinvar_file" ]
+    # then
+    #     dx download "$clinvar_file"
+    # fi
+    # if [ -n "$clinvar_file_index" ]
+    # then
+    #     dx download "$clinvar_file_index"
+    # fi
 
-    # Fill in your application code here.
-    #
-    # To report any recognized errors in the correct format in
-    # $HOME/job_error.json and exit this script, you can use the
-    # dx-jobutil-report-error utility as follows:
-    #
-    #   dx-jobutil-report-error "My error message"
-    #
-    # Note however that this entire bash script is executed with -e
-    # when running in the cloud, so any line which returns a nonzero
-    # exit code will prematurely exit the script; if no error was
-    # reported in the job_error.json file, then the failure reason
-    # will be AppInternalError with a generic error message.
+    ## get <eid>_23153_0_0 from <eid>_23153_0_0.bqsr.bam
+    eid_nameroot=$(echo $vcf_name | cut -d'.' -f1)
     #dx load -i /vep.tar.gz
-    docker load -i $dockerimage_vep_name
+    #docker load -i $dockerimage_vep_name
+    docker load -i $dockerimage_vep_path
 
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/vep3 \
         /bin/bash -c "/opt/vep/src/ensembl-vep/vep \
             --format vcf \
-            -i $vcf_name \
+            -i $vcf_path \
             --fork $fork \
             --terms SO \
             --transcript_version \
@@ -89,10 +84,10 @@ main() {
             --cache \
             --symbol \
             --vcf \
-            -o $vcf_prefix.annotated.vcf \
-            --fasta $reference_name \
+            -o $eid_nameroot.vep.annotated.vcf \
+            --fasta $reference_path \
             --dir /opt/vep/.vep/ \
-            --synonyms $synonyms_name \
+            --synonyms $synonyms_path \
             --sift p \
             --polyphen p \
             --coding_only \
@@ -104,13 +99,14 @@ main() {
             --species homo_sapiens \
             --merged \
             --check_existing \
-            --custom $gnomad_file_name,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
-            --custom $clinvar_file_name,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
-            --force_overwrite && bgzip $vcf_prefix.annotated.vcf && tabix $vcf_prefix.annotated.vcf.gz"
+            --buffer_size 1000 \
+            --custom $gnomad_file_path,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
+            --custom $clinvar_file_path,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
+            --force_overwrite && bgzip $eid_nameroot.vep.annotated.vcf && tabix $eid_nameroot.vep.annotated.vcf.gz"
 
 
-    annotated_vcf=$(dx upload  $vcf_prefix.annotated.vcf.gz --brief)
-    annotated_vcf_index=$(dx upload  $vcf_prefix.annotated.vcf.gz.tbi --brief)
+    annotated_vcf=$(dx upload  $eid_nameroot.vep.annotated.vcf.gz --brief)
+    annotated_vcf_index=$(dx upload  $eid_nameroot.vep.annotated.vcf.gz.tbi --brief)
 
     dx-jobutil-add-output annotated_vcf "$annotated_vcf" --class=file
     dx-jobutil-add-output annotated_vcf_index "$annotated_vcf_index" --class=file
