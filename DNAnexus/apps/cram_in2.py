@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-import sys
+
 import json
 import argparse
 
@@ -12,6 +12,8 @@ parser.add_argument('cram', metavar='N', type=str,
 parser.add_argument('cram_index', metavar='N', type=str,
                     help='key')
 parser.add_argument('folder', metavar='N', type=str,
+                    help='output folder with template to name new input file')
+parser.add_argument('folder_prefix', metavar='N', type=str,
                     help='output folder with template to name new input file')
 # args = parser.parse_args(['1036101','"file-Fyf3kj8J7YXfQX8B3kyz1YYY"',
 #                           "/Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/Mutect_Vardict_CH_NO_BQSR"])
@@ -28,5 +30,5 @@ for k, v in my_json.items():
         my_json[k]['$dnanexus_link']['id'] = args.cram_index
 
 
-with open(args.folder + "/input_json/{}.json".format(args.eid), 'w') as outfile:
+with open(args.folder + "/input_json/{}/{}.json".format(args.folder_prefix, args.eid), 'w') as outfile:
     json.dump(my_json, outfile, indent=4)
