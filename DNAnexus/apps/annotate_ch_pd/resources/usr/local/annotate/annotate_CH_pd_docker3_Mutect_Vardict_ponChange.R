@@ -382,6 +382,7 @@ final.coding.gnomad.sorted.regions$Mutect2_gt_alt_rev <- as.numeric(final.coding
 final.coding.gnomad.sorted.regions$Vardict_gt_ALD_forw <- as.numeric(final.coding.gnomad.sorted.regions$Vardict_gt_ALD_forw)
 final.coding.gnomad.sorted.regions$Vardict_gt_ALD_rev <- as.numeric(final.coding.gnomad.sorted.regions$Vardict_gt_ALD_rev)
 
+## 1 passes SB and 0 fails SB
 final.coding.gnomad.sorted.regions <- final.coding.gnomad.sorted.regions %>%
   mutate(Mutect2_SB = 
            ifelse(Mutect2_gt_alt_fwd/(Mutect2_gt_alt_fwd+Mutect2_gt_alt_rev)<.1 |

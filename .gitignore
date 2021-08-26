@@ -20,3 +20,4 @@ DNAnexus/apps/hdfs
 DNAnexus/apps/bqsr_spark/resources/gatk
 *PerBaseCoverage.txt
 [0-9][0-9][0-9][0-9][0-9][0-9][0-9].json
+*.final.tsv
