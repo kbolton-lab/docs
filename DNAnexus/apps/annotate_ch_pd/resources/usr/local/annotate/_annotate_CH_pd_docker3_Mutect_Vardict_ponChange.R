@@ -44,9 +44,9 @@ parser <- add_argument(parser, "--target-length", type="integer", help="total su
 args <- parse_args(parser, list(c("-i","~/Bolton/data/hg38_mut_full_long_filtered_KB_deid_2.tsv"),
                                 c("-b","~/Bolton/data/bick_topmed_variants.txt"),
                                 c("-c","~/Bolton/data/hg38_cosmic78_parsed.sorted.txt"),
-                                ## new pipeline 
-                                c("-v", paste("~/Bolton/UKBB/docs/DNAnexus/apps/1018966_23153_0_0.mutect.final.annotated.vcf.gz",
-                                              "~/Bolton/UKBB/docs/DNAnexus/apps/1018966_23153_0_0.vardict.final.annotated.vcf.gz",
+                           
+                                c("-v", paste("~/Bolton/UKBB/results/1018966_23153_0_0.mutect.final.annotated.vcf.gz",
+                                              "~/Bolton/UKBB/results/1018966_23153_0_0.vardict.final.annotated.vcf.gz",
                                               sep=",")),
                                 c("-T","~/Bolton/data/gene_census_TSG.txt"),
                                 c("--oncoKB-curated","~/Bolton/data/all_curated_genes_v2.0.tsv"),
@@ -57,10 +57,8 @@ args <- parse_args(parser, list(c("-i","~/Bolton/data/hg38_mut_full_long_filtere
                                 c("--segemental-duplications","/Users/brian/Bolton/final_vcfs/dup.grch38.bed.gz"),
                                 c("--simple-repeats","/Users/brian/Bolton/HIV/simpleRepeat.bed"),
                                 c("--repeat-masker","/Users/brian/Bolton/HIV/repeatMaskerJoinedCurrent.bed"),
-                                # c("--target-length",39000000))) # 38793002
                                 c("--target-length",38793002),
-                                c("-e", "1018966_23153_0_0"))) # 
-
+                                c("--eid", "1018966_23153_0_0"))) # 
 
 if (is.na(args$impact_file) || is.na(args$bick_file) || is.na(args$cosmic_file) || 
     is.na(args$variant_calls_files) || is.na(args$TSG_file) || is.na(args$eid) || 
@@ -310,8 +308,10 @@ final <- final[,!(colnames(final) %in% intersection.cols.y)]
 final <- final[!is.na(final$CSQ),]
 # VEP CSQ
 # using tidyr::separate to tidy CSQ column even further,sep="\\|"
-string2 <-"Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|STRAND|FLAGS|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE_SELECT|MANE_PLUS_CLINICAL|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|UNIPROT_ISOFORM|REFSEQ_MATCH|SOURCE|REFSEQ_OFFSET|GIVEN_REF|USED_REF|BAM_EDIT|GENE_PHENO|SIFT|PolyPhen|DOMAINS|miRNA|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|AA_AF|EA_AF|gnomAD_AF|gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|MAX_AF|MAX_AF_POPS|CLIN_SIG|SOMATIC|PHENO|PUBMED|MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|FrameshiftSequence|WildtypeProtein|gnomADe|gnomADe_AF|gnomADe_AF_AFR|gnomADe_AF_AMR|gnomADe_AF_ASJ|gnomADe_AF_EAS|gnomADe_AF_FIN|gnomADe_AF_NFE|gnomADe_AF_OTH|gnomADe_AF_SAS|clinvar|clinvar_CLINSIGN|clinvar_PHENOTYPE|clinvar_SCORE|clinvar_RCVACC|clinvar_TESTEDINGTR|clinvar_PHENOTYPELIST|clinvar_NUMSUBMIT|clinvar_GUIDELINES"
-CSQnames2 <- str_split(string2, "\\|")[[1]]
+#string <-"Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|STRAND|FLAGS|PICK|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|SOURCE|GENE_PHENO|SIFT|PolyPhen|DOMAINS|miRNA|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|AA_AF|EA_AF|gnomAD_AF|gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|MAX_AF|MAX_AF_POPS|CLIN_SIG|SOMATIC|PHENO|PUBMED|VAR_SYNONYMS|MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|FrameshiftSequence|WildtypeProtein|gnomADe|gnomADe_AF|gnomADe_AF_AFR|gnomADe_AF_AMR|gnomADe_AF_ASJ|gnomADe_AF_EAS|gnomADe_AF_FIN|gnomADe_AF_NFE|gnomADe_AF_OTH|gnomADe_AF_SAS|clinvar|clinvar_CLINSIGN|clinvar_PHENOTYPE|clinvar_SCORE|clinvar_RCVACC|clinvar_TESTEDINGTR|clinvar_PHENOTYPELIST|clinvar_NUMSUBMIT|clinvar_GUIDELINES"
+## new VEP has 96 fields
+string <- "Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|STRAND|FLAGS|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE_SELECT|MANE_PLUS_CLINICAL|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|UNIPROT_ISOFORM|REFSEQ_MATCH|SOURCE|REFSEQ_OFFSET|GIVEN_REF|USED_REF|BAM_EDIT|GENE_PHENO|SIFT|PolyPhen|DOMAINS|miRNA|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|AA_AF|EA_AF|gnomAD_AF|gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|MAX_AF|MAX_AF_POPS|CLIN_SIG|SOMATIC|PHENO|PUBMED|MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|FrameshiftSequence|WildtypeProtein|gnomADe|gnomADe_AF|gnomADe_AF_AFR|gnomADe_AF_AMR|gnomADe_AF_ASJ|gnomADe_AF_EAS|gnomADe_AF_FIN|gnomADe_AF_NFE|gnomADe_AF_OTH|gnomADe_AF_SAS|clinvar|clinvar_CLINSIGN|clinvar_PHENOTYPE|clinvar_SCORE|clinvar_RCVACC|clinvar_TESTEDINGTR|clinvar_PHENOTYPELIST|clinvar_NUMSUBMIT|clinvar_GUIDELINES"
+CSQnames <- str_split(string, "\\|")[[1]]
 # CSQ has 91 columns, maybe we should suffix cols with VEP?
 final <- final %>% separate(CSQ, paste0(CSQnames, "_VEP"), sep="\\|", extra = "merge", fill = "right")
 ############################################################
@@ -399,15 +399,16 @@ final.coding.gnomad.sorted.regions$Mutect2_gt_alt_rev <- as.numeric(final.coding
 final.coding.gnomad.sorted.regions$Vardict_gt_ALD_forw <- as.numeric(final.coding.gnomad.sorted.regions$Vardict_gt_ALD_forw)
 final.coding.gnomad.sorted.regions$Vardict_gt_ALD_rev <- as.numeric(final.coding.gnomad.sorted.regions$Vardict_gt_ALD_rev)
 
+## 1 passes SB and 0 fails SB
 final.coding.gnomad.sorted.regions <- final.coding.gnomad.sorted.regions %>%
   mutate(Mutect2_SB = 
            ifelse(Mutect2_gt_alt_fwd/(Mutect2_gt_alt_fwd+Mutect2_gt_alt_rev)<.1 |
                     Mutect2_gt_alt_fwd/(Mutect2_gt_alt_fwd+Mutect2_gt_alt_rev)>.9,0,
-                  ifelse((Mutect2_gt_alt_fwd+Mutect2_gt_alt_rev)<3,0,1)),
+                  ifelse((Mutect2_gt_alt_fwd+Mutect2_gt_alt_rev)<1,0,1)),
          Vardict_SB = 
            ifelse(Vardict_gt_ALD_forw/(Vardict_gt_ALD_forw+Vardict_gt_ALD_rev)<.1 |
                     Vardict_gt_ALD_forw/(Vardict_gt_ALD_forw+Vardict_gt_ALD_rev)>.9,0,
-                  ifelse((Vardict_gt_ALD_forw+Vardict_gt_ALD_rev)<3,0,1)),
+                  ifelse((Vardict_gt_ALD_forw+Vardict_gt_ALD_rev)<1,0,1)),
   )
 
 ## Passed by both Mutect2 and vardict
@@ -612,7 +613,7 @@ annotate.PD <- function(x) {
   h = curl::new_handle()
   curl::handle_setopt(h, http_version = 2)
   httr::set_config(httr::config(http_version = 0))
-  cl = parallel::makeCluster(6)
+  cl = parallel::makeCluster(8)
   MUTS$oncoKB = parallel::parApply(cl, MUTS, 1, get_oncokb)
   parallel::stopCluster(cl)
   

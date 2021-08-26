@@ -8,3 +8,9 @@ for sample in ${samples[@]}; do
 done
 
 
+## app submit
+samples=($(dx ls "/CH_Exome/Inputs/youngest/30/*.bam" | cut -d'_' -f1 | sort))
+
+for sample in ${samples[@]:0:1}; do
+    BQSR_SPARK $sample
+done
