@@ -1,0 +1,174 @@
+{
+  "name": "Test_Remove_BQSR_BAM",
+  "title": "Test_Remove_BQSR_BAM",
+  "stages": [
+    {
+      "id": "stage-G4Z56f8J6XG7xZppKFBYz4GX",
+      "name": "bqsr_spark",
+      "executable": "applet-G4bzBPjJ6XGBG3Kj48P1kPK1",
+      "folder": "CH_Exome/Workflow_Outputs/Remove_BQSR_BAM/bqsr",
+      "input": {
+        "bam": {
+          "$dnanexus_link": "file-G4Z52x0J6XG2g5b00xvfby3p"
+        },
+        "bam_index": {
+          "$dnanexus_link": "file-G4Z5310J6XG8Jbz5KFZ4xGY2"
+        },
+        "reference": {
+          "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        },
+        "reference_index": {
+          "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        },
+        "reference_dict": {
+          "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+        },
+        "known_sites": [
+          {
+            "$dnanexus_link": "file-G3zPJg0J6XG8j2fy4XKPF8pZ"
+          },
+          {
+            "$dnanexus_link": "file-G3zPJV8J6XG5Y1JBPjgFbQQf"
+          },
+          {
+            "$dnanexus_link": "file-G3zPGgQJ6XGKy6V90xB23Gg9"
+          }
+        ],
+        "known_sites_index": [
+          {
+            "$dnanexus_link": "file-G4KgzyjJ6XGP2F6B9Gpj6z94"
+          },
+          {
+            "$dnanexus_link": "file-G4Kj1kQJ6XG4z8J45x2fP49b"
+          },
+          {
+            "$dnanexus_link": "file-G3zPQyQJ6XG448K8Kp7Xq3kY"
+          }
+        ]
+      }
+    },
+    {
+      "id": "stage-G4Z5VBQJ6XG6yqfpK1kPYkq7",
+      "name": "mutect",
+      "executable": "applet-G4f0J48J6XGPygpj4VkPZ8Yb",
+      "folder": "CH_Exome/Workflow_Outputs/Remove_BQSR_BAM/mutect",
+      "input": {
+        "reference": {
+          "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        },
+        "reference_index": {
+          "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        },
+        "reference_dict": {
+          "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+        },
+        "tumor_bam": {
+          "$dnanexus_link": {
+            "stage": "stage-G4Z56f8J6XG7xZppKFBYz4GX",
+            "outputField": "bam_out"
+          }
+        },
+        "tumor_bai": {
+          "$dnanexus_link": {
+            "stage": "stage-G4Z56f8J6XG7xZppKFBYz4GX",
+            "outputField": "bam_out_index"
+          }
+        },
+        "normal_bam": {
+          "$dnanexus_link": "file-G4YKBz0Jp5bF0qGbPP8QYYVJ"
+        },
+        "normal_bai": {
+          "$dnanexus_link": "file-G4YKF2QJp5bPqxgpPP9v6fXv"
+        },
+        "interval_list": {
+          "$dnanexus_link": "file-G41XqV0J6XGPYJzK3Pjvy64P"
+        },
+        "interval_lists_array": [
+          {
+            "$dnanexus_link": "file-G4650VQJ6XG8kvZ5B7Gp8F4p"
+          },
+          {
+            "$dnanexus_link": "file-G4650Y8J6XGF55ZZ5xFfZGBX"
+          },
+          {
+            "$dnanexus_link": "file-G4650YQJ6XGJ3G375z6B2qz8"
+          },
+          {
+            "$dnanexus_link": "file-G4650Z0J6XG3xJfZ81VjBpFV"
+          },
+          {
+            "$dnanexus_link": "file-G4650Z8J6XG7Z8gJ5yGyJ4yQ"
+          },
+          {
+            "$dnanexus_link": "file-G4650ZQJ6XGJ3G375z6B2qzB"
+          },
+          {
+            "$dnanexus_link": "file-G4650ZjJ6XGGQ1qpB6Z5g92G"
+          },
+          {
+            "$dnanexus_link": "file-G4650ZjJ6XGF55ZZ5xFfZGBv"
+          },
+          {
+            "$dnanexus_link": "file-G4650b0J6XGJ3G375z6B2qzG"
+          },
+          {
+            "$dnanexus_link": "file-G4650XjJ6XGJ3G375z6B2qz6"
+          }
+        ]
+      }
+    },
+    {
+      "id": "stage-G4fVzGjJ6XGBg9bq5QkVf20X",
+      "name": "vardict",
+      "executable": "applet-G4YK5GjJ6XGJj51084b5Q56k",
+      "folder": "CH_Exome/Workflow_Outputs/Remove_BQSR_BAM/vardict",
+      "input": {
+        "tumor_bam": {
+          "$dnanexus_link": {
+            "stage": "stage-G4Z56f8J6XG7xZppKFBYz4GX",
+            "outputField": "bam_out"
+          }
+        },
+        "tumor_bai": {
+          "$dnanexus_link": {
+            "stage": "stage-G4Z56f8J6XG7xZppKFBYz4GX",
+            "outputField": "bam_out_index"
+          }
+        },
+        "normal_bam": {
+          "$dnanexus_link": "file-G4YKBz0Jp5bF0qGbPP8QYYVJ"
+        },
+        "normal_bai": {
+          "$dnanexus_link": "file-G4YKF2QJp5bPqxgpPP9v6fXv"
+        },
+        "bed": {
+          "$dnanexus_link": "file-G4Y9x6QJ6XG27Gkq76PKZXjG"
+        },
+        "reference": {
+          "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        },
+        "reference_dict": {
+          "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+        },
+        "reference_index": {
+          "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        }
+      }
+    },
+    {
+      "id": "stage-G4fVzp8J6XG532vYF3kX3629",
+      "executable": "applet-G4fVy4QJ6XG098pY9YkvxXpB",
+      "input": {
+        "final_tsv": {
+          "$dnanexus_link": "file-G4Xv64jJFZ6qq9QKPYGZK9qp"
+        },
+        "sample_bqsr_delete": {
+          "$dnanexus_link": "file-G4fPVp8J6XG5bvG84XGxK0JJ"
+        },
+        "samples_bqsr_failed_delete": {
+          "$dnanexus_link": "file-G4fPVpQJ6XG239V5B8jBVK9g"
+        }
+      }
+    }
+  ]
+}

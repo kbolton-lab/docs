@@ -12,7 +12,6 @@ DNAnexus/apps/test_annotate
 *.cram*
 *.bam*
 *.bam
-*.cram
 *.vcf
 *.vcf.gz
 *.vcf.gz.tbi
@@ -21,3 +20,9 @@ DNAnexus/apps/bqsr_spark/resources/gatk
 *PerBaseCoverage.txt
 [0-9][0-9][0-9][0-9][0-9][0-9][0-9].json
 *.final.tsv
+*.HSsMetrics.txt
+*.fisher.*put
+DNAnexus/apps/test/*
+DNAnexus/apps/test/test_annotate/*
+DNAnexus/apps/test/test_annotate/hg38_cosmic78_parsed.sorted.txt
+DNAnexus/apps/test/test_annotate/repeatMaskerJoinedCurrent.bed

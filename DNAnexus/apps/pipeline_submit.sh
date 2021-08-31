@@ -14,3 +14,5 @@ samples=($(dx ls "/CH_Exome/Inputs/youngest/30/*.bam" | cut -d'_' -f1 | sort))
 for sample in ${samples[@]:0:1}; do
     BQSR_SPARK $sample
 done
+
+(head -n1 combined.UKBB.10.tsv; grep VIKEADRGDSGTYDLVLENKCGKKAVYIKVRVIGSPNSPEGPLEYDDIQVRSVRVSWR combined.UKBB.10.tsv) | awk -F'\t' '{print $1,$2,$3,$4,$29,$56,$194}' OFS='\t'
