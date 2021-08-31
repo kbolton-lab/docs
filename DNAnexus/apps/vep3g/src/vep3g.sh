@@ -44,28 +44,10 @@ main() {
     mv $vcf_index_path ~/in/vcf
     mv $reference_index_path ~/in/reference
     mv $gnomad_file_index_path ~/in/gnomad_file
+    mv $gnomad_V3_index_path ~/in/gnomad_V3
     mv $clinvar_file_index_path ~/in/clinvar_file
 
-    # if [ -n "$synonyms" ]
-    # then
-    #     dx download "$synonyms"
-    # fi
-    # if [ -n "$gnomad_file" ]
-    # then
-    #     dx download "$gnomad_file"
-    # fi
-    # if [ -n "$gnomad_file_index" ]
-    # then
-    #     dx download "$gnomad_file_index"
-    # fi
-    # if [ -n "$clinvar_file" ]
-    # then
-    #     dx download "$clinvar_file"
-    # fi
-    # if [ -n "$clinvar_file_index" ]
-    # then
-    #     dx download "$clinvar_file_index"
-    # fi
+    
 
     ## get <eid>_23153_0_0 from <eid>_23153_0_0.bqsr.bam
     eid_nameroot=$(echo $vcf_name | cut -d'.' -f1)
@@ -102,6 +84,7 @@ main() {
             --buffer_size 1000 \
             --af_gnomad \
             --custom $gnomad_file_path,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
+            --custom $gnomad_V3_path,gnomADg,vcf,exact,1,AF,AF_ami,AF_oth,AF_afr,AF_sas,AF_asj,AF_fin,AF_amr,AF_nfe,AF_eas \
             --custom $clinvar_file_path,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
             --force_overwrite && bgzip $eid_nameroot.vep.annotated.vcf && tabix $eid_nameroot.vep.annotated.vcf.gz"
 

@@ -2,7 +2,7 @@
     "vcf": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4X2Y5QJbYf4gPvZ48pXjZPy"
+            "id": "file-G4fqpQ8JjfzzG3P66fkxyj67"
         }
     },
     "caller": "mutect",

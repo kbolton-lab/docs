@@ -1,0 +1,114 @@
+{
+  "name": "filter_vcf_mapq0",
+  "title": "filter_vcf_mapq0",
+  "summary": "filter_vcf_mapq0",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "vcf",
+      "label": "vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_index",
+      "label": "vcf_index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_bam",
+      "label": "tumor_bam",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_bai",
+      "label": "tumor_bai",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam.bai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "threshold",
+      "label": "percent mapq0 threshold",
+      "class": "float",
+      "optional": true,
+      "default": 0.15,
+      "help": ""
+    },
+    {
+      "name": "dockerimage_bcf_sam_tab",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Z5x8QJ6XG0kxg9JyGG63v2"
+        }
+      },
+      "help": "MSK get base counts counts with R installed"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "mapq0_vcf",
+      "label": "soft-filter mapq0 vcf",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mapq0_vcf_index",
+      "label": "index",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/filter_vcf_mapq0.sh",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "project": "CONTRIBUTE"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x4"
+        }
+      }
+    }
+  }
+}

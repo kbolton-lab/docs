@@ -47,6 +47,9 @@ main() {
         -i output_name:string=${output_name} \
         -i "reference:file=${reference}" \
         -i "reference_index:file=${reference_index}" \
+        -i "tumor_bam=${tumor_bam}" \
+        -i "tumor_bai=${tumor_bai}" \
+        -i "dockerimage_gatk=${dockerimage_gatk}" \
         --depends-on $map_job)
 
     dx-jobutil-add-output vcf --class=jobref "$postprocess_job":vcf 
@@ -137,6 +140,9 @@ postprocess() {
     
     dx download "$reference"
     dx download "$reference_index"
+    dx download "$tumor_bam"
+    dx download "$tumor_bai"
+    
 
     # download vcfs and vcf indices
     mkdir -p /tmp/mutect
@@ -154,7 +160,7 @@ postprocess() {
     /usr/bin/bcftools concat --allow-overlaps --remove-duplicates -Oz --threads 8 /tmp/mutect/*.vcf.gz | /usr/bin/bcftools view -s $tumor_sample_name --threads 8 | bcftools norm -f $reference_name -m -any --threads 8 -Oz -o $output_name && /usr/bin/tabix $output_name
 
     vcf=$(dx upload "$output_name" --brief)
-    dx-jobutil-add-output vcf --class=file "$vcf" 
+    dx-jobutil-add-output vcf --class=file "$vcf"
 
     vcf_index=$(dx upload "$output_name.tbi" --brief)
     dx-jobutil-add-output vcf_index --class=file "$vcf_index"

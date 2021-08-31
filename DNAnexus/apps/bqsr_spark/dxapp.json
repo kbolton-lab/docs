@@ -17,7 +17,8 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*.bam"
+        "*.bam",
+        "*.cram"
       ],
       "help": ""
     },
@@ -27,7 +28,8 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*.bam.bai"
+        "*.bam.bai",
+        "*.cram.crai"
       ],
       "help": ""
     },
