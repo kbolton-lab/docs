@@ -94,16 +94,10 @@
           "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
         },
         "normal_bam": {
-          "$dnanexus_link": {
-            "project": "container-G4Kjkq8JJ3861ZV18f49bP9j",
-            "id": "file-G4KjxZjJJ38PzKJgJGx7k7bv"
-          }
+          "$dnanexus_link": "file-G4YKBz0Jp5bF0qGbPP8QYYVJ"
         },
         "normal_bai": {
-          "$dnanexus_link": {
-            "project": "container-G4Kjkq8JJ3861ZV18f49bP9j",
-            "id": "file-G4KjxZ8JJ38687Zy2BYBxjVx"
-          }
+          "$dnanexus_link": "file-G4YKF2QJp5bPqxgpPP9v6fXv"
         },
         "interval_list": {
           "$dnanexus_link": "file-G3jP4X8J6XGGQgpz3F4bfQqY"
@@ -719,7 +713,7 @@
     {
       "id": "stage-G4Kkb4QJ6XGKj5714KYjyvVB",
       "name": "vardict",
-      "executable": "applet-G4YK5GjJ6XGJj51084b5Q56k",
+      "executable": "applet-G4gx7j0J6XG16Fg353pYP32v",
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/VardictJava/10",
       "input": {
         "bed": {
@@ -811,7 +805,7 @@
     {
       "id": "stage-G4KqPz0J6XGJZGB842qJVYQK",
       "name": "final_annotation",
-      "executable": "applet-G4fvVJQJ6XG25KY49zBzpkK0",
+      "executable": "applet-G4gz9G0J6XG23Pfg4Fvq313j",
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/Final_Outputs/10",
       "input": {
         "intervals": {
@@ -834,7 +828,7 @@
     {
       "id": "stage-G4fq8KjJ6XG6pBYqK1VXFgZV",
       "name": "declutter",
-      "executable": "applet-G4fpB78J6XGFPkkg06Q22pF6",
+      "executable": "applet-G4g7Yz8J6XGKVVp1P4j27z4Y",
       "input": {
         "final_tsv": {
           "$dnanexus_link": {

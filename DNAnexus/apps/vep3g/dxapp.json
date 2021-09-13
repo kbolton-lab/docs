@@ -164,6 +164,12 @@
       "help": ""
     },
     {
+      "name": "caller",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
       "name": "dockerimage_vep",
       "class": "file",
       "optional": true,
