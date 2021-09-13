@@ -304,21 +304,24 @@ final.coding.gnomad.sorted <- final[with(final, order(CHROM, POS)), ]
 # gnomAD 
 gnomAD.col <- grep("gnomAD_.*_VEP", colnames(final.coding.gnomad.sorted))
 final.coding.gnomad.sorted[,gnomAD.col] <- apply(final.coding.gnomad.sorted[,gnomAD.col], 2, as.numeric)
-final.coding.gnomad.sorted[,gnomAD.col][is.na(final.coding.gnomad.sorted[,gnomAD.col])] <- 0
+## we want to know which are NA
+#final.coding.gnomad.sorted[,gnomAD.col][is.na(final.coding.gnomad.sorted[,gnomAD.col])] <- 0
 final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP <- as.numeric(apply(final.coding.gnomad.sorted[,gnomAD.col], 1, function(x){
   max(x, na.rm = T)
 }))
 # gnomADe /storage1/fs1/bga/Active/gmsroot/gc2560/core/model_data/genome-db-ensembl-gnomad/2dd4b53431674786b760adad60a29273/fixed_b38_exome.vcf.gz
 gnomADe.col <- grep("gnomADe_.*_VEP", colnames(final.coding.gnomad.sorted))
 final.coding.gnomad.sorted[,gnomADe.col] <- apply(final.coding.gnomad.sorted[,gnomADe.col], 2, as.numeric)
-final.coding.gnomad.sorted[,gnomADe.col][is.na(final.coding.gnomad.sorted[,gnomADe.col])] <- 0
+## we want to know which are NA
+#final.coding.gnomad.sorted[,gnomADe.col][is.na(final.coding.gnomad.sorted[,gnomADe.col])] <- 0
 final.coding.gnomad.sorted$MAX_gnomADe_AF_VEP <- as.numeric(apply(final.coding.gnomad.sorted[,gnomADe.col], 1, function(x){
   max(x, na.rm = T)
 }))
 # gnomADg http://ftp.ensembl.org/pub/data_files/homo_sapiens/GRCh38/variation_genotype/gnomad/r3.0/
 gnomADg.col <- grep("gnomADg_.*_VEP", colnames(final.coding.gnomad.sorted))
 final.coding.gnomad.sorted[,gnomADg.col] <- apply(final.coding.gnomad.sorted[,gnomADg.col], 2, as.numeric)
-final.coding.gnomad.sorted[,gnomADg.col][is.na(final.coding.gnomad.sorted[,gnomADg.col])] <- 0
+## we want to know which are NA
+#final.coding.gnomad.sorted[,gnomADg.col][is.na(final.coding.gnomad.sorted[,gnomADg.col])] <- 0
 final.coding.gnomad.sorted$MAX_gnomADg_AF_VEP <- as.numeric(apply(final.coding.gnomad.sorted[,gnomADg.col], 1, function(x){
   max(x, na.rm = T)
 }))
@@ -649,7 +652,15 @@ annotate.PD <- function(x) {
   }
 
   ch_my_variants = ch_my_variants %>% dplyr::select(source, var_key, ch_my_pd) %>% unique()
-  ch_my_variants <- aggregate(source ~ var_key + ch_my_pd, data = ch_my_variants, FUN = paste, collapse = ",")
+  tryCatch(
+    expr = {
+      ch_my_variants <- aggregate(source ~ var_key + ch_my_pd, data = ch_my_variants, FUN = paste, collapse = ",")
+    },
+    error = function(e){ 
+      message(e)
+    }
+  )
+  ## easier to just not return anything from TC and call this below it
   MUTS = left_join(MUTS, ch_my_variants, by="var_key")
   MUTS$ch_my_pd = fillna(MUTS$ch_my_pd, 0)
   

@@ -66,7 +66,7 @@ main() {
             --cache \
             --symbol \
             --vcf \
-            -o $eid_nameroot.vep.annotated.vcf \
+            -o $eid_nameroot.$caller.vep.annotated.vcf \
             --fasta $reference_path \
             --dir /opt/vep/.vep/ \
             --synonyms $synonyms_path \
@@ -86,11 +86,11 @@ main() {
             --custom $gnomad_file_path,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
             --custom $gnomad_V3_path,gnomADg,vcf,exact,1,AF,AF_ami,AF_oth,AF_afr,AF_sas,AF_asj,AF_fin,AF_amr,AF_nfe,AF_eas \
             --custom $clinvar_file_path,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
-            --force_overwrite && bgzip $eid_nameroot.vep.annotated.vcf && tabix $eid_nameroot.vep.annotated.vcf.gz"
+            --force_overwrite && bgzip $eid_nameroot.$caller.vep.annotated.vcf && tabix $eid_nameroot.$caller.vep.annotated.vcf.gz"
 
 
-    annotated_vcf=$(dx upload  $eid_nameroot.vep.annotated.vcf.gz --brief)
-    annotated_vcf_index=$(dx upload  $eid_nameroot.vep.annotated.vcf.gz.tbi --brief)
+    annotated_vcf=$(dx upload  $eid_nameroot.$caller.vep.annotated.vcf.gz --brief)
+    annotated_vcf_index=$(dx upload  $eid_nameroot.$caller.vep.annotated.vcf.gz.tbi --brief)
 
     dx-jobutil-add-output annotated_vcf "$annotated_vcf" --class=file
     dx-jobutil-add-output annotated_vcf_index "$annotated_vcf_index" --class=file

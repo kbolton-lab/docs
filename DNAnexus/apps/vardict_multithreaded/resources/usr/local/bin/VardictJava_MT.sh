@@ -14,7 +14,7 @@ normal_sample_name=$(/usr/bin/samtools view -H $normal_bam | /usr/bin/perl -nE '
 echo $normal_sample_name
 
 
-/opt/VarDictJava/build/install/VarDict/bin/VarDict -G $REF -f $AF_THR -N $tumor_sample_name -b "$tumor_bam|$normal_bam" -c 1 -S 2 -E 3 -g 4 $bed -th 64 | /opt/VarDictJava/build/install/VarDict/bin/testsomatic.R | /opt/VarDictJava/build/install/VarDict/bin/var2vcf_paired.pl -N "$tumor_sample_name|$normal_sample_name" -f $AF_THR > $eid_nameroot.vardict.vcf
+/opt/VarDictJava/build/install/VarDict/bin/VarDict -U -G $REF -f $AF_THR -N $tumor_sample_name -b "$tumor_bam|$normal_bam" -c 1 -S 2 -E 3 -g 4 $bed -th 64 | /opt/VarDictJava/build/install/VarDict/bin/testsomatic.R | /opt/VarDictJava/build/install/VarDict/bin/var2vcf_paired.pl -N "$tumor_sample_name|$normal_sample_name" -f $AF_THR > $eid_nameroot.vardict.vcf
 
 /usr/bin/bgzip $eid_nameroot.vardict.vcf && /usr/bin/tabix $eid_nameroot.vardict.vcf.gz
 

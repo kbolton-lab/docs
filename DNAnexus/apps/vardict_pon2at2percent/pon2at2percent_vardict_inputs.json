@@ -1,0 +1,39 @@
+{
+    "vcf": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4xjPG0JPBZGx1xj4Qkx011Q"
+        }
+    },
+    "vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4xjPG8JPBZ2B6FB4g5PZxkB"
+        }
+    },
+    "intersect_vcf": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4xjq68J55xGZV5X4ZzGXpGG"
+        }
+    },
+    "intersect_vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4xjq6jJ55x1PGj94V0zvJxF"
+        }
+    },
+    "caller": "vardict",
+    "vcf2PON": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4KbGy0J6XGFJJfj6xkkbbY0"
+        }
+    },
+    "vcf2PON_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4KbGyjJ6XG7fjz7PVZ3GGZk"
+        }
+    }
+}

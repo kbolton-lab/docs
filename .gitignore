@@ -26,3 +26,6 @@ DNAnexus/apps/test/*
 DNAnexus/apps/test/test_annotate/*
 DNAnexus/apps/test/test_annotate/hg38_cosmic78_parsed.sorted.txt
 DNAnexus/apps/test/test_annotate/repeatMaskerJoinedCurrent.bed
+DNAnexus/apps/workflows/TEST_RM_BQSR_BAM/*
+*/resources/gatk
+DNAnexus/apps/workflows/FINAL/batch/FINAL_Transplant/transplant.json

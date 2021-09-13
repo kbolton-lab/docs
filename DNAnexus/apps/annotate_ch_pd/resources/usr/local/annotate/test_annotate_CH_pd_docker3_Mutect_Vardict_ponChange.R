@@ -45,14 +45,18 @@ args <- parse_args(parser, list(c("-i","~/Bolton/data/hg38_mut_full_long_filtere
                                 c("-b","~/Bolton/data/bick_topmed_variants.txt"),
                                 c("-c","~/Bolton/data/hg38_cosmic78_parsed.sorted.txt"),
      
-                                c("-v", paste("~/Bolton/UKBB/results/1000144_23153_0_0.mutect.final.annotated.vcf.gz",
-                                              "~/Bolton/UKBB/results/1000144_23153_0_0.vardict.final.annotated.vcf.gz",
+                                # c("-v", paste("~/Bolton/UKBB/results/10/1007298_23153_0_0.mutect.final.annotated.vcf.gz",
+                                #               "~/Bolton/UKBB/results/10/1007298_23153_0_0.vardict.final.annotated.vcf.gz",
+                                #               sep=",")),
+                                # c("-e","1007298_23153_0_0"),
+                                c("-v", paste("~/Bolton/UKBB/results/10/1000144_23153_0_0.mutect.final.annotated.vcf.gz",
+                                              "~/Bolton/UKBB/results/10/1000144_23153_0_0.vardict.final.annotated.vcf.gz",
                                               sep=",")),
                                 c("-e","1000144_23153_0_0"),
                                 
                                 c("-T","~/Bolton/data/gene_census_TSG.txt"),
                                 c("--oncoKB-curated","~/Bolton/data/all_curated_genes_v2.0.tsv"),
-                                c("-p","~/Bolton/data/pd_table_kbreview_bick.tsv"),
+                                c("-p","~/Bolton/data/pd_table_kbreview_bick_trunc.tsv"),
                                 c("--pan-myeloid","~/Bolton/data/panmyeloid_variant_counts.tsv"),
                                 c("--number-samples-annot",5),
                                 c("--blacklist","/Users/brian/ENCFF356LFX.bed"),
@@ -323,21 +327,24 @@ final.coding.gnomad.sorted <- final[with(final, order(CHROM, POS)), ]
 # gnomAD 
 gnomAD.col <- grep("gnomAD_.*_VEP", colnames(final.coding.gnomad.sorted))
 final.coding.gnomad.sorted[,gnomAD.col] <- apply(final.coding.gnomad.sorted[,gnomAD.col], 2, as.numeric)
-final.coding.gnomad.sorted[,gnomAD.col][is.na(final.coding.gnomad.sorted[,gnomAD.col])] <- 0
+## we want to know which are NA
+#final.coding.gnomad.sorted[,gnomAD.col][is.na(final.coding.gnomad.sorted[,gnomAD.col])] <- 0
 final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP <- as.numeric(apply(final.coding.gnomad.sorted[,gnomAD.col], 1, function(x){
   max(x, na.rm = T)
 }))
 # gnomADe /storage1/fs1/bga/Active/gmsroot/gc2560/core/model_data/genome-db-ensembl-gnomad/2dd4b53431674786b760adad60a29273/fixed_b38_exome.vcf.gz
 gnomADe.col <- grep("gnomADe_.*_VEP", colnames(final.coding.gnomad.sorted))
 final.coding.gnomad.sorted[,gnomADe.col] <- apply(final.coding.gnomad.sorted[,gnomADe.col], 2, as.numeric)
-final.coding.gnomad.sorted[,gnomADe.col][is.na(final.coding.gnomad.sorted[,gnomADe.col])] <- 0
+## we want to know which are NA
+#final.coding.gnomad.sorted[,gnomADe.col][is.na(final.coding.gnomad.sorted[,gnomADe.col])] <- 0
 final.coding.gnomad.sorted$MAX_gnomADe_AF_VEP <- as.numeric(apply(final.coding.gnomad.sorted[,gnomADe.col], 1, function(x){
   max(x, na.rm = T)
 }))
 # gnomADg http://ftp.ensembl.org/pub/data_files/homo_sapiens/GRCh38/variation_genotype/gnomad/r3.0/
 gnomADg.col <- grep("gnomADg_.*_VEP", colnames(final.coding.gnomad.sorted))
 final.coding.gnomad.sorted[,gnomADg.col] <- apply(final.coding.gnomad.sorted[,gnomADg.col], 2, as.numeric)
-final.coding.gnomad.sorted[,gnomADg.col][is.na(final.coding.gnomad.sorted[,gnomADg.col])] <- 0
+## we want to know which are NA
+#final.coding.gnomad.sorted[,gnomADg.col][is.na(final.coding.gnomad.sorted[,gnomADg.col])] <- 0
 final.coding.gnomad.sorted$MAX_gnomADg_AF_VEP <- as.numeric(apply(final.coding.gnomad.sorted[,gnomADg.col], 1, function(x){
   max(x, na.rm = T)
 }))
@@ -526,6 +533,7 @@ final.passed$alt_strand_counts_min_2_callers <- apply(final.passed[,c("Mutect2_S
 final.passed$alt_strand_counts_min_1_caller_only <- apply(final.passed[,c("Mutect2_SB","Vardict_SB")],
                                                           1,
                                                           function(x) sum(x, na.rm = T)>=1)
+final.passed2=final.passed
 ################################################
 ### Annotate PD
 
@@ -600,7 +608,8 @@ annotate.PD <- function(x) {
   ##read in PD annoation files from papaemmanuil lab##
   ## file 4
   #A <- readxl::read_xlsx(args$pd_annotation_file)[,1:9] # now tsv
-  A <- read.table(args$pd_annotation_file, sep = "\t", header = T, quote = "")[,1:9]
+  #A <- read.table(args$pd_annotation_file, sep = "\t", header = T, quote = "")[,1:9]
+  A <- read.table("~/Bolton/data/pd_table_kbreview_bick_trunc.tsv", sep = "\t", header = T, quote = "")[,1:9]
   A$keys = apply(A, 1, function(x) {
     names(x)[x != '*'] %>% .[!. %in% c('source', 'ch_my_pd', 'ch_pancan_pd')]
   })
@@ -668,9 +677,34 @@ annotate.PD <- function(x) {
   }
 
   ch_my_variants = ch_my_variants %>% dplyr::select(source, var_key, ch_my_pd) %>% unique()
-  ch_my_variants <- aggregate(source ~ var_key + ch_my_pd, data = ch_my_variants, FUN = paste, collapse = ",")
+  tryCatch(
+    expr = {
+      ch_my_variants <- aggregate(source ~ var_key + ch_my_pd, data = ch_my_variants, FUN = paste, collapse = ",")
+      # MUTS = left_join(MUTS, ch_my_variants, by="var_key")
+      # MUTS$ch_my_pd = fillna(MUTS$ch_my_pd, 0)
+    },
+    error = function(e){ 
+      #MUTS$ch_my_pd = 0
+      message(e)
+    }
+  )
   MUTS = left_join(MUTS, ch_my_variants, by="var_key")
   MUTS$ch_my_pd = fillna(MUTS$ch_my_pd, 0)
+  out = tryCatch(
+    expr = {
+      ch_my_variants <- aggregate(source ~ var_key + ch_my_pd, data = ch_my_variants, FUN = paste, collapse = ",")
+      MUTS = left_join(MUTS, ch_my_variants, by="var_key")
+      MUTS$ch_my_pd = fillna(MUTS$ch_my_pd, 0)
+    },
+    error = function(e){ 
+      message(e)
+      MUTS$ch_my_pd = 0
+      return(MUTS$ch_my_pd)
+    }
+  ) 
+  # ch_my_variants <- aggregate(source ~ var_key + ch_my_pd, data = ch_my_variants, FUN = paste, collapse = ",")
+  # MUTS = left_join(MUTS, ch_my_variants, by="var_key")
+  # MUTS$ch_my_pd = fillna(MUTS$ch_my_pd, 0)
   
   # 6. Any variant occurring in the COSMIC “haematopoietic and lymphoid” category greater than or equal to 10 times
   
@@ -753,7 +787,7 @@ final.passed$passed_everything <- (!final.passed$Vardict_PON_2AT2_percent &
 final.passed$passed_everything_mutect <- final.passed$passed_everything & final.passed$Mutect2_PASS
 
 annotation <- annotate.PD(final.passed)
-final.df <-  left_join(final.passed,
+final.df <- left_join(final.passed,
                        annotation %>%
                          dplyr::select("CHROM","POS","REF","ALT","SAMPLE","CosmicCount","heme_cosmic_count","MDS",
                                        "AML","MPN","ch_my_pd","ch_pd","ch_pd2","VariantClass","AAchange","Gene"),
