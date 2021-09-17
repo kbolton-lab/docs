@@ -147,6 +147,12 @@
     "allProjects": "VIEW",
     "network": [ "*" ]
   },
+  "executionPolicy": {
+    "restartOn": {
+      "UnresponsiveWorker": 2
+    },
+    "maxSpotTries": 2
+  },
   "regionalOptions": {
     "aws:eu-west-2": {
       "systemRequirements": {

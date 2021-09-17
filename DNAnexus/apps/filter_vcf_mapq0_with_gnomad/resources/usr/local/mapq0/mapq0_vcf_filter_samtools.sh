@@ -21,4 +21,4 @@ printf "##INFO=<ID=MQ0,Number=1,Type=Integer,Description=\"Number of MAPQ == 0 r
 
 bgzip -f mapq0counts
 tabix mapq0counts.gz -s1 -b2 -e2;
-bcftools annotate --threads 8 -a mapq0counts.gz -h MQ0.header -c CHROM,POS,MQ0 gnomad.filtered.vcf.gz | bcftools filter -m+ -e "((INFO/MQ0) / (FMT/DP)) > $mapq0perc" -s "MQ0" --threads 8 -Oz -o $eid_nameroot.mapq0.soft-filtered.gz && tabix $eid_nameroot.mapq0.soft-filtered.gz
+bcftools annotate --threads 8 -a mapq0counts.gz -h MQ0.header -c CHROM,POS,MQ0 gnomad.filtered.vcf.gz | bcftools filter -m+ -e "((INFO/MQ0) / (FMT/DP)) > $mapq0perc" -s "MQ0" --threads 8 -Oz -o $eid_nameroot.mapq0.soft-filtered.vcf.gz && tabix $eid_nameroot.mapq0.soft-filtered.vcf.gz

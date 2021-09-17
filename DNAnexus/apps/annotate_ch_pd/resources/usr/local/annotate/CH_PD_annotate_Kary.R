@@ -34,16 +34,17 @@ parser <- add_argument(parser, "--pan-myeloid", type="character", help="panmyelo
 
 
 ## test
-args <- parse_args(parser, list(c("-i","~/Bolton/data/hg38_mut_full_long_filtered_KB_deid_2.tsv"),
-                                c("-b","~/Bolton/data/bick_topmed_variants.txt"),
-                                c("-c","~/Bolton/data/hg38_cosmic78_parsed.sorted.txt"),
+args <- parse_args(parser, list(c("-i","~/Bolton/data/hg38_mut_full_long_filtered_KB_deid_2.tsv"), ## hg19 Brian: Done
+                                c("-b","~/Bolton/data/bick_topmed_variants.txt"), ## Kary lift over to hg19
+                                c("-c","~/Bolton/data/hg38_cosmic78_parsed.sorted.txt"), #hg19 Brian
                                 c("-v", paste("~/Bolton/UKBB/results/10/1000144_23153_0_0.mutect.final.annotated.vcf.gz",
+                                              #"~/Bolton/UKBB/results/10/1000144_23153_0_0.vardict.final.annotated.vcf.gz",#
                                               ## add more variant caller files here that are VEP Annotated,
                                               sep=",")),
                                 c("-T","~/Bolton/data/gene_census_TSG.txt"),
                                 c("--oncoKB-curated","~/Bolton/data/all_curated_genes_v2.0.tsv"),
                                 c("-p","~/Bolton/data/pd_table_kbreview_bick_trunc.tsv"),
-                                c("--pan-myeloid","~/Bolton/data/panmyeloid_variant_counts.tsv")))
+                                c("--pan-myeloid","~/Bolton/data/panmyeloid_variant_counts.tsv"))) #hg38 or # hg19
 
 
 variant.files <- str_split(args$variant_calls_files, ",")[[1]]
@@ -61,11 +62,11 @@ mutect.df <- mutect2[["dat"]]
 na.mutect.cols <- names(mutect.df[,apply(mutect.df, 2, function(x) all(is.na(x)))])
 mutect.df <- mutect.df[,-which(names(mutect.df) %in% c(na.mutect.cols))]
 
-# vardict <- vcfR2tidy(read.vcfR(vardict_vcf_file, verbose = FALSE),
-#                      single_frame = TRUE,
-#                      info_types = TRUE,
-#                      format_types = TRUE)
-# vardict.df <- vardict[["dat"]]
+vardict <- vcfR2tidy(read.vcfR(vardict_vcf_file, verbose = FALSE),
+                     single_frame = TRUE,
+                     info_types = TRUE,
+                     format_types = TRUE)
+vardict.df <- vardict[["dat"]]
 
 ## remove blank CSQ rows (non-Coding) and separate
 mutect.df <- mutect.df[!is.na(mutect.df$CSQ),]

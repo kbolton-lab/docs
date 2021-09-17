@@ -15,6 +15,8 @@ parser.add_argument('folder', metavar='N', type=str,
                     help='output folder with template to name new input file')
 parser.add_argument('folder_prefix', metavar='N', type=str,
                     help='output folder with template to name new input file')
+parser.add_argument('project', metavar='N', type=str,
+                    help='project id')
 # args = parser.parse_args(['1036101','"file-Fyf3kj8J7YXfQX8B3kyz1YYY"',
 #                           "/Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/Mutect_Vardict_CH_NO_BQSR"])
 args = parser.parse_args()
@@ -28,6 +30,8 @@ for k, v in my_json.items():
         my_json[k]['$dnanexus_link']['id'] = args.cram
     elif k.endswith("bam_index"):
         my_json[k]['$dnanexus_link']['id'] = args.cram_index
+    elif k.endswith("project"):
+        my_json[k] = args.project
 
 
 with open(args.folder + "/input_json/{}/{}.json".format(args.folder_prefix, args.eid), 'w') as outfile:
