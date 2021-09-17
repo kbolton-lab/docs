@@ -1,0 +1,26 @@
+{
+    "vcf": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4qqYy8JGz1yQy0z4f2Vb3Fj"
+        }
+    },
+    "vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4qqYyjJGz1vZV5X4ZzG7PJb"
+        }
+    },
+    "intersect_vcf": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G4v05Q0JYP24xFxz4fqQk3GB"
+        }
+    },
+    "intersect_vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G4v05Q8JYP24BZfq4f0bky9P"
+        }
+    }
+}

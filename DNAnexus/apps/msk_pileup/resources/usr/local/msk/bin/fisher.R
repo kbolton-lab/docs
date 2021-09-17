@@ -28,5 +28,4 @@ df$fisher.exact.pval <- apply(df, 1, function(x) {
 })
 
 
-
 write.table(df, file=args[2], row.names = F, quote = F, col.names = F, sep = "\t")

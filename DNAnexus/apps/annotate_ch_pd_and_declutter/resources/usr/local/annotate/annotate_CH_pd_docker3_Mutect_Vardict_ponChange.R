@@ -278,7 +278,7 @@ colnames(final)[colnames(final) %in% intersection.cols.x] <- intersection
 ## remove *.y columns completely
 final <- final[,!(colnames(final) %in% intersection.cols.y)]
 
-## remove blank CSQ columns and separate
+## remove blank CSQ columns because they are non-coding and separate
 final <- final[!is.na(final$CSQ),]
 # VEP CSQ
 ## new VEP has 96 fields
@@ -733,6 +733,7 @@ final.passed$Vardict_PON_2AT2_percent <- fillna(final.passed$Vardict_PON_2AT2_pe
 ## let's look at 
     # gnomAD_MAX.Stringent.0007, gnomAD_MAX.lessStringent.0007, 
     # MAX_gnomAD_AF_VEP, MAX_gnomADe_AF_VEP, MAX_gnomADg_AF_VEP
+# final.passed$Vardict_PON_2AT2_percent = 1 = fail
 final.passed$passed_everything <- (!final.passed$Vardict_PON_2AT2_percent &
                                      !final.passed$Mutect2_PON_2AT2_percent &
                                      final.passed$alt_strand_counts_min_2_callers &

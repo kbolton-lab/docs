@@ -636,7 +636,7 @@
     {
       "id": "stage-G4Kkb4QJ6XGKj5714KYjyvVB",
       "name": "vardict",
-      "executable": "applet-G4gx7j0J6XG16Fg353pYP32v",
+      "executable": "applet-G500XxjJQ286y66qBV8g6K1B",
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/VardictJava/12",
       "input": {
         "bed": {
@@ -674,32 +674,31 @@
     {
       "id": "stage-G4Kq2q0J6XG1y7gvBfkKKPYx",
       "name": "vardict_intersect_mutect",
-      "executable": "applet-G4XYGbQJ6XG9jXp6FGXz80z7",
+      "executable": "applet-G50fq78JQ288BgP84k055ZzY",
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/VardictIntersectMutect/12",
       "input": {
-        "vcf2": {
-          "$dnanexus_link": {
-            "stage": "stage-G4fpGYjJ6XG5bvG84XGxP9kG",
-            "outputField": "mapq0_vcf"
-          }
-        },
-        "vcf2_index": {
-          "$dnanexus_link": {
-            "stage": "stage-G4fpGYjJ6XG5bvG84XGxP9kG",
-            "outputField": "mapq0_vcf_index"
-          }
-        },
-        "output_vcf_suffix": "vardict.intersect.mutect.vcf.gz",
-        "vcf1": {
+        "vcf": {
           "$dnanexus_link": {
             "stage": "stage-G4Kkb4QJ6XGKj5714KYjyvVB",
             "outputField": "vcf"
           }
         },
-        "vcf1_index": {
+        "vcf_index": {
           "$dnanexus_link": {
             "stage": "stage-G4Kkb4QJ6XGKj5714KYjyvVB",
             "outputField": "vcf_index"
+          }
+        },
+        "intersect_vcf": {
+          "$dnanexus_link": {
+            "stage": "stage-G4xz0g0JQ288JB17F8vBZkkq",
+            "outputField": "mapq0_vcf"
+          }
+        },
+        "intersect_vcf_index": {
+          "$dnanexus_link": {
+            "stage": "stage-G4xz0g0JQ288JB17F8vBZkkq",
+            "outputField": "mapq0_vcf_index"
           }
         }
       }
@@ -728,7 +727,7 @@
     {
       "id": "stage-G4KqPz0J6XGJZGB842qJVYQK",
       "name": "final_annotation",
-      "executable": "applet-G4gz9G0J6XG23Pfg4Fvq313j",
+      "executable": "applet-G50f5X8JQ283B70z4Yvp9Qf0",
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/Final_Outputs/12",
       "input": {
         "intervals": {

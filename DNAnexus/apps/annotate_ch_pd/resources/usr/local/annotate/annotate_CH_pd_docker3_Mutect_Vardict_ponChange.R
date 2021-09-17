@@ -79,7 +79,7 @@ vardict.df <- vardict.df[,!colnames(vardict.df) %in% c("OLD_MULTIALLELIC")]
 mutect.df <- mutect.df[!duplicated(mutect.df),]
 vardict.df <- vardict.df[!duplicated(vardict.df),]
 
-test <-  mutect.df[is.na(mutect.df$CSQ),]
+# test <-  mutect.df[is.na(mutect.df$CSQ),]
 ## remove blank CSQ, OTA non-coding now doing this after merge since vardict depends on mutect
 #mutect.df <- mutect.df[!is.na(mutect.df$CSQ),]
 #vardict.df <- vardict.df[!is.na(vardict.df$CSQ),]
@@ -278,8 +278,8 @@ colnames(final)[colnames(final) %in% intersection.cols.x] <- intersection
 ## remove *.y columns completely
 final <- final[,!(colnames(final) %in% intersection.cols.y)]
 
-## remove blank CSQ columns and separate
-final <- final[!is.na(final$CSQ),]
+## remove blank CSQ columns because they are non-coding and separate
+final <- final[!is.na(final$CSQ) | (!is.na(final$Vardict_calpos) & is.na(final$Mutect2_CALLER)),]
 # VEP CSQ
 ## new VEP has 96 fields
 ## new VEP with gnomADg has 106 fields

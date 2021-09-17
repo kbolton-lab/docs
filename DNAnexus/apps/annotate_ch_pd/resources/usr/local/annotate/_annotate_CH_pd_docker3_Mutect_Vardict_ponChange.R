@@ -79,7 +79,7 @@ vardict.df <- vardict.df[,!colnames(vardict.df) %in% c("OLD_MULTIALLELIC")]
 mutect.df <- mutect.df[!duplicated(mutect.df),]
 vardict.df <- vardict.df[!duplicated(vardict.df),]
 
-test <-  mutect.df[is.na(mutect.df$CSQ),]
+# test <-  mutect.df[is.na(mutect.df$CSQ),]
 ## remove blank CSQ, OTA non-coding now doing this after merge since vardict depends on mutect
 #mutect.df <- mutect.df[!is.na(mutect.df$CSQ),]
 #vardict.df <- vardict.df[!is.na(vardict.df$CSQ),]
@@ -278,12 +278,12 @@ colnames(final)[colnames(final) %in% intersection.cols.x] <- intersection
 ## remove *.y columns completely
 final <- final[,!(colnames(final) %in% intersection.cols.y)]
 
-## remove blank CSQ columns and separate
-final <- final[!is.na(final$CSQ),]
+## remove blank CSQ columns because they are non-coding and separate
+final <- final[!is.na(final$CSQ) | (!is.na(final$Vardict_calpos) & is.na(final$Mutect2_CALLER)),]
 # VEP CSQ
 ## new VEP has 96 fields
 ## new VEP with gnomADg has 106 fields
-string <- "Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|STRAND|FLAGS|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE_SELECT|MANE_PLUS_CLINICAL|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|UNIPROT_ISOFORM|REFSEQ_MATCH|SOURCE|REFSEQ_OFFSET|GIVEN_REF|USED_REF|BAM_EDIT|GENE_PHENO|SIFT|PolyPhen|DOMAINS|miRNA|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|AA_AF|EA_AF|gnomAD_AF|gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|MAX_AF|MAX_AF_POPS|CLIN_SIG|SOMATIC|PHENO|PUBMED|MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|FrameshiftSequence|WildtypeProtein|gnomADe|gnomADe_AF|gnomADe_AF_AFR|gnomADe_AF_AMR|gnomADe_AF_ASJ|gnomADe_AF_EAS|gnomADe_AF_FIN|gnomADe_AF_NFE|gnomADe_AF_OTH|gnomADe_AF_SAS|clinvar|clinvar_CLINSIGN|clinvar_PHENOTYPE|clinvar_SCORE|clinvar_RCVACC|clinvar_TESTEDINGTR|clinvar_PHENOTYPELIST|clinvar_NUMSUBMIT|clinvar_GUIDELINES"
+string <- "Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|STRAND|FLAGS|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE_SELECT|MANE_PLUS_CLINICAL|TSL|APPRIS|CCDS|ENSP|SWISSPROT|TREMBL|UNIPARC|UNIPROT_ISOFORM|REFSEQ_MATCH|SOURCE|REFSEQ_OFFSET|GIVEN_REF|USED_REF|BAM_EDIT|GENE_PHENO|SIFT|PolyPhen|DOMAINS|miRNA|HGVS_OFFSET|AF|AFR_AF|AMR_AF|EAS_AF|EUR_AF|SAS_AF|AA_AF|EA_AF|gnomAD_AF|gnomAD_AFR_AF|gnomAD_AMR_AF|gnomAD_ASJ_AF|gnomAD_EAS_AF|gnomAD_FIN_AF|gnomAD_NFE_AF|gnomAD_OTH_AF|gnomAD_SAS_AF|MAX_AF|MAX_AF_POPS|CLIN_SIG|SOMATIC|PHENO|PUBMED|MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|FrameshiftSequence|WildtypeProtein|gnomADe|gnomADe_AF|gnomADe_AF_AFR|gnomADe_AF_AMR|gnomADe_AF_ASJ|gnomADe_AF_EAS|gnomADe_AF_FIN|gnomADe_AF_NFE|gnomADe_AF_OTH|gnomADe_AF_SAS|gnomADg|gnomADg_AF|gnomADg_AF_ami|gnomADg_AF_oth|gnomADg_AF_afr|gnomADg_AF_sas|gnomADg_AF_asj|gnomADg_AF_fin|gnomADg_AF_amr|gnomADg_AF_nfe|gnomADg_AF_eas|clinvar|clinvar_CLINSIGN|clinvar_PHENOTYPE|clinvar_SCORE|clinvar_RCVACC|clinvar_TESTEDINGTR|clinvar_PHENOTYPELIST|clinvar_NUMSUBMIT|clinvar_GUIDELINES"
 CSQnames <- str_split(string, "\\|")[[1]]
 # CSQ has 91 columns, maybe we should suffix cols with VEP?
 final <- final %>% separate(CSQ, paste0(CSQnames, "_VEP"), sep="\\|", extra = "merge", fill = "right")
@@ -301,13 +301,31 @@ final[, c("Mutect2_PASS","Vardict_PASS")][is.na(final[, c("Mutect2_PASS","Vardic
 
 final.coding.gnomad.sorted <- final[with(final, order(CHROM, POS)), ]
 
-# gnomADe from 
-gnomad.col <- grep("gnomADe_AF*", colnames(final.coding.gnomad.sorted))
-final.coding.gnomad.sorted[,gnomad.col] <- apply(final.coding.gnomad.sorted[,gnomad.col], 2, as.numeric)
-final.coding.gnomad.sorted[,gnomad.col][is.na(final.coding.gnomad.sorted[,gnomad.col])] <- 0
-final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP <- as.numeric(apply(final.coding.gnomad.sorted[,gnomad.col], 1, function(x){
+# gnomAD 
+gnomAD.col <- grep("gnomAD_.*_VEP", colnames(final.coding.gnomad.sorted))
+final.coding.gnomad.sorted[,gnomAD.col] <- apply(final.coding.gnomad.sorted[,gnomAD.col], 2, as.numeric)
+## we want to know which are NA
+#final.coding.gnomad.sorted[,gnomAD.col][is.na(final.coding.gnomad.sorted[,gnomAD.col])] <- 0
+final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP <- as.numeric(apply(final.coding.gnomad.sorted[,gnomAD.col], 1, function(x){
   max(x, na.rm = T)
 }))
+# gnomADe /storage1/fs1/bga/Active/gmsroot/gc2560/core/model_data/genome-db-ensembl-gnomad/2dd4b53431674786b760adad60a29273/fixed_b38_exome.vcf.gz
+gnomADe.col <- grep("gnomADe_.*_VEP", colnames(final.coding.gnomad.sorted))
+final.coding.gnomad.sorted[,gnomADe.col] <- apply(final.coding.gnomad.sorted[,gnomADe.col], 2, as.numeric)
+## we want to know which are NA
+#final.coding.gnomad.sorted[,gnomADe.col][is.na(final.coding.gnomad.sorted[,gnomADe.col])] <- 0
+final.coding.gnomad.sorted$MAX_gnomADe_AF_VEP <- as.numeric(apply(final.coding.gnomad.sorted[,gnomADe.col], 1, function(x){
+  max(x, na.rm = T)
+}))
+# gnomADg http://ftp.ensembl.org/pub/data_files/homo_sapiens/GRCh38/variation_genotype/gnomad/r3.0/
+gnomADg.col <- grep("gnomADg_.*_VEP", colnames(final.coding.gnomad.sorted))
+final.coding.gnomad.sorted[,gnomADg.col] <- apply(final.coding.gnomad.sorted[,gnomADg.col], 2, as.numeric)
+## we want to know which are NA
+#final.coding.gnomad.sorted[,gnomADg.col][is.na(final.coding.gnomad.sorted[,gnomADg.col])] <- 0
+final.coding.gnomad.sorted$MAX_gnomADg_AF_VEP <- as.numeric(apply(final.coding.gnomad.sorted[,gnomADg.col], 1, function(x){
+  max(x, na.rm = T)
+}))
+
 
 getVAFs <- function(x) {
   mutect_VAF <- grep("Mutect2_gt_AF", colnames(x))
@@ -316,7 +334,12 @@ getVAFs <- function(x) {
   VAFS
 }
 #test <- final.coding.gnomad.sorted[final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP > 0.0007,]
-final.coding.gnomad.sorted$gnomAD_MAX.Stringent.0007 <- final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP < 0.0007
+final.coding.gnomad.sorted$gnomAD_MAX.Stringent.0007 <- (final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP < 0.0007 &
+                                                           final.coding.gnomad.sorted$MAX_gnomADe_AF_VEP < 0.0007 &
+                                                           final.coding.gnomad.sorted$MAX_gnomADg_AF_VEP < 0.0007)
+final.coding.gnomad.sorted$gnomAD_MAX.lessStringent.0007 <- (final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP < 0.0007 |
+                                                           final.coding.gnomad.sorted$MAX_gnomADe_AF_VEP < 0.0007 |
+                                                           final.coding.gnomad.sorted$MAX_gnomADg_AF_VEP < 0.0007)
 
 #########################################################################################################
 # blacklist, segmental duplications, simple tandem repeatts, and masked repeat regions
@@ -629,7 +652,15 @@ annotate.PD <- function(x) {
   }
 
   ch_my_variants = ch_my_variants %>% dplyr::select(source, var_key, ch_my_pd) %>% unique()
-  ch_my_variants <- aggregate(source ~ var_key + ch_my_pd, data = ch_my_variants, FUN = paste, collapse = ",")
+  tryCatch(
+    expr = {
+      ch_my_variants <- aggregate(source ~ var_key + ch_my_pd, data = ch_my_variants, FUN = paste, collapse = ",")
+    },
+    error = function(e){ 
+      message(e)
+    }
+  )
+  ## easier to just not return anything from TC and call this below it
   MUTS = left_join(MUTS, ch_my_variants, by="var_key")
   MUTS$ch_my_pd = fillna(MUTS$ch_my_pd, 0)
   
@@ -699,8 +730,11 @@ annotate.PD <- function(x) {
 final.passed$Mutect2_PON_2AT2_percent <- fillna(final.passed$Mutect2_PON_2AT2_percent, 0)
 final.passed$Vardict_PON_2AT2_percent <- fillna(final.passed$Vardict_PON_2AT2_percent, 0)
 
+## let's look at 
+    # gnomAD_MAX.Stringent.0007, gnomAD_MAX.lessStringent.0007, 
+    # MAX_gnomAD_AF_VEP, MAX_gnomADe_AF_VEP, MAX_gnomADg_AF_VEP
 final.passed$passed_everything <- (!final.passed$Vardict_PON_2AT2_percent &
-                                     !final.passed$Mutect2_PON_2AT2_percent &&
+                                     !final.passed$Mutect2_PON_2AT2_percent &
                                      final.passed$alt_strand_counts_min_2_callers &
                                      final.passed$min.under.0.35 &
                                      final.passed$max.over.0.02 &
