@@ -418,7 +418,7 @@
     {
       "id": "stage-G4Kkb4QJ6XGKj5714KYjyvVB",
       "name": "vardict",
-      "executable": "applet-G4gx7j0J6XG16Fg353pYP32v",
+      "executable": "applet-G513XZ8JQ28Gkfy251GG3FYq",
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/VardictJava/Transplant",
       "input": {
         "bed": {
@@ -455,7 +455,8 @@
     },
     {
       "id": "stage-G4xz6gQJQ28JqVq0FZzPq571",
-      "executable": "applet-G4xz7j0JQ286fq34GJ7kgV5j",
+      "name": "vardict_pon2at2percent_final",
+      "executable": "applet-G519x1QJQ28619194gX650vV",
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/VardictIntersectMutect/Transplant",
       "input": {
         "vcf": {
@@ -494,7 +495,7 @@
     {
       "id": "stage-G4KqPz0J6XGJZGB842qJVYQK",
       "name": "final_annotation_and_declutter",
-      "executable": "applet-G4xyvX0JQ282Jg3k61bFKVJ6",
+      "executable": "applet-G51q928JQ280fVjfJjp7V9yJ",
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/Final_Outputs/Transplant",
       "input": {
         "intervals": {

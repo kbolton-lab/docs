@@ -31,8 +31,8 @@ main() {
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/mapq0:/usr/local/mapq0 -w /home/dnanexus kboltonlab/bst \
         /bin/bash /usr/local/mapq0/mapq0_vcf_filter_samtools.sh "$vcf_name" "$tumor_bam_name" "$exclude_vcf_name" $threshold
 
-    mapq0_vcf=$(dx upload $eid_nameroot.mapq0.soft-filtered.gz --brief)
-    mapq0_vcf_index=$(dx upload $eid_nameroot.mapq0.soft-filtered.gz.tbi --brief)
+    mapq0_vcf=$(dx upload $eid_nameroot.mapq0.soft-filtered.vcf.gz --brief)
+    mapq0_vcf_index=$(dx upload $eid_nameroot.mapq0.soft-filtered.vcf.gz.tbi --brief)
 
     dx-jobutil-add-output mapq0_vcf "$mapq0_vcf" --class=file
     dx-jobutil-add-output mapq0_vcf_index "$mapq0_vcf_index" --class=file
