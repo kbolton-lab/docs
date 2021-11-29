@@ -123,8 +123,8 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4gy0jQJ6XGPpb7Q4GpGZX1z" 
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5j80zjJQ289P281KVq12VqP" 
         }
       },
       "patterns": [
@@ -139,8 +139,8 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G51q1z0J6XGFgfY84jXVyvpf"
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5b2Kj8JQ281jkJx6y0XzQVB"
         }
       },
       "patterns": [
@@ -228,8 +228,8 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4KjGZQJ6XGP32PJ704VqBX4"
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5b4yJQJQ283kZJpJzz40YqB"
         }
       },
       "help": "R installed"
@@ -260,7 +260,7 @@
       "label": "mutect",
       "class": "string",
       "optional": true,
-      "default": "mutect_single",
+      "default": "mutect_single_orientation",
       "patterns": [
         "*"
       ],
@@ -274,6 +274,96 @@
       "default": "vardict",
       "patterns": [
         "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "cosmic_files",
+      "class": "array:file",
+      "optional": false,
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bolton_bick_vars",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5bq3VQJQ28GVYVBFV2XqJz2"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mut2_bick",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G67Z978JQ281g2jF4QbjvPpF"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mut2_kelly",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G67Z9B8JQ287G3Y68g9X4PKJ"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    { 
+      "name": "muts2",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G67YxZ0JQ287G3Y68g9X4K4p"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "col_order",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5qVzQ8JQ2883v6GFfVQb7g9"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
       ],
       "help": ""
     }

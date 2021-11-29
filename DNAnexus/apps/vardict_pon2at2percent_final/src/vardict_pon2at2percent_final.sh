@@ -4,7 +4,7 @@
 
 main() {
     set -exou pipefail
-    wget https://raw.githubusercontent.com/griffithlab/pVACtools/master/tools/pvacseq/VEP_plugins/Wildtype.pm
+    #wget https://raw.githubusercontent.com/griffithlab/pVACtools/master/tools/pvacseq/VEP_plugins/Wildtype.pm
     echo "Value of vcf: '$vcf'"
     ## the mutect vcf
     echo "Value of vcf: '$intersect_vcf'"
@@ -54,11 +54,12 @@ main() {
     bcftools filter -i 'INFO/calpos~".*"' complex.variant.query.vcf.gz -Oz -o complex.only.variant.query.vcf.gz && /usr/bin/tabix complex.only.variant.query.vcf.gz
 
     docker load -i $dockerimage_vep_path
+
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/vep \
         /bin/bash -c "/opt/vep/src/ensembl-vep/vep \
             --format vcf \
             -i complex.only.variant.query.vcf.gz \
-            --fork 4 \
+            --fork $fork \
             --terms SO \
             --transcript_version \
             --symbol \
@@ -68,23 +69,48 @@ main() {
             --fasta $reference_path \
             --dir /opt/vep/.vep/ \
             --synonyms $synonyms_path \
-            --sift p \
-            --polyphen p \
-            --coding_only \
-            --pick \
             --plugin Frameshift \
             --plugin Wildtype \
-            --everything 1 \
             --assembly GRCh38 \
             --species homo_sapiens \
             --merged \
-            --check_existing \
-            --buffer_size 1000 \
-            --af_gnomad \
+            $additional_args \
             --custom $gnomad_file_path,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
             --custom $gnomad_V3_path,gnomADg,vcf,exact,1,AF,AF_ami,AF_oth,AF_afr,AF_sas,AF_asj,AF_fin,AF_amr,AF_nfe,AF_eas \
             --custom $clinvar_file_path,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
             --force_overwrite && bgzip complex.only.variant.query.vep.annotated.vcf && tabix complex.only.variant.query.vep.annotated.vcf.gz"
+
+    # docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/vep \
+    #     /bin/bash -c "/opt/vep/src/ensembl-vep/vep \
+    #         --format vcf \
+    #         -i complex.only.variant.query.vcf.gz \
+    #         --fork 4 \
+    #         --terms SO \
+    #         --transcript_version \
+    #         --symbol \
+    #         --vcf \
+    #         --database \
+    #         -o complex.only.variant.query.vep.annotated.vcf \
+    #         --fasta $reference_path \
+    #         --dir /opt/vep/.vep/ \
+    #         --synonyms $synonyms_path \
+    #         --sift p \
+    #         --polyphen p \
+    #         --coding_only \
+    #         --pick \
+    #         --plugin Frameshift \
+    #         --plugin Wildtype \
+    #         --everything 1 \
+    #         --assembly GRCh38 \
+    #         --species homo_sapiens \
+    #         --merged \
+    #         --check_existing \
+    #         --buffer_size 1000 \
+    #         --af_gnomad \
+    #         --custom $gnomad_file_path,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
+    #         --custom $gnomad_V3_path,gnomADg,vcf,exact,1,AF,AF_ami,AF_oth,AF_afr,AF_sas,AF_asj,AF_fin,AF_amr,AF_nfe,AF_eas \
+    #         --custom $clinvar_file_path,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
+    #         --force_overwrite && bgzip complex.only.variant.query.vep.annotated.vcf && tabix complex.only.variant.query.vep.annotated.vcf.gz"
 
 
     /usr/bin/bcftools isec -n+2 -w1 complex.variant.query.vcf.gz ${intersect_vcf_path} -Oz -o $eid_nameroot.vardict.intersect.mutect.vcf.gz && /usr/bin/tabix $eid_nameroot.vardict.intersect.mutect.vcf.gz

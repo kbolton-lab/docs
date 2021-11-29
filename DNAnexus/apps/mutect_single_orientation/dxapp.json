@@ -1,0 +1,155 @@
+{
+  "name": "mutect_single_orientation",
+  "title": "Mutect2 Single",
+  "summary": "Run GATK Mutect2 and FilterMutectCalls",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "reference",
+      "label": "reference assembly fasta",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa",
+        "*.fasta"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_index",
+      "label": "reference assembly index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_dict",
+      "label": "reference assembly dict",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.dict"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_bam",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_bai",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bai",
+        "*.bam.bai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "normal_bam",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "normal_bai",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam.bai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "interval_list",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.interval_list"
+      ],
+      "help": ""
+    },
+    {
+      "name": "dockerimage_gatk",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G464PjQJ6XGK5YYg78FP1z1k"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "output_name",
+      "label": "output_name",
+      "class": "string",
+      "optional": true,
+      "default": "mutect.filtered.vcf.gz",
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "vcf",
+      "class": "file",
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_index",
+      "class": "file",
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 2
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/mutect_single_orientation.sh",
+    "distribution": "Ubuntu",
+    "execDepends":[
+      {"name": "bcftools"},
+      {"name": "samtools"},
+      {"name": "tabix"}
+    ],
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "allProjects": "VIEW"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem3_ssd1_v2_x4"
+        }
+      }
+    }
+  }
+}

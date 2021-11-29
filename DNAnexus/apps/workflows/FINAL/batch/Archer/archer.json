@@ -1,0 +1,14 @@
+{
+    "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G58XqfjJQ289V0X10Yv18Fxy"
+        }
+    },
+    "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam_index": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G58XqpQJQ28762b42QXXXpZF"
+        }
+    }
+}

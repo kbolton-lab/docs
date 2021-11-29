@@ -1,0 +1,15 @@
+{
+    "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-Fyby3JjJGGV5j06Y3jy23XkF"
+        }
+    },
+    "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-Fyby320JGGV9b4843jZpX434"
+        }
+    },
+    "stage-G4KqPz0J6XGJZGB842qJVYQK.project": "project-G4qpk1jJQ285yvbXPFZKXkk8"
+}

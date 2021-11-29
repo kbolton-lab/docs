@@ -13,15 +13,16 @@
     },
     "vcf": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4KbGy0J6XGFJJfj6xkkbbY0"
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5y8ZP8JQ289826f6X9P37gq"
         }
     },
     "vcf_index": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4KbGyjJ6XG7fjz7PVZ3GGZk"
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5y8ZPQJQ283pKB673g0JbF4"
         }
-    }
-   
+    },
+    "caller": "germline_mane_canonical_length_rank_biotype",
+    "additional_args": "--sift p --polyphen p --pick --pick_order mane,canonical,length,rank,biotype,ccds,appris,tsl --everything 1 --merged --check_existing --buffer_size 1000 --af_gnomad"
 }

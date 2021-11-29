@@ -1,0 +1,29 @@
+{
+    "reference": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        }
+    },
+    "reference_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        }
+    },
+    "vcf": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5XG298JQ28PZ9bp8kjQ0YB7"
+        }
+    },
+    "vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5XG29QJQ287155y4kqvpf19"
+        }
+    },
+    "additional_args": "--sift p --polyphen p --pick --pick_order canonical,mane,ccds,rank,appris,tsl,biotype,length --everything 1 --merged --check_existing --buffer_size 1000 --af_gnomad",
+    "caller": "brian.pick_order.mane.ccds.rank"
+   
+}

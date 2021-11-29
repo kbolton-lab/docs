@@ -30,10 +30,11 @@ main() {
     dx-download-all-inputs --parallel
 
     analysis=$(dx describe $DX_JOB_ID --json | jq -r .rootExecution)
-    bqsr_job=$(dx describe $analysis --json | jq -r '.stages[] | .execution | select( .name == "bqsr_spark" ) | .id')
+    bqsr_job=$(dx describe $analysis --json | jq --arg bqsr_spark "$bqsr_spark" -r '.stages[] | .execution | select( .name == $bqsr_spark ) | .id')
     # mutect and vardict depend
-    mutect_job=$(dx describe $analysis --json | jq -r '.stages[] | .execution | select( .name == "mutect_single" ) | .id')
-    vardict_job=$(dx describe $analysis --json | jq -r '.stages[] | .execution | select( .name == "vardict") | .id')
+    
+    mutect_job=$(dx describe $analysis --json | jq --arg mutect "$mutect" -r '.stages[] | .execution | select( .name == $mutect ) | .id')
+    vardict_job=$(dx describe $analysis --json | jq --arg vardict "$vardict" -r '.stages[] | .execution | select( .name == $vardict) | .id')
 
     bqsr_state=$(dx describe $bqsr_job --json | jq -r '.state')
     bqsr_depends=$(dx describe $bqsr_job --json | jq -r '.dependsOn' | jq length)

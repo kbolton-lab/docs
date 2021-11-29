@@ -1,0 +1,225 @@
+{
+  "name": "vep3g",
+  "title": "VEP with Gnomad 3.0",
+  "summary": "runs vep with frameshift, wildtype and dbNSFP plugins",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa.fai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "synonyms",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G46qvVjJ6XG7GYy908bk63Xb"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "gnomad_file",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G46qqJ8J6XGKP0v42VYfBFxK"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "gnomad_file_index",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48jkGQJ6XGB107g64pfBB26"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "gnomad_V3",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4fkXKjJ6XG5bvG84XGxP97b"
+        }
+      },
+      "patterns": [
+        "*.vcf.bgz",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "gnomad_V3_index",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4fkYJjJ6XG0Kg1V37pv39K5"
+        }
+      },
+      "patterns": [
+        "*.vcf.bgz.tbi",
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    },
+    {
+      "name": "clinvar_file",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G46qv30J6XGFYkX6Kv9j7gG5"
+        }
+      }, 
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "clinvar_file_index",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48jkj0J6XG8ZYjZJp3GB9JK"
+        }
+      }, 
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "species",
+      "class": "string",
+      "optional": true,
+      "default": "homo_sapiens",
+      "help": ""
+    },
+    {
+      "name": "fork",
+      "class": "string",
+      "optional": true,
+      "default": "8",
+      "help": ""
+    },
+    {
+      "name": "caller",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "dockerimage_vep",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Bj59QJ6XG9zg6Q4fBvjV3p"
+        }
+      },
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "annotated_vcf",
+      "class": "file",
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "annotated_vcf_index",
+      "class": "file",
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/vep3g.sh",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem3_ssd1_v2_x8"
+        }
+      }
+    }
+  }
+}

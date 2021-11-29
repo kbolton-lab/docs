@@ -170,6 +170,13 @@
       "help": ""
     },
     {
+      "name": "additional_args",
+      "class": "string",
+      "optional": true,
+      "default": "--sift p --polyphen p --pick --pick_order canonical,rank,mane,ccds,appris,tsl,biotype,length --everything 1 --merged --check_existing --buffer_size 1000 --af_gnomad",
+      "help": "" 
+    },
+    {
       "name": "dockerimage_vep",
       "class": "file",
       "optional": true,

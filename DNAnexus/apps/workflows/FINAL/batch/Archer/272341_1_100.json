@@ -1,0 +1,38 @@
+{
+    "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5kjKYjJQ28J2K31Ky0kX9pv"
+        }
+    },
+    "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam_index": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5kjKb0JQ285Kz12K0gZjgqX"
+        }
+    },
+    "stage-G4KkV88J6XG340022vxq916x.normal_bam": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5p8PZjJ4v6PB60k24vFKBPZ"
+        }
+    },
+    "stage-G4KkV88J6XG340022vxq916x.normal_bai": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5p8PbQJ4v6PxX7q242FjpyX"
+        }
+    },
+    "stage-G4Kkb4QJ6XGKj5714KYjyvVB.normal_bam": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5p8PZjJ4v6PB60k24vFKBPZ"
+        }
+    },
+    "stage-G4Kkb4QJ6XGKj5714KYjyvVB.normal_bai": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5p8PbQJ4v6PxX7q242FjpyX"
+        }
+    }
+}

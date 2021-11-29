@@ -30,3 +30,4 @@ DNAnexus/apps/workflows/TEST_RM_BQSR_BAM/*
 */resources/gatk
 DNAnexus/apps/workflows/FINAL/batch/FINAL_Transplant/transplant.json
 dx_batch.*.tsv
+DNAnexus/apps/workflows/FINAL/batch/FINAL_Transplant_test/transplant.json

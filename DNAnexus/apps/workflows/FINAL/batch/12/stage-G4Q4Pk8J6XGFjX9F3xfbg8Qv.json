@@ -1,0 +1,273 @@
+{
+  "id": "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv",
+  "execution": {
+    "id": "job-G53J660JQ285bz7Q83kJKF6v",
+    "region": "aws:eu-west-2",
+    "name": "bqsr_spark",
+    "tags": [],
+    "properties": {},
+    "executable": "applet-G4Z548jJ6XG3BZbKK9zxz5By",
+    "executableName": "bqsr_spark",
+    "class": "job",
+    "created": 1632031512743,
+    "modified": 1632032616252,
+    "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+    "billTo": "org-ukb_wallet_891f1ef266e",
+    "costLimit": null,
+    "invoiceMetadata": null,
+    "folder": "/CH_Exome/Workflow_Outputs/FINAL/BQSR/12",
+    "parentJob": null,
+    "originJob": "job-G53J660JQ285bz7Q83kJKF6v",
+    "parentAnalysis": "analysis-G53J660JQ285bz7Q83kJKF6j",
+    "analysis": "analysis-G53J660JQ285bz7Q83kJKF6j",
+    "stage": "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv",
+    "rootExecution": "analysis-G53J660JQ285bz7Q83kJKF6j",
+    "state": "failed",
+    "function": "main",
+    "workspace": "container-G53J67jJkxq53K626Jxxpf0b",
+    "launchedBy": "user-bolton",
+    "detachedFrom": null,
+    "priority": "low",
+    "workerReuseDeadlineRunTime": {
+      "state": "reuse-off",
+      "waitTime": -1,
+      "at": -1
+    },
+    "dependsOn": [],
+    "failureCounts": {},
+    "failureReason": "UnresponsiveWorker",
+    "failureMessage": "The machine running the job became unresponsive",
+    "failureFrom": {
+      "id": "job-G53J660JQ285bz7Q83kJKF6v",
+      "name": "bqsr_spark",
+      "function": "main",
+      "stage": "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv",
+      "analysis": "analysis-G53J660JQ285bz7Q83kJKF6j",
+      "executable": "applet-G4Z548jJ6XG3BZbKK9zxz5By",
+      "executableName": "bqsr_spark",
+      "failureReason": "UnresponsiveWorker",
+      "failureMessage": "The machine running the job became unresponsive",
+      "analysisName": null
+    },
+    "stateTransitions": [
+      {
+        "newState": "runnable",
+        "setAt": 1632031520030
+      },
+      {
+        "newState": "running",
+        "setAt": 1632031598565
+      },
+      {
+        "newState": "failed",
+        "setAt": 1632032612820
+      }
+    ],
+    "applet": "applet-G4Z548jJ6XG3BZbKK9zxz5By",
+    "singleContext": false,
+    "ignoreReuse": false,
+    "httpsApp": {
+      "ports": [
+        8081
+      ],
+      "shared_access": "NONE",
+      "dns": {
+        "url": "https://job-G53J660JQ285bz7Q83kJKF6v.dnanexus.cloud"
+      },
+      "enabled": true,
+      "loginURL": "https://ukbiobank.dnanexus.com/login"
+    },
+    "details": {},
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem3_ssd1_v2_x16",
+        "clusterSpec": {
+          "type": "dxspark",
+          "version": "2.4.4",
+          "initialInstanceCount": 1,
+          "ports": "9000, 9500, 9700-9750, 40000-55000"
+        }
+      }
+    },
+    "executionPolicy": {
+      "restartOn": {
+        "UnresponsiveWorker": 2
+      }
+    },
+    "instanceType": "mem3_ssd1_v2_x16",
+    "finalPriority": "low",
+    "networkAccess": [
+      "*"
+    ],
+    "runInput": {
+      "reference": {
+        "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+      },
+      "reference_index": {
+        "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+      },
+      "reference_dict": {
+        "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+      },
+      "known_sites": [
+        {
+          "$dnanexus_link": "file-G3zPJg0J6XG8j2fy4XKPF8pZ"
+        },
+        {
+          "$dnanexus_link": "file-G3zPJV8J6XG5Y1JBPjgFbQQf"
+        },
+        {
+          "$dnanexus_link": "file-G3zPGgQJ6XGKy6V90xB23Gg9"
+        }
+      ],
+      "known_sites_index": [
+        {
+          "$dnanexus_link": "file-G4KgzyjJ6XGP2F6B9Gpj6z94"
+        },
+        {
+          "$dnanexus_link": "file-G4Kj1kQJ6XG4z8J45x2fP49b"
+        },
+        {
+          "$dnanexus_link": "file-G3zPQyQJ6XG448K8Kp7Xq3kY"
+        }
+      ],
+      "bam": {
+        "$dnanexus_link": {
+          "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+          "id": "file-Fybx868JQqgKgz4q3jyq4B9j"
+        }
+      },
+      "bam_index": {
+        "$dnanexus_link": {
+          "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+          "id": "file-Fybx868JQqgG9ky93jF7Y4J2"
+        }
+      }
+    },
+    "originalInput": {
+      "reference": {
+        "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+      },
+      "reference_index": {
+        "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+      },
+      "reference_dict": {
+        "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+      },
+      "known_sites": [
+        {
+          "$dnanexus_link": "file-G3zPJg0J6XG8j2fy4XKPF8pZ"
+        },
+        {
+          "$dnanexus_link": "file-G3zPJV8J6XG5Y1JBPjgFbQQf"
+        },
+        {
+          "$dnanexus_link": "file-G3zPGgQJ6XGKy6V90xB23Gg9"
+        }
+      ],
+      "known_sites_index": [
+        {
+          "$dnanexus_link": "file-G4KgzyjJ6XGP2F6B9Gpj6z94"
+        },
+        {
+          "$dnanexus_link": "file-G4Kj1kQJ6XG4z8J45x2fP49b"
+        },
+        {
+          "$dnanexus_link": "file-G3zPQyQJ6XG448K8Kp7Xq3kY"
+        }
+      ],
+      "bam": {
+        "$dnanexus_link": {
+          "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+          "id": "file-Fybx868JQqgKgz4q3jyq4B9j"
+        }
+      },
+      "bam_index": {
+        "$dnanexus_link": {
+          "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+          "id": "file-Fybx868JQqgG9ky93jF7Y4J2"
+        }
+      },
+      "dockerimage_gatk": {
+        "$dnanexus_link": {
+          "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+          "id": "file-G464PjQJ6XGK5YYg78FP1z1k"
+        }
+      }
+    },
+    "input": {
+      "reference": {
+        "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+      },
+      "reference_index": {
+        "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+      },
+      "reference_dict": {
+        "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+      },
+      "known_sites": [
+        {
+          "$dnanexus_link": "file-G3zPJg0J6XG8j2fy4XKPF8pZ"
+        },
+        {
+          "$dnanexus_link": "file-G3zPJV8J6XG5Y1JBPjgFbQQf"
+        },
+        {
+          "$dnanexus_link": "file-G3zPGgQJ6XGKy6V90xB23Gg9"
+        }
+      ],
+      "known_sites_index": [
+        {
+          "$dnanexus_link": "file-G4KgzyjJ6XGP2F6B9Gpj6z94"
+        },
+        {
+          "$dnanexus_link": "file-G4Kj1kQJ6XG4z8J45x2fP49b"
+        },
+        {
+          "$dnanexus_link": "file-G3zPQyQJ6XG448K8Kp7Xq3kY"
+        }
+      ],
+      "bam": {
+        "$dnanexus_link": "file-Fybx868JQqgKgz4q3jyq4B9j"
+      },
+      "bam_index": {
+        "$dnanexus_link": "file-Fybx868JQqgG9ky93jF7Y4J2"
+      },
+      "dockerimage_gatk": {
+        "$dnanexus_link": "file-G464PjQJ6XGK5YYg78FP1z1k"
+      }
+    },
+    "output": null,
+    "host": "ec2-18-170-216-149.eu-west-2.compute.amazonaws.com",
+    "debug": {},
+    "startedRunning": 1632031598565,
+    "stoppedRunning": 1632032078600,
+    "delayWorkspaceDestruction": false,
+    "clusterID": "cluster-G53J660JQ285bz7Q83kJKF6q",
+    "clusterSpec": {
+      "type": "dxspark",
+      "version": "2.4.4",
+      "initialInstanceCount": 1,
+      "ports": "9000, 9500, 9700-9750, 40000-55000"
+    },
+    "isFree": true,
+    "totalPrice": 0,
+    "totalEgress": {},
+    "egressComputedAt": 1632032616225,
+    "priceComputedAt": 1632032616225,
+    "currency": {
+      "dxCode": 1,
+      "code": "GBP",
+      "symbol": "£",
+      "symbolPosition": "left",
+      "decimalSymbol": ".",
+      "groupingSymbol": ","
+    },
+    "egressReport": {
+      "regionLocalEgress": 0,
+      "internetEgress": 2537,
+      "interRegionEgress": 1999
+    },
+    "timeout": 3600000
+  }
+}

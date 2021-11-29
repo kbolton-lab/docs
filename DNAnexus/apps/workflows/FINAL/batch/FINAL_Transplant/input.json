@@ -1,0 +1,17 @@
+{
+    "intervals": {
+          "$dnanexus_link": "file-G3jP4X8J6XGGQgpz3F4bfQqY"
+        },
+    "mutect_vcf": {
+        "$dnanexus_link": {
+        "stage": "stage-G4KpvP8J6XGGY19F6Vpxz7pJ",
+        "outputField": "annotated_vcf"
+        }
+    },
+    "vardict_vcf": {
+        "$dnanexus_link": {
+        "stage": "stage-G4xz6gQJQ28JqVq0FZzPq571",
+        "outputField": "annotated_pon2_vcf"
+        }
+    }
+}

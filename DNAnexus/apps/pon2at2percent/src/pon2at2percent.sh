@@ -25,7 +25,7 @@ main() {
     export name="$eid_nameroot"."$caller".final.annotated.vcf.gz
 
     printf "##INFO=<ID=PON_2AT2_percent,Number=1,Type=Integer,Description=\"If 2 PoN samples have variant at >=2 percent\">\n" > pon2.header;
-    /usr/bin/bcftools query -f "%CHROM\t%POS\t%REF\t%REF\t1\n" $vcf2PON_path > normal2.txt
+    /usr/bin/bcftools query -f "%CHROM\t%POS\t%REF\t%ALT\t1\n" $vcf2PON_path > normal2.txt
     /usr/bin/bgzip -f normal2.txt
     /usr/bin/tabix -f -s1 -b2 -e2 normal2.txt.gz
     /usr/bin/bcftools annotate --threads 4 -a normal2.txt.gz -h pon2.header -c CHROM,POS,REF,ALT,PON_2AT2_percent $vcf_path -Oz -o $name

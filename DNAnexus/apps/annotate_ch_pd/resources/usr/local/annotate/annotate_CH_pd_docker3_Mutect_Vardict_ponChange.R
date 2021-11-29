@@ -279,7 +279,7 @@ colnames(final)[colnames(final) %in% intersection.cols.x] <- intersection
 final <- final[,!(colnames(final) %in% intersection.cols.y)]
 
 ## remove blank CSQ columns because they are non-coding and separate
-final <- final[!is.na(final$CSQ) | (!is.na(final$Vardict_calpos) & is.na(final$Mutect2_CALLER)),]
+final <- final[!is.na(final$CSQ),]
 # VEP CSQ
 ## new VEP has 96 fields
 ## new VEP with gnomADg has 106 fields
@@ -510,6 +510,77 @@ final.passed$alt_strand_counts_min_2_callers <- apply(final.passed[,c("Mutect2_S
 final.passed$alt_strand_counts_min_1_caller_only <- apply(final.passed[,c("Mutect2_SB","Vardict_SB")],
                                                           1,
                                                           function(x) sum(x, na.rm = T)>=1)
+
+#####
+## REDO Annotate_PD
+# source("hotspots_final.R")
+getVAFs <- function(x) {
+  mutect_VAF <- grep("Mutect2_gt_AF", colnames(x))
+  vardict_VAF <- grep("Vardict_gt_AF", colnames(x))
+  VAFS <- c(mutect_VAF, vardict_VAF)
+  VAFS
+}
+AminoAcids = c('Cys'= 'C', 'Asp'= 'D', 'Ser'= 'S', 'Gln'= 'Q', 'Lys'= 'K',
+               'Ile'= 'I', 'Pro'= 'P', 'Thr'= 'T', 'Phe'= 'F', 'Asn'= 'N',
+               'Gly'= 'G', 'His'= 'H', 'Leu'= 'L', 'Arg'= 'R', 'Trp'= 'W',
+               'Ala'= 'A', 'Val'='V', 'Glu'= 'E', 'Tyr'= 'Y', 'Met'= 'M',
+               '%3D'='=', '='='=')
+
+final.test <- read.table("/Users/brian/Bolton/UKBB/results/12/update/transplant_match/match/1218352_23153_0_0.final.tsv", 
+                         sep = "\t", header = T, comment.char = "")
+final.test <- final.test[,c(1:249,263)]
+final.test$max.under.0.35 <- apply(final.test[,getVAFs(final.test)],1,function(x) max(x, na.rm = T) < 0.35)
+vardict.pon2 <- read.table("/Users/brian/apps/vardict_pon2at2percent_final/resources/usr/local/test/vardict.2N.tsv", 
+                           sep = "\t", header = F, quote = "", comment.char = "")
+colnames(vardict.pon2) <- c("CHROM","POS","REF","ALT")
+vardict.pon2$Vardict_PON_2AT2_percent <- 1
+mutect.pon2 <- read.table("/Users/brian/Bolton/CWL_TESTS/mutect2.merged.SB.2N.tsv", 
+                           sep = "\t", header = F, quote = "", comment.char = "")
+colnames(mutect.pon2) <- c("CHROM","POS","REF","ALT")
+mutect.pon2$Mutect2_PON_2AT2_percent <- 1
+
+final.test <- final.test %>%
+  dplyr::select(-c(Mutect2_PON_2AT2_percent,Vardict_PON_2AT2_percent)) %>% 
+  left_join(mutect.pon2 %>% 
+              dplyr::select(CHROM, POS, REF, ALT, Mutect2_PON_2AT2_percent),
+            by = c("CHROM"="CHROM", "POS"="POS", "REF"="REF", "ALT"="ALT")) %>%
+  left_join(vardict.pon2 %>% 
+              dplyr::select(CHROM, POS, REF, ALT, Vardict_PON_2AT2_percent),
+            by = c("CHROM"="CHROM", "POS"="POS", "REF"="REF", "ALT"="ALT"))
+
+final.test$Mutect2_PON_2AT2_percent <- fillna(final.test$Mutect2_PON_2AT2_percent, 0)
+final.test$Vardict_PON_2AT2_percent <- fillna(final.test$Vardict_PON_2AT2_percent, 0)
+
+final.test$AAchange <- gsub("(.*p\\.)(.*)", "\\2", final.test$HGVSp)
+for (i in 1:length(AminoAcids)) {
+  final.test$AAchange <- gsub(names(AminoAcids)[i], AminoAcids[i], final.test$AAchange)
+}
+final.test$gene_loci_p <- paste(final.test$SYMBOL_VEP,
+                                paste0(sapply(final.test$AAchange, function(x) str_split(x, "[0-9]+", n=2)[[1]][1]),
+                                       as.numeric(str_extract(final.test$AAchange, "\\d+"))),
+                                sep = "_")
+final.test$gene_loci_c <- paste(final.test$SYMBOL_VEP,
+                                gsub(".*:", "", final.test$HGVSc),
+                                sep = "_")
+final.test$gene_loci_vep <- ifelse(is.na(final.test$gene_loci_p),final.test$gene_loci_c,final.test$gene_loci_p)
+final.test$key <- with(final.test, paste(CHROM,POS,REF,ALT,sep = ":"))
+final.test$gene_aachange <- with(final.test, paste(SYMBOL_VEP, AAchange, sep = "_"))
+
+vars <- read.table("~/Bolton/data/bick.bolton.vars.txt",sep = "\t", header = T, comment.char = "")
+vars$gene_aachange <- paste(vars$SYMBOL_VEP, vars$AAchange2, sep = "_")
+
+
+library(sqldf)
+final.test <- sqldf("SELECT l.*, r.`n.loci.vep`
+            FROM `final.test` as l
+            LEFT JOIN `vars` as r
+            on l.key = r.key OR l.gene_loci_vep = r.gene_loci_vep")
+final.test <- final.test[!duplicated(final.test),]
+final.test <- sqldf("SELECT l.*, r.`n.HGVSp`
+            FROM `final.test` as l
+            LEFT JOIN `vars` as r
+            on l.gene_aachange = r.gene_aachange")
+
 ################################################
 ### Annotate PD
 
@@ -522,6 +593,7 @@ AminoAcids = c('Cys'= 'C', 'Asp'= 'D', 'Ser'= 'S', 'Gln'= 'Q', 'Lys'= 'K',
 annotate.PD <- function(x) {
 
   MUTS <- x
+  MUTS <- final.test
   translate_consequence = c(
     "frameshift_variant" = "Frame_Shift_", 
     "stop_gained" = "Nonsense_Mutation", 
@@ -529,7 +601,7 @@ annotate.PD <- function(x) {
     "inframe_deletion" = "In_Frame_Del", 
     "inframe_insertion" = "In_Frame_Ins",
     "synonymous_variant" = "synonymous_variant",
-    "missense_variant" = "Missense",
+    "missense_variant" = "Missense_Mutation",
     "intron_variant" = "intron_variant",
     "splice_donor_variant" = "Splice_Site",
     "coding_sequence_variant" = "coding_sequence_variant",
@@ -549,18 +621,23 @@ annotate.PD <- function(x) {
     mutate(VariantClass = translate_consequence[str_split(Consequence_VEP,"&",simplify = TRUE)[,1]]) %>%
     mutate(VariantClass = ifelse(VariantClass == 'Frame_Shift_', paste0('Frame_Shift_', translate_type[VARIANT_CLASS_VEP]), VariantClass))
   
-  MUTS$HGVSp_VEP <- gsub("(.*:p\\.)(.*)(fs.*)", "\\2", MUTS$HGVSp_VEP)
-  MUTS$HGVSp_VEP <- gsub("(.*:p\\.)(.*)", "\\2", MUTS$HGVSp_VEP)
-  MUTS$HGVSp_VEP <- gsub("del", "", MUTS$HGVSp_VEP)
-  MUTS$HGVSp_VEP <- gsub("%3D", "=", MUTS$HGVSp_VEP) 
-  MUTS <- MUTS[,c("CHROM","POS","REF","ALT","SYMBOL_VEP","HGVSp_VEP","VariantClass","SAMPLE","EXON_VEP")]
+  # MUTS$HGVSp_VEP <- gsub("(.*:p\\.)(.*)(fs.*)", "\\2", MUTS$HGVSp_VEP)
+  # MUTS$HGVSp_VEP <- gsub("(.*:p\\.)(.*)", "\\2", MUTS$HGVSp_VEP)
+  # MUTS$HGVSp_VEP <- gsub("del", "", MUTS$HGVSp_VEP)
+  # MUTS$HGVSp_VEP <- gsub("%3D", "=", MUTS$HGVSp_VEP) 
+  # MUTS$HGVSp_VEP3 <- gsub("(.*p\\.)(.*)", "\\2", MUTS$HGVSp_VEP3)
+  # MUTS <- MUTS[,c("CHROM","POS","REF","ALT","SYMBOL_VEP","HGVSp_VEP","VariantClass","SAMPLE","EXON_VEP","AAchangg")]
+  MUTS <- MUTS[,c("CHROM","POS","REF","ALT","SYMBOL_VEP","HGVSp_VEP","VariantClass","SAMPLE","EXON_VEP","AAchange")]
   
-  MUTS$aa_ref <- sapply(MUTS$HGVSp_VEP, function(x) str_split(x, "[0-9]+", n=2)[[1]][1])
-  MUTS$aa_alt <- sapply(MUTS$HGVSp_VEP, function(x) str_split(x, "[0-9]+", n=2)[[1]][2])
-  MUTS$aa_pos <- as.numeric(str_extract(MUTS$HGVSp_VEP, "\\d+"))
+  # MUTS$aa_ref <- sapply(MUTS$HGVSp_VEP3, function(x) str_split(x, "[0-9]+", n=2)[[1]][1])
+  # MUTS$aa_alt <- sapply(MUTS$HGVSp_VEP3, function(x) str_split(x, "[0-9]+", n=2)[[1]][2])
+  # MUTS$aa_pos <- as.numeric(str_extract(MUTS$HGVSp_VEP, "\\d+"))
+  MUTS$aa_ref <- sapply(MUTS$AAchange, function(x) str_split(x, "[0-9]+", n=2)[[1]][1])
+  MUTS$aa_alt <- sapply(MUTS$AAchange, function(x) str_split(x, "[0-9]+", n=2)[[1]][2])
+  MUTS$aa_pos <- as.numeric(str_extract(MUTS$AAchange, "\\d+"))
   
-  MUTS <- MUTS %>% 
-    mutate(AAchange=paste0(AminoAcids[aa_ref],aa_pos,AminoAcids[aa_alt]))
+  # MUTS <- MUTS %>% 
+  #   mutate(AAchange=paste0(AminoAcids[aa_ref],aa_pos,AminoAcids[aa_alt]))
   MUTS$var_key = paste(MUTS$CHROM, MUTS$POS, MUTS$REF, MUTS$ALT, sep = ":")
   
   ###create list of tumor suppressor genes####
@@ -575,23 +652,15 @@ annotate.PD <- function(x) {
   
   
   ###########annotate with COSMIC########
-  COSMIChg38 <- read.table(args$cosmic_file, sep = "\t", quote = "", header = T)
-  MUTS = left_join(MUTS, COSMIChg38 %>% dplyr::select(COSMIC78_ID, CosmicCount, heme_cosmic_count, var_key),by="var_key")
-
+  # COSMIChg38 <- read.table(args$cosmic_file, sep = "\t", quote = "", header = T)
+  # MUTS = left_join(MUTS, COSMIChg38 %>% dplyr::select(COSMIC78_ID, CosmicCount, heme_cosmic_count, var_key),by="var_key")
+  source("~/Bolton/data/trying.parallel.cosmic.test.R")
+  ## need to add a parallel
+  MUTS.t <- cosmic.run(MUTS,"SYMBOL")
+  MUTS <- MUTS.t
   MUTS$CosmicCount = fillna(MUTS$CosmicCount, 0)
   MUTS$heme_cosmic_count = fillna(MUTS$heme_cosmic_count, 0)
-  
-  ##read in PD annoation files from papaemmanuil lab##
-  ## file 4
-  #A <- readxl::read_xlsx(args$pd_annotation_file)[,1:9] # now tsv
-  A <- read.table(args$pd_annotation_file, sep = "\t", header = T, quote = "")[,1:9]
-  A$keys = apply(A, 1, function(x) {
-    names(x)[x != '*'] %>% .[!. %in% c('source', 'ch_my_pd', 'ch_pancan_pd')]
-  })
-  pd_dfs = split(A, paste(A$keys))
-  
-  panmyeloid_variant_counts = read_delim(args$pan_myeloid, delim = "\t", guess_max = 5e6)
-  panmyeloid_variant_counts$var_key = paste0("chr", gsub("_", ":", panmyeloid_variant_counts$ID_VARIANT))
+  MUTS$heme_cosmic_count = fillna(MUTS$myeloid_cosmic_count, 0)
   
   #annotate oncokb
   get_oncokb = function(mut) {
@@ -626,6 +695,14 @@ annotate.PD <- function(x) {
   #   4. FLT3-ITDs
   #   5. In-frame indels in CALR, CEBPA, CHEK2, ETV6, EZH2
   
+  ##read in PD annoation files from papaemmanuil lab##
+  ## file 4
+  A <- read.table(args$pd_annotation_file, sep = "\t", header = T, quote = "")[,1:9]
+  A$keys = apply(A, 1, function(x) {
+    names(x)[x != '*'] %>% .[!. %in% c('source', 'ch_my_pd', 'ch_pancan_pd')]
+  })
+  pd_dfs = split(A, paste(A$keys))
+  
   ch_my_variants = NULL
   pd_dfs = split(A, paste(A$keys))
   MUTS$aa_pos <- as.character(MUTS$aa_pos)
@@ -645,6 +722,8 @@ annotate.PD <- function(x) {
       MUTS.temp <- MUTS.temp %>% filter(!(var_key %in% matched))
       temp <- temp %>% filter(Exon == '*')
     }
+    # are all keys is both tables?
+    print(all(keys %in% colnames(temp), keys %in% colnames(MUTS.temp)))
     pds = left_join(MUTS.temp, temp[,c(keys,'ch_my_pd','source')], by=keys)
     pds = pds %>% filter(ch_my_pd>0)
     matched = append(matched, pds$var_key)
@@ -664,32 +743,55 @@ annotate.PD <- function(x) {
   MUTS = left_join(MUTS, ch_my_variants, by="var_key")
   MUTS$ch_my_pd = fillna(MUTS$ch_my_pd, 0)
   
+  
   # 6. Any variant occurring in the COSMIC “haematopoietic and lymphoid” category greater than or equal to 10 times
   
   MUTS$ch_my_pd = ifelse(MUTS$heme_cosmic_count>=10,ifelse(MUTS$ch_my_pd==2,2,1),MUTS$ch_my_pd)
   
   # 7. Any variant noted as potentially oncogenic in an in-house dataset of 7,000 individuals with myeloid neoplasm greater than or equal to 5 times
-  
-  MUTS = left_join(MUTS, panmyeloid_variant_counts %>% dplyr::select(Annotation,MDS,AML,MPN,var_key), by = 'var_key') %>%
+  panmyeloid_variant_counts = read_delim(args$pan_myeloid, delim = "\t", guess_max = 5e6)
+  panmyeloid_variant_counts$var_key = with(panmyeloid_variant_counts, paste(CHROM,POS,REF,ALT, sep = ":"))
+  panmyeloid_variant_counts <- panmyeloid_variant_counts[panmyeloid_variant_counts$Annotation == "ONCOGENIC" | 
+                                                           panmyeloid_variant_counts$Annotation == "SNP",]
+  # panmyeloid_variant_counts$MDS <- fillna(panmyeloid_variant_counts$MDS, 0)
+  # panmyeloid_variant_counts$AML <- fillna(panmyeloid_variant_counts$AML, 0)
+  # panmyeloid_variant_counts$MPN <- fillna(panmyeloid_variant_counts$MPN, 0)
+  # MUTS1 = left_join(MUTS, panmyeloid_variant_counts %>% dplyr::select(Annotation,MDS,AML,MPN,var_key), by = 'var_key') %>%
+  #   mutate(
+  #     MDS = fillna(MDS, 0),
+  #     AML = fillna(AML, 0),
+  #     MPN = fillna(MPN, 0),
+  #     Annotation = fillna(Annotation, '')
+  #   ) %>%
+  #   mutate(n_panmyeloid = ifelse(Annotation == 'ONCOGENIC', MDS + AML + MPN, 0))
+  MUTS$Gene_HGVSp_VEP <- paste(MUTS$Gene, gsub(".*p.","", MUTS$HGVSp_VEP), sep = "_")
+  panmyeloid_variant_counts$Gene_HGVSp_VEP <- paste(panmyeloid_variant_counts$SYMBOL_VEP, gsub(".*p.","", panmyeloid_variant_counts$HGVSp_VEP), sep = "_")
+  MUTS <- sqldf("SELECT l.*, r.MDS, r.AML, r.MPN, r.Annotation
+            FROM `MUTS` as l
+            LEFT JOIN `panmyeloid_variant_counts` as r
+            on l.var_key = r.var_key OR l.Gene_HGVSp_VEP = r.Gene_HGVSp_VEP")
+  MUTS <- MUTS %>%
     mutate(
       MDS = fillna(MDS, 0),
       AML = fillna(AML, 0),
       MPN = fillna(MPN, 0),
-      Annotation = fillna(Annotation, '')
-    ) %>%
-    mutate(n_panmyeloid = ifelse(Annotation == 'ONCOGENIC', MDS + AML + MPN, 0))
+      Annotation = fillna(Annotation, ''),
+      n_panmyeloid = ifelse(Annotation == 'ONCOGENIC', MDS + AML + MPN, 0))
+  
   
   MUTS$ch_my_pd = ifelse(MUTS$n_panmyeloid>=5,ifelse(MUTS$ch_my_pd==2,2,1),MUTS$ch_my_pd)
   # We annotated variants as oncogenic (CH-PD) if they fulfilled any of the following criteria: #reffered to in code as ch_pancan_pd
   # 1. Any variant noted as oncogenic or likely oncogenic in OncoKB
   
-  MUTS$ch_pd = ifelse(MUTS$oncoKB=="Oncogenic" | MUTS$oncoKB=="Likely Oncogenic", 1,0)
+  MUTS$ch_pd = ifelse(MUTS$oncoKB=="Oncogenic" | MUTS$oncoKB=="Likely Oncogenic", 1, 0)
+  MUTS$isOncogenic <- MUTS$oncoKB=="Oncogenic" | MUTS$oncoKB=="Likely Oncogenic"
+  MUTS$isTSG <- MUTS$Gene %in% TSG
   
   # 2. Any truncating mutations (nonsense, essential splice site or frameshift indel) in known tumor suppressor genes as per the Cancer Gene Census or OncoKB.
   # Genes not listed in the cancer census or OncoKB were reviewed in the literature to determine if they were potentially tumor suppressor genes.# Annotate PD based on prevelance in cancer databases (COSMIC, Oncokb)
   
   
-  MUTS$ch_pd = ifelse(MUTS$Gene %in% TSG &
+  MUTS$ch_pd = ifelse(MUTS$isTSG &
                         MUTS$VariantClass %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Nonsense_Mutation", "Splice_Site"), 1, MUTS$ch_pd)
   
   #3. Any variant reported as somatic at least 20 times in COSMIC
@@ -699,7 +801,7 @@ annotate.PD <- function(x) {
   #4. Any variant meeting criteria for CH-Myeloid-PD as above.
   
   MUTS = MUTS %>% mutate(ch_pd = ifelse(ch_my_pd == 1 | ch_my_pd == 2, 1, ch_pd))
-  #MUTS$DMP_PATIENT_ID = gsub("-T.*", "", MUTS$DMP_ASSAY_ID)
+  
   
   annotate_PD.R = MUTS %>% distinct(CHROM,POS,REF,ALT,SAMPLE, .keep_all = TRUE)
   
@@ -714,11 +816,11 @@ annotate.PD <- function(x) {
                       gene_aachange = paste(Gene,AAchange,sep = "_"),
                       gene_loci = paste(Gene,loci,sep = "_"),
                       ch_pd2 = case_when(ch_pd==1 ~ 1,
-                                              gene_loci %in% topmed.loci.n$gene_loci & gene_aachange %in% topmed.mutation.1$gene_aachange & VariantClass=="Missense_Mutation" ~ 1,
-                                              gene_loci %in% topmed.loci.n$gene_loci & VariantClass %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Nonsense_Mutation", "Splice_Site") ~ 1,
-                                              gene_loci %in% kelly.loci.n$gene_loci & gene_aachange %in% kelly.mutation.1$gene_aachange & VariantClass=="Missense_Mutation" ~ 1,
-                                              gene_loci %in% kelly.loci.n$gene_loci & VariantClass %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Nonsense_Mutation", "Splice_Site") ~ 1,
-                                              TRUE ~ 0))
+                                         (gene_loci %in% topmed.loci.n$gene_loci | gene_aachange %in% topmed.mutation.1$gene_aachange) & VariantClass=="Missense_Mutation" ~ 1,
+                                         gene_loci %in% topmed.loci.n$gene_loci & VariantClass %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Nonsense_Mutation", "Splice_Site") ~ 1,
+                                         (gene_loci %in% kelly.loci.n$gene_loci | gene_aachange %in% kelly.mutation.1$gene_aachange) & VariantClass=="Missense_Mutation" ~ 1,
+                                         gene_loci %in% kelly.loci.n$gene_loci & VariantClass %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Nonsense_Mutation", "Splice_Site") ~ 1,
+                                         TRUE ~ 0))
     )
   } else {
     message("something wrong with dims")
@@ -737,6 +839,7 @@ final.passed$passed_everything <- (!final.passed$Vardict_PON_2AT2_percent &
                                      !final.passed$Mutect2_PON_2AT2_percent &
                                      final.passed$alt_strand_counts_min_2_callers &
                                      final.passed$min.under.0.35 &
+                                     final.passed$max.under.0.35 &
                                      final.passed$max.over.0.02 &
                                      final.passed$passed &
                                      final.passed$complexity_filters &

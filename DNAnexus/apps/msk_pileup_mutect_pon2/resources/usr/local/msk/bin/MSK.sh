@@ -8,6 +8,7 @@ sample=$(bcftools query -l $vcf_filename)
 nameroot=$5
 vcf2PON=$6
 caller=$7
+p_value=$8
 
 /opt/GetBaseCountsMultiSample/GetBaseCountsMultiSample --fasta $reference $bams --vcf $vcf_filename --output $msk_out --thread 32;
 bgzip -f $msk_out && tabix -f $msk_out.gz
@@ -27,7 +28,7 @@ bcftools annotate --threads 32 -a $sample.name.gz -h sample.header -c CHROM,POS,
 
 bcftools annotate --threads 32 -a RD_AD.vcf.gz -h pileup.header -c PON_RefDepth,PON_AltDepth $nameroot.sample.vcf.gz -Oz -o $nameroot.sample.pileup.vcf.gz;
 ## don't need index for VEP?
-bcftools annotate --threads 32 -a RD_AD.vcf.gz -c PON_RefDepth,PON_AltDepth $nameroot.sample.vcf.gz -Oz -o $nameroot.sample.pileup.vcf.gz && tabix $nameroot.sample.pileup.vcf.gz;
+# bcftools annotate --threads 32 -a RD_AD.vcf.gz -c PON_RefDepth,PON_AltDepth $nameroot.sample.vcf.gz -Oz -o $nameroot.sample.pileup.vcf.gz && tabix $nameroot.sample.pileup.vcf.gz;
 
 bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%INFO/PON_RefDepth\t%INFO/PON_AltDepth\t[%AD]\n' $nameroot.sample.pileup.vcf.gz > $nameroot.fisher.input;
 
@@ -39,8 +40,9 @@ bcftools annotate -a $nameroot.fisher.output.gz -h fisher.header -c CHROM,POS,RE
 
 export name="$nameroot"."$caller".msk.pon2.vcf.gz
 printf "##INFO=<ID=PON_2AT2_percent,Number=1,Type=Integer,Description=\"If 2 PoN samples have variant at >=2 percent\">\n" > pon2.header;
-bcftools query -f "%CHROM\t%POS\t%REF\t%REF\t1\n" $vcf2PON > normal2.txt
+bcftools query -f "%CHROM\t%POS\t%REF\t%ALT\t1\n" $vcf2PON > normal2.txt
 bgzip -f normal2.txt
 tabix -f -s1 -b2 -e2 normal2.txt.gz
-bcftools annotate --threads 4 -a normal2.txt.gz -h pon2.header -c CHROM,POS,REF,ALT,PON_2AT2_percent $nameroot.fisherPON.vcf.gz -Oz -o $name
+## now hard filtering PoN 
+bcftools annotate --threads 4 -a normal2.txt.gz -h pon2.header -c CHROM,POS,REF,ALT,PON_2AT2_percent $nameroot.fisherPON.vcf.gz | bcftools filter -i "PON_FISHER <= $p_value" -Oz -o $name
 tabix $name

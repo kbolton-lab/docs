@@ -1,0 +1,2 @@
+Transplant
+dx ls -l $KELLY:/CH_Exome/Workflow_Outputs/FINAL/FilterMutectCalls/Transplant/ | grep .vcf.gz | awk -F' ' 'NR==1 || !a[$6]++' | awk '{print $7}' | cut -d'(' -f2 | cut -d')' -f1 | wc -l > transplant.mutect.txt

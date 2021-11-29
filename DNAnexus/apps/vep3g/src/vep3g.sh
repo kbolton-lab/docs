@@ -29,6 +29,7 @@ main() {
     echo "Value of species: '$species'"
     echo "Value of fork: '$fork'"
     echo "Value of dockerimage_vep: '$dockerimage_vep'"
+    echo "additional_args: '$additional_args'"
 
     # The following line(s) use the dx command-line tool to download your file
     # inputs to the local file system using variable names for the filenames. To
@@ -70,19 +71,11 @@ main() {
             --fasta $reference_path \
             --dir /opt/vep/.vep/ \
             --synonyms $synonyms_path \
-            --sift p \
-            --polyphen p \
-            --coding_only \
-            --pick \
             --plugin Frameshift \
             --plugin Wildtype \
-            --everything 1 \
             --assembly GRCh38 \
             --species homo_sapiens \
-            --merged \
-            --check_existing \
-            --buffer_size 1000 \
-            --af_gnomad \
+            $additional_args \
             --custom $gnomad_file_path,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
             --custom $gnomad_V3_path,gnomADg,vcf,exact,1,AF,AF_ami,AF_oth,AF_afr,AF_sas,AF_asj,AF_fin,AF_amr,AF_nfe,AF_eas \
             --custom $clinvar_file_path,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \

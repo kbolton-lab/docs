@@ -22,7 +22,7 @@ main() {
     # echo "Value of bam_index: '${bam_index}'"
     # echo "Value of known_sites: '${known_sites[@]}'"
     # echo "Value of known_sites_index: '${known_sites_index[@]}'"
-    $HADOOP_HOME/bin/hadoop fs -mkdir -p /data
+    # $HADOOP_HOME/bin/hadoop fs -mkdir -p /data
     dx-download-all-inputs --parallel
 
     known_sites_files=""
@@ -58,11 +58,11 @@ main() {
     #mv $dockerimage_gatk_path .
     #dx download "${dockerimage_gatk}"
     #docker load -i ${dockerimage_gatk_path}
-    hdfs dfs -ls /data
-    hadoop fs -ls /data
+    # hdfs dfs -ls /data
+    # hadoop fs -ls /data
 
-    spark_executor_memory=124g # Could be parameterized as an app input
-    spark_executor_cores=16  # Could be parameterized as an app input
+    # spark_executor_memory=124g # Could be parameterized as an app input
+    # spark_executor_cores=16  # Could be parameterized as an app input
     mkdir /tmp/spark
 
     # /gatk/gatk --java-options "-Xmx8G -XX:+UseParallelGC -XX:ParallelGCThreads=8" BQSRPipelineSpark \
@@ -82,12 +82,12 @@ main() {
     #     --conf spark.local.dir=/tmp/spark \
     #     --executor-cores $spark_executor_cores --executor-memory $spark_executor_memory \
     #     --driver-memory 4g
-    /gatk/gatk --java-options "-Xmx124G -XX:+UseParallelGC -XX:ParallelGCThreads=32" BQSRPipelineSpark \
+    /gatk/gatk --java-options "-Xmx32G -XX:+UseParallelGC -XX:ParallelGCThreads=8" BQSRPipelineSpark \
         -R $reference_name \
         -I $bam_name \
         $known_sites_files \
         -O $bam_prefix.bqsr.bam --verbosity ERROR \
-        -- --spark-runner LOCAL --spark-master local[16] \
+        -- --spark-runner LOCAL --spark-master local[8] \
         --conf spark.local.dir=/tmp/spark
 
 
@@ -106,9 +106,9 @@ main() {
 
     ## this errored out on job-G4Vyyy0J6XG97b1xFJf2BvPZ
     # /cluster/log_collector.sh /home/dnanexus/out/cluster_runtime_logs_tarball
-    cat /cluster/log_collector.sh
-    ls 
-    ls /cluster
+    # cat /cluster/log_collector.sh
+    # ls 
+    # ls /cluster
  
     bam_out=$(dx upload "$bam_prefix.bqsr.bam" --brief)
     dx-jobutil-add-output bam_out --class=file "$bam_out" 

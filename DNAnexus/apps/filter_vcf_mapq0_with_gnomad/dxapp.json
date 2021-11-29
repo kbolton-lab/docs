@@ -88,7 +88,7 @@
   "outputSpec": [
     {
       "name": "mapq0_vcf",
-      "label": "soft-filter mapq0 vcf",
+      "label": "mapq0_vcf",
       "class": "file",
       "patterns": [
         "*"
@@ -97,7 +97,7 @@
     },
     {
       "name": "mapq0_vcf_index",
-      "label": "index",
+      "label": "mapq0_vcf_index",
       "class": "file",
       "patterns": [
         "*"

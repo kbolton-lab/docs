@@ -21,6 +21,8 @@ df$fisher.exact.pval <- apply(df, 1, function(x) {
   if (x[2]==0 & x[1]!=0) {
     return(0)
   } else if ((x[1]==0 & x[2]!=0) | (x[3]==0 & x[4]!=0)) {
+    return(1) 
+  } else if (x[2]/(x[1]+x[2]) >= x[4]/(x[3]+x[4])) {
     return(1)
   } else {
     return(fisher.test(matrix(c(x[1], x[2], x[3], x[4]), ncol=2))$p.value)
