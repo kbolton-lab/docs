@@ -4,6 +4,7 @@
 .Ruserdata
 *.tar.gz
 *.zip
+*.jar
 DNAnexus/apps/mutect/resources/gatk
 DNAnexus/apps/test_annotate
 *.fa
@@ -30,12 +31,8 @@ DNAnexus/apps/workflows/TEST_RM_BQSR_BAM/*
 */resources/gatk
 DNAnexus/apps/workflows/FINAL/batch/FINAL_Transplant/transplant.json
 <<<<<<< HEAD
-<<<<<<< HEAD
 dx_batch.*.tsv
 DNAnexus/apps/workflows/FINAL/batch/FINAL_Transplant_test/transplant.json
-=======
-dx_batch.*.tsv
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 =======
 dx_batch.*.tsv
 >>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
