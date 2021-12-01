@@ -253,6 +253,7 @@
         }
       },
       "help": ""
+<<<<<<< HEAD
     },
     {
       "name": "additional_args",
@@ -260,6 +261,8 @@
       "optional": true,
       "default": "--sift p --polyphen p --pick --pick_order canonical,rank,mane,ccds,appris,tsl,biotype,length --everything 1 --merged --check_existing --buffer_size 1000 --af_gnomad",
       "help": "" 
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     }
   ],
   "outputSpec": [
@@ -293,7 +296,12 @@
     "file": "src/vardict_pon2at2percent_final.sh",
     "execDepends": [
       {"name": "bcftools"},
+<<<<<<< HEAD
       {"name": "tabix"}
+=======
+      {"name": "tabix"},
+      {"name": "wget"}
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     ],
     "distribution": "Ubuntu",
     "release": "20.04",

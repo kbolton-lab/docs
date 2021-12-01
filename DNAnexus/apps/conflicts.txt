@@ -1,0 +1,159 @@
+CONFLICT (modify/delete): DNAnexus/apps/workflows/test/12/FINAL_12_MT_SINGLE/dxworkflow.json deleted in HEAD and modified in 65d148f5d1ffac4ed8440f892e4a8b651eb53b01. Version 65d148f5d1ffac4ed8440f892e4a8b651eb53b01 of DNAnexus/apps/workflows/test/12/FINAL_12_MT_SINGLE/dxworkflow.json left in tree.
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log59
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log59
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log58
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log58
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log57
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log57
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log56
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log56
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log55
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log55
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log54
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log54
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log53
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log53
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log52
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log52
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log51
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log51
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log50
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log50
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log49
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log49
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log48
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log48
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log47
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log47
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log46
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log46
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log45
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log45
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log44
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log44
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log43
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log43
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log42
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log42
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log41
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log41
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log40
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log40
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log39
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log39
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log38
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log38
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log37
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log37
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log36
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log36
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log35
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log35
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log34
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log34
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log33
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log33
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log32
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log32
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log31
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log31
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log30
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log30
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log29
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log29
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log28
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log28
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log27
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log27
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log26
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log26
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log25
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log25
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log24
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log24
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log23
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log23
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log22
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log22
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log21
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log21
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log20
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log20
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log19
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log19
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log18
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log18
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log17
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log17
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log16
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log16
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log15
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log15
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log14
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log14
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log13
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log13
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log12
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log12
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log11
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log11
+Auto-merging DNAnexus/apps/workflows/FINAL/logs/log10
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/logs/log10
+Auto-merging DNAnexus/apps/workflows/FINAL/batch/FINAL_Transplant/transplant.sh
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/batch/FINAL_Transplant/transplant.sh
+CONFLICT (rename/delete): DNAnexus/apps/workflows/FINAL_WITH_BQSR2/input_json/template2.json deleted in 65d148f5d1ffac4ed8440f892e4a8b651eb53b01 and renamed to DNAnexus/apps/workflows/FINAL/batch/FINAL_Transplant/bad.input.json in HEAD. Version HEAD of DNAnexus/apps/workflows/FINAL/batch/FINAL_Transplant/bad.input.json left in tree.
+Auto-merging DNAnexus/apps/workflows/FINAL/batch/12/split_dx_batch.0002.tsv_aa
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/batch/12/split_dx_batch.0002.tsv_aa
+Auto-merging DNAnexus/apps/workflows/FINAL/batch/12/split_dx_batch.0001.tsv_ae
+Auto-merging DNAnexus/apps/workflows/FINAL/batch/12/split_dx_batch.0001.tsv_ad
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/batch/12/split_dx_batch.0001.tsv_ad
+Auto-merging DNAnexus/apps/workflows/FINAL/batch/12/split_dx_batch.0001.tsv_ac
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/batch/12/split_dx_batch.0001.tsv_ac
+Auto-merging DNAnexus/apps/workflows/FINAL/batch/12/batch.sh
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/batch/12/batch.sh
+Auto-merging DNAnexus/apps/workflows/FINAL/batch/12/FINAL_12_MT_SINGLE/dxworkflow.json
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/batch/12/FINAL_12_MT_SINGLE/dxworkflow.json
+Auto-merging DNAnexus/apps/workflows/FINAL/batch/12/12.sh
+CONFLICT (content): Merge conflict in DNAnexus/apps/workflows/FINAL/batch/12/12.sh
+Auto-merging DNAnexus/apps/vep3g/vep_3g.json
+CONFLICT (content): Merge conflict in DNAnexus/apps/vep3g/vep_3g.json
+CONFLICT (add/add): Merge conflict in DNAnexus/apps/vardict_pon2at2percent_final/src/vardict_pon2at2percent_final.sh
+Auto-merging DNAnexus/apps/vardict_pon2at2percent_final/src/vardict_pon2at2percent_final.sh
+CONFLICT (add/add): Merge conflict in DNAnexus/apps/vardict_pon2at2percent_final/resources/usr/local/helper/SQO.jl
+Auto-merging DNAnexus/apps/vardict_pon2at2percent_final/resources/usr/local/helper/SQO.jl
+CONFLICT (add/add): Merge conflict in DNAnexus/apps/vardict_pon2at2percent_final/pon2at2percent_vardict_inputs.json
+Auto-merging DNAnexus/apps/vardict_pon2at2percent_final/pon2at2percent_vardict_inputs.json
+CONFLICT (add/add): Merge conflict in DNAnexus/apps/vardict_pon2at2percent_final/dxapp.json
+Auto-merging DNAnexus/apps/vardict_pon2at2percent_final/dxapp.json
+CONFLICT (add/add): Merge conflict in DNAnexus/apps/vardict_multithreaded_final/resources/usr/local/bin/VardictJava_MT.sh
+Auto-merging DNAnexus/apps/vardict_multithreaded_final/resources/usr/local/bin/VardictJava_MT.sh
+CONFLICT (add/add): Merge conflict in DNAnexus/apps/vardict_multithreaded_final/dxapp.json
+Auto-merging DNAnexus/apps/vardict_multithreaded_final/dxapp.json
+Auto-merging DNAnexus/apps/msk_pileup/resources/usr/local/msk/bin/fisher.R
+Auto-merging DNAnexus/apps/filter_vcf_mapq0_with_gnomad/resources/usr/local/mapq0/mapq0_vcf_filter_samtools.sh
+CONFLICT (content): Merge conflict in DNAnexus/apps/filter_vcf_mapq0_with_gnomad/resources/usr/local/mapq0/mapq0_vcf_filter_samtools.sh
+Auto-merging DNAnexus/apps/bqsr_spark/dxapp.json
+Auto-merging DNAnexus/apps/annotate_ch_pd_and_declutter/resources/usr/local/annotate/annotate_CH_pd_docker3_Mutect_Vardict_ponChange.R
+CONFLICT (add/add): Merge conflict in DNAnexus/apps/annotate_ch_pd_and_declutter/resources/usr/local/annotate/_annotate_CH_pd_docker3_Mutect_Vardict_ponChange.R
+Auto-merging DNAnexus/apps/annotate_ch_pd_and_declutter/resources/usr/local/annotate/_annotate_CH_pd_docker3_Mutect_Vardict_ponChange.R
+Auto-merging DNAnexus/apps/annotate_ch_pd_and_declutter/dxapp.json
+CONFLICT (content): Merge conflict in DNAnexus/apps/annotate_ch_pd_and_declutter/dxapp.json
+Auto-merging DNAnexus/apps/annotate_ch_pd/resources/usr/local/annotate/annotate_CH_pd_docker3_Mutect_Vardict_ponChange.R
+CONFLICT (content): Merge conflict in DNAnexus/apps/annotate_ch_pd/resources/usr/local/annotate/annotate_CH_pd_docker3_Mutect_Vardict_ponChange.R
+Auto-merging DNAnexus/apps/annotate_ch_pd/resources/usr/local/annotate/_annotate_CH_pd_docker3_Mutect_Vardict_ponChange.R
+Auto-merging DNAnexus/apps/annotate_ch_pd/resources/usr/local/annotate/CH_PD_annotate_Kary.R
+CONFLICT (add/add): Merge conflict in DNAnexus/apps/annotate_ch_pd/resources/usr/local/annotate/CH_PD_annotate_Jie.R
+Auto-merging DNAnexus/apps/annotate_ch_pd/resources/usr/local/annotate/CH_PD_annotate_Jie.R
+Auto-merging DNAnexus/apps/_vardict_pon2at2percent/pon2at2percent_vardict_inputs.json
+Auto-merging DNAnexus/apps/_vardict_pon2at2percent/dxapp.json
+Auto-merging DNAnexus/apps/TOTAL/total.txt
+CONFLICT (content): Merge conflict in DNAnexus/apps/TOTAL/total.txt
+Auto-merging DNAnexus/apps/TOTAL/kelly_project
+CONFLICT (content): Merge conflict in DNAnexus/apps/TOTAL/kelly_project
+Auto-merging DNAnexus/apps/.DS_Store
+CONFLICT (content): Merge conflict in DNAnexus/apps/.DS_Store
+Auto-merging DNAnexus/.DS_Store
+CONFLICT (content): Merge conflict in DNAnexus/.DS_Store
+Auto-merging .gitignore
+CONFLICT (content): Merge conflict in .gitignore
+Automatic merge failed; fix conflicts and then commit the result.

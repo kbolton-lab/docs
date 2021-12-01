@@ -4,7 +4,11 @@ library(argparser)
 library(vcfR)
 library(tidyverse)
 library(stringr)
+<<<<<<< HEAD
 # library(readxl)
+=======
+library(readxl)
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 library(VariantAnnotation)
 library(ggsci)
 library(data.table)
@@ -13,7 +17,10 @@ library(rtracklayer)
 library(BSgenome)
 library(BSgenome.Hsapiens.UCSC.hg38)
 library(R453Plus1Toolbox)
+<<<<<<< HEAD
 library(sqldf)
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 
 '%!in%' = function(x, y){
   ! ('%in%'(x, y))
@@ -24,6 +31,7 @@ fillna <- function(x, r) {
   return(x)
 }
 
+<<<<<<< HEAD
 #'@returns dataframe with equal number of rows as input with binded counts columns
 #'@param df dataframe: this is the MUTS dataframe; needs to have `HGVSp_VEP` column
 #'@param sample.column string: column name for sample name/id
@@ -147,6 +155,8 @@ cosmic.run <- function(df, sample.column) {
   }
 }
 
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 parser <- arg_parser("Process NGS variant calls")
 parser <- add_argument(parser, "--impact-file", type="character", help="kelly's file")
 parser <- add_argument(parser, "--bick-file", type="character", help="bick's file")
@@ -155,14 +165,20 @@ parser <- add_argument(parser, "--variant-calls-files", type="character", help="
 parser <- add_argument(parser, "--TSG-file", type="character", help="tumor suppressor genes")
 parser <- add_argument(parser, "--eid", type="character", help="eid for output")
 parser <- add_argument(parser, "--oncoKB-curated", type="character", help="oncoKB all_curated_genes_v2.0.tsv")
+<<<<<<< HEAD
 parser <- add_argument(parser, "--pd-annotation-file", type="character", help="PD annoation files from papaemmanuil lab") # updated
 parser <- add_argument(parser, "--pan-myeloid", type="character", help="panmyeloid_variant_counts.tsv") # updated
+=======
+parser <- add_argument(parser, "--pd-annotation-file", type="character", help="PD annoation files from papaemmanuil lab")
+parser <- add_argument(parser, "--pan-myeloid", type="character", help="panmyeloid_variant_counts.tsv")
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 parser <- add_argument(parser, "--number-samples-annot", type="integer", help="number samples in loci for variant", default=5)
 parser <- add_argument(parser, "--blacklist", type="character", help="ENCODE blacklist hg38")
 parser <- add_argument(parser, "--segemental-duplications", type="character", help="segmental duplications")
 parser <- add_argument(parser, "--simple-repeats", type="character", help="Simple Tandem Repeats by TRF")
 parser <- add_argument(parser, "--repeat-masker", type="character", help="repeatMaskerJoinedCurrent")
 parser <- add_argument(parser, "--target-length", type="integer", help="total sum of target intervals", default=39000000)
+<<<<<<< HEAD
 parser <- add_argument(parser, "--bolton-bick-vars", type="character", help="help") # updated
 parser <- add_argument(parser, "--mut1-bick", type="character", help="") # updated
 parser <- add_argument(parser, "--mut1-kelly", type="character", help="") # updated
@@ -170,13 +186,45 @@ parser <- add_argument(parser, "--col-order", type="character", help="") # updat
 parser <- add_argument(parser, "--matches2", type="character", help="") # updated MORE
 
 args <- parse_args(parser)
+=======
+
+args <- parse_args(parser)
+args <- parse_args(parser, list(c("-i","~/Bolton/data/hg38_mut_full_long_filtered_KB_deid_2.tsv"),
+                                c("-b","~/Bolton/data/bick_topmed_variants.txt"),
+                                c("-c","~/Bolton/data/hg38_cosmic78_parsed.sorted.txt"),
+                                
+                                # c("-v", paste("~/Bolton/UKBB/results/10/1007298_23153_0_0.mutect.final.annotated.vcf.gz",
+                                #               "~/Bolton/UKBB/results/10/1007298_23153_0_0.vardict.final.annotated.vcf.gz",
+                                #               sep=",")),
+                                # c("-e","1007298_23153_0_0"),
+                                c("-v", paste("~/Bolton/UKBB/results/59/5977335_23153_0_0.mutect.vep.annotated.vcf.gz",
+                                              # "~/Bolton/UKBB/results/59/5977335_23153_0_0.vardict.final.annotated.vcf.gz",
+                                              "~/Bolton/UKBB/docs/DNAnexus/apps/test/5977335_23153_0_0.vardict.final.annotated.vcf.gz",
+                                              sep=",")),
+                                c("-e","1000144_23153_0_0"),
+                                
+                                c("-T","~/Bolton/data/gene_census_TSG.txt"),
+                                c("--oncoKB-curated","~/Bolton/data/all_curated_genes_v2.0.tsv"),
+                                c("-p","~/Bolton/data/pd_table_kbreview_bick_trunc.tsv"),
+                                c("--pan-myeloid","~/Bolton/data/panmyeloid_variant_counts.tsv"),
+                                c("--number-samples-annot",5),
+                                c("--blacklist","/Users/brian/ENCFF356LFX.bed"),
+                                c("--segemental-duplications","/Users/brian/Bolton/final_vcfs/dup.grch38.bed.gz"),
+                                c("--simple-repeats","/Users/brian/Bolton/HIV/simpleRepeat.bed"),
+                                c("--repeat-masker","/Users/brian/Bolton/HIV/repeatMaskerJoinedCurrent.bed"),
+                                c("--target-length",38793002))) # 
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 
 
 if (is.na(args$impact_file) || is.na(args$bick_file) || is.na(args$cosmic_file) || 
     is.na(args$variant_calls_files) || is.na(args$TSG_file) || is.na(args$eid) || 
     is.na(args$oncoKB_curated) || is.na(args$pd_annotation_file) || 
+<<<<<<< HEAD
     is.na(args$pan_myeloid) || is.na(args$target_length) ||
     is.na(args$bolton_bick_vars) || is.na(args$mut1_bick) || is.na(args$mut1_kelly)) {
+=======
+    is.na(args$pan_myeloid) || is.na(args$target_length)) {
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   stop("Missing one of the annotation files or output")
 }
 
@@ -209,10 +257,14 @@ vardict.df <- vardict.df[,!colnames(vardict.df) %in% c("OLD_MULTIALLELIC")]
 mutect.df <- mutect.df[!duplicated(mutect.df),]
 vardict.df <- vardict.df[!duplicated(vardict.df),]
 
+<<<<<<< HEAD
 # test <-  mutect.df[is.na(mutect.df$CSQ),]
 ## remove blank CSQ, OTA non-coding now doing this after merge since vardict depends on mutect
 #mutect.df <- mutect.df[!is.na(mutect.df$CSQ),]
 #vardict.df <- vardict.df[!is.na(vardict.df$CSQ),]
+=======
+
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 
 mutect.df <- mutect.df %>% separate(gt_AD, c("gt_AD_ref","gt_AD_alt"), 
                                     sep=",",extra = "merge", fill = "right")
@@ -246,6 +298,12 @@ vardict.new.col.ord <- c(1:7,vardict.pfx,8:(min(vardict.pfx)-1))
 length(vardict.new.col.ord) == dim(vardict.df)[2]
 vardict.final <- vardict.df[,vardict.new.col.ord] 
 colnames(vardict.final)[colnames(vardict.final)=="FILTER"] = "Vardict_FILTER"
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 vardict.final$Vardict_PASS <- ifelse(grepl("PASS", vardict.final$Vardict_FILTER), 1, 0) ## 52 cols
 
 
@@ -258,6 +316,7 @@ vardict.final$PON_2AT2_percent <- fillna(vardict.final$PON_2AT2_percent, 0)
 colnames(vardict.final)[colnames(vardict.final)=="PON_2AT2_percent"] = "Vardict_PON_2AT2_percent"
 
 ## remove columns where all NA
+<<<<<<< HEAD
 ## only do this for columns that are not from Alex's script
 na.mutect.cols <- names(mutect2.final[,apply(mutect2.final, 2, function(x) all(is.na(x)))])
 na.vardict.cols <- names(vardict.final[,apply(vardict.final, 2, function(x) all(is.na(x)))])
@@ -267,11 +326,17 @@ length(na.vardict.cols)
 ## only do this for columns that are not from Alex's script
 na.vardict.cols <- setdiff(na.vardict.cols, c("calpos","calref","calalt","calpos_best","calref_best","calalt_best"))
 length(na.vardict.cols)
+=======
+na.mutect.cols <- names(mutect2.final[,apply(mutect2.final, 2, function(x) all(is.na(x)))])
+na.vardict.cols <- names(vardict.final[,apply(vardict.final, 2, function(x) all(is.na(x)))])
+
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 mutect2.final <- mutect2.final[,-which(names(mutect2.final) %in% c(na.mutect.cols))]
 vardict.final <- vardict.final[,-which(names(vardict.final) %in% c(na.vardict.cols))]
 
 
 
+<<<<<<< HEAD
 
 ########################################################################################
 
@@ -287,11 +352,124 @@ colnames(mutect2.final)[colnames(mutect2.final) %in% mutect2.info] <-
 #                                          "REF"="REF", "ALT"="ALT"))
 colnames(vardict.final)[colnames(vardict.final) %in% vardict.info] <-
   paste0("Vardict_", colnames(vardict.final)[colnames(vardict.final) %in% vardict.info])
+=======
+########################################################################################
+## ch_pd stuff
+mut_full_long_filtered_KB_deid.ch_pd2.hg38 <- read.table(args$impact_file,
+                                                         quote = "", header = T, sep = "\t")
+bick.topmed <- read.table(args$bick_file,
+                          quote = "", header = T, sep = "\t")
+bick.topmed$CHROM <- paste0("chr", bick.topmed$CHROM)
+num = args$number_samples_annot
+
+## combine to count only
+# https://community.rstudio.com/t/summarise-max-but-keep-all-columns/52449/3
+topmed.loci.n <- rbind(bick.topmed %>%
+                         dplyr::filter(!grepl("c\\.", AAchange)) %>%
+                         dplyr::mutate(loci = ifelse(grepl('[A-Z]\\d+',AAchange),str_extract(AAchange, '[A-Z]\\d+'), AAchange)) %>%
+                         dplyr::group_by(Gene, loci) %>%
+                         dplyr::mutate(n=dplyr::n()) %>%
+                         dplyr::ungroup() %>%
+                         dplyr::filter(n >= num) %>%
+                         #distinct(CHROM,POS,REF,ALT, .keep_all = TRUE) %>%
+                         dplyr::select(CHROM,POS,REF,ALT,Gene,loci,AAchange,n),
+                       bick.topmed %>%
+                         dplyr::filter(grepl("c\\.", AAchange)) %>%
+                         dplyr::mutate(loci = str_extract(AAchange, "c\\.\\d+[\\-\\+]\\d[TCGA-]")) %>% # c.769+2T>G and -> is for insertion
+                         dplyr::group_by(Gene, loci) %>%
+                         dplyr::mutate(n=dplyr::n()) %>%
+                         dplyr::ungroup() %>%
+                         dplyr::filter(n >= num) %>%
+                         #distinct(CHROM,POS,REF,ALT, .keep_all = TRUE) %>%
+                         dplyr::select(CHROM,POS,REF,ALT,Gene,loci,AAchange,n)
+)
+
+topmed.loci.n <- topmed.loci.n %>% mutate(gene_loci = paste(Gene,loci,sep = "_"))
+topmed.mutation.1 <- bick.topmed %>% 
+  group_by(Gene, AAchange) %>% 
+  dplyr::count() %>%  
+  filter(n >= 1) %>% 
+  mutate(gene_aachange = paste(Gene,AAchange,sep = "_"))
+
+colnames(mut_full_long_filtered_KB_deid.ch_pd2.hg38)[1:4] <- colnames(bick.topmed)[1:4]
+kelly.loci.n <- rbind(mut_full_long_filtered_KB_deid.ch_pd2.hg38 %>%
+                        dplyr::filter(!grepl("c\\.", AAchange)) %>%
+                        dplyr::mutate(loci = ifelse(grepl('[A-Z]\\d+',AAchange),str_extract(AAchange, '[A-Z]\\d+'), AAchange)) %>%
+                        dplyr::group_by(Gene, loci) %>%
+                        dplyr::mutate(n=ifelse(is.na(loci),1,dplyr::n())) %>%
+                        dplyr::ungroup() %>%
+                        dplyr::filter(n >= num) %>%
+                        #distinct(CHROM,POS,REF,ALT, .keep_all = TRUE) %>%
+                        dplyr::select(CHROM,POS,REF,ALT,Gene,loci,AAchange,n,VariantClass),
+                      mut_full_long_filtered_KB_deid.ch_pd2.hg38 %>%
+                        dplyr::filter(grepl("c\\.", AAchange)) %>%
+                        dplyr::mutate(loci = str_extract(AAchange, "c\\.\\d+[\\-\\+]\\d[TCGA-]")) %>% # c.769+2T>G and -> is for insertion
+                        dplyr::group_by(Gene, loci) %>%
+                        dplyr::mutate(n=ifelse(is.na(loci),1,dplyr::n())) %>%
+                        dplyr::ungroup() %>%
+                        dplyr::filter(n >= num) %>%
+                        #distinct(CHROM,POS,REF,ALT, .keep_all = TRUE) %>%
+                        dplyr::select(CHROM,POS,REF,ALT,Gene,loci,AAchange,n,VariantClass)
+)
+kelly.loci.n <- kelly.loci.n %>% mutate(gene_loci = paste(Gene,loci,sep = "_"))
+kelly.mutation.1 <- mut_full_long_filtered_KB_deid.ch_pd2.hg38 %>% 
+  group_by(Gene, AAchange) %>% 
+  dplyr::count() %>%  
+  filter(n >= 1) %>% 
+  mutate(gene_aachange = paste(Gene,AAchange,sep = "_"))
+
+vars.loci.n <- rbind(mut_full_long_filtered_KB_deid.ch_pd2.hg38 %>%
+                       dplyr::select(CHROM,POS,REF,ALT,Gene,AAchange,ch_my_pd,ch_pd2) %>%
+                       mutate(source="kelly"),
+                     bick.topmed %>%
+                       dplyr::select(CHROM,POS,REF,ALT,Gene,AAchange) %>%
+                       mutate(ch_my_pd = NA,
+                              ch_pd2 = NA,
+                              source = "bick"))
+
+vars <- rbind(vars.loci.n %>%
+                dplyr::filter(!grepl("c\\.", AAchange)) %>%
+                dplyr::mutate(loci = ifelse(grepl('[A-Z]\\d+',AAchange),str_extract(AAchange, '[A-Z]\\d+'), AAchange)) %>%
+                dplyr::group_by(Gene, loci) %>%
+                dplyr::mutate(n=dplyr::n()) %>%
+                dplyr::ungroup() %>%
+                dplyr::filter(n >= num) %>%
+                #distinct(CHROM,POS,REF,ALT, .keep_all = TRUE) %>%
+                dplyr::select(CHROM,POS,REF,ALT,Gene,loci,AAchange,n,ch_my_pd,ch_pd2,source),
+              vars.loci.n %>%
+                dplyr::filter(grepl("c\\.", AAchange)) %>%
+                dplyr::mutate(loci = str_extract(AAchange, "c\\.\\d+[\\-\\+]\\d[TCGA-]")) %>% # c.769+2T>G and -> is for insertion
+                dplyr::group_by(Gene, loci) %>%
+                dplyr::mutate(n=dplyr::n()) %>%
+                dplyr::ungroup() %>%
+                dplyr::filter(n >= num) %>%
+                #distinct(CHROM,POS,REF,ALT, .keep_all = TRUE) %>%
+                dplyr::select(CHROM,POS,REF,ALT,Gene,loci,AAchange,n,ch_my_pd,ch_pd2,source)) 
+
+vars <- vars[!duplicated(vars[,c("CHROM","POS","REF","ALT")]),]
+
+########################################################################################
+########################################################################################
+
+mutect2.final.driver <- dplyr::left_join(mutect2.final, vars,
+                                         by = c("CHROM"="CHROM", "POS"="POS", 
+                                                "REF"="REF", "ALT"="ALT"))
+## prefix INFO data with Caller
+colnames(mutect2.final.driver)[colnames(mutect2.final.driver) %in% mutect2.info] <-
+  paste0("Mutect2_", colnames(mutect2.final.driver)[colnames(mutect2.final.driver) %in% mutect2.info])
+
+vardict.final.driver <- left_join(vardict.final, vars,
+                                  by = c("CHROM"="CHROM", "POS"="POS", 
+                                         "REF"="REF", "ALT"="ALT"))
+colnames(vardict.final.driver)[colnames(vardict.final.driver) %in% vardict.info] <-
+  paste0("Vardict_", colnames(vardict.final.driver)[colnames(vardict.final.driver) %in% vardict.info])
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 
 
 
 ## Way 3 works
 #https://stackoverflow.com/questions/16042380/merge-data-frames-and-overwrite-values
+<<<<<<< HEAD
 colnames(mutect2.final)[which(colnames(mutect2.final)=="CALLER")] <- "Mutect2_CALLER"
 colnames(vardict.final)[which(colnames(vardict.final)=="CALLER")] <- "Vardict_CALLER"
 mutect2.final$Mutect2_CALLER <- 1
@@ -309,6 +487,25 @@ intersection <- intersection[6:length(intersection)] ## first 5 are the grouped 
 intersection.cols.x <- paste0(intersection, ".x")
 intersection.cols.y <- paste0(intersection, ".y")
 final <- full_join(vardict.final, mutect2.final,
+=======
+colnames(mutect2.final.driver)[which(colnames(mutect2.final.driver)=="CALLER")] <- "Mutect2_CALLER"
+colnames(vardict.final.driver)[which(colnames(vardict.final.driver)=="CALLER")] <- "Vardict_CALLER"
+mutect2.final.driver$Mutect2_CALLER <- 1
+vardict.final.driver$Vardict_CALLER <- 1
+
+write.table(mutect2.final.driver, "~/mutect.tmp", row.names = F, quote = F, sep = "\t")
+mutect2.final.driver <- read.table("~/mutect.tmp", sep = "\t", header = T, quote = "")
+write.table(vardict.final.driver, "~/vardict.tmp", row.names = F, quote = F, sep = "\t")
+vardict.final.driver <- read.table("~/vardict.tmp", sep = "\t", header = T, quote = "")
+
+
+## vardict with mutect2
+intersection <- intersect(colnames(vardict.final.driver), colnames(mutect2.final.driver))
+intersection <- intersection[6:length(intersection)] ## first 5 are the grouped by columns
+intersection.cols.x <- paste0(intersection, ".x")
+intersection.cols.y <- paste0(intersection, ".y")
+final <- full_join(vardict.final.driver, mutect2.final.driver,
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
                    by = c("CHROM"="CHROM", "POS"="POS", 
                           "REF"="REF", "ALT"="ALT", "SAMPLE"="SAMPLE"))
 final[,intersection.cols.x][is.na(final[,intersection.cols.x])] <- final[,intersection.cols.y][is.na(final[,intersection.cols.x])]
@@ -320,7 +517,11 @@ colnames(final)[colnames(final) %in% intersection.cols.x] <- intersection
 final <- final[,!(colnames(final) %in% intersection.cols.y)]
 
 ## remove blank CSQ columns because they are non-coding and separate
+<<<<<<< HEAD
 final <- final[!is.na(final$CSQ),]
+=======
+final <- final[!is.na(final$CSQ) | (!is.na(final$Vardict_calpos) & is.na(final$Mutect2_CALLER)),]
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 # VEP CSQ
 ## new VEP has 96 fields
 ## new VEP with gnomADg has 106 fields
@@ -375,6 +576,7 @@ getVAFs <- function(x) {
   VAFS
 }
 #test <- final.coding.gnomad.sorted[final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP > 0.0007,]
+<<<<<<< HEAD
 # final.coding.gnomad.sorted$gnomAD_MAX.Stringent.0007 <- (final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP < 0.0007 &
 #                                                            final.coding.gnomad.sorted$MAX_gnomADe_AF_VEP < 0.0007 &
 #                                                            final.coding.gnomad.sorted$MAX_gnomADg_AF_VEP < 0.0007)
@@ -393,6 +595,14 @@ final.coding.gnomad.sorted$gnomAD_MAX.Stringent.005 <- (final.coding.gnomad.sort
 final.coding.gnomad.sorted$gnomAD_MAX.lessStringent.005 <- (final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP < 0.005 |
                                                               final.coding.gnomad.sorted$MAX_gnomADe_AF_VEP < 0.005 |
                                                               final.coding.gnomad.sorted$MAX_gnomADg_AF_VEP < 0.005)
+=======
+final.coding.gnomad.sorted$gnomAD_MAX.Stringent.0007 <- (final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP < 0.0007 &
+                                                           final.coding.gnomad.sorted$MAX_gnomADe_AF_VEP < 0.0007 &
+                                                           final.coding.gnomad.sorted$MAX_gnomADg_AF_VEP < 0.0007)
+final.coding.gnomad.sorted$gnomAD_MAX.lessStringent.0007 <- (final.coding.gnomad.sorted$MAX_gnomAD_AF_VEP < 0.0007 |
+                                                           final.coding.gnomad.sorted$MAX_gnomADe_AF_VEP < 0.0007 |
+                                                           final.coding.gnomad.sorted$MAX_gnomADg_AF_VEP < 0.0007)
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 
 #########################################################################################################
 # blacklist, segmental duplications, simple tandem repeatts, and masked repeat regions
@@ -462,6 +672,10 @@ final.coding.gnomad.sorted.regions <- final.coding.gnomad.sorted.regions %>%
 
 ## Passed by both Mutect2 and vardict
 ## if add in varscan, passed by Mutect2 and (Vardict or Varscan)
+<<<<<<< HEAD
+=======
+final.coding.gnomad.sorted.regions$Vardict_FILTER
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 final.coding.gnomad.sorted.regions$passed <-
   apply(final.coding.gnomad.sorted.regions[,c("Mutect2_PASS","Vardict_PASS")],
         1,
@@ -552,7 +766,11 @@ final.passed$context_5_3 <- as.character(final.passed$context_5_3)
 
 ## min VAFs > 35% remove
 VAFS <- getVAFs(final.passed)
+<<<<<<< HEAD
 final.passed$max.under.0.35 <- apply(final.passed[,VAFS],1,function(x) max(x, na.rm = T) < 0.35)
+=======
+final.passed$min.under.0.35 <- apply(final.passed[,VAFS],1,function(x) min(x, na.rm = T) < 0.35)
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 final.passed$max.over.0.02 <- apply(final.passed[,VAFS],1,function(x) max(x, na.rm = T) >= 0.02)
 
 ## Strand Bias 2 or more pass SB
@@ -570,6 +788,7 @@ AminoAcids = c('Cys'= 'C', 'Asp'= 'D', 'Ser'= 'S', 'Gln'= 'Q', 'Lys'= 'K',
                'Ile'= 'I', 'Pro'= 'P', 'Thr'= 'T', 'Phe'= 'F', 'Asn'= 'N',
                'Gly'= 'G', 'His'= 'H', 'Leu'= 'L', 'Arg'= 'R', 'Trp'= 'W',
                'Ala'= 'A', 'Val'='V', 'Glu'= 'E', 'Tyr'= 'Y', 'Met'= 'M',
+<<<<<<< HEAD
                '%3D'='=', '='='=')
 
 ## ch_pd stuff
@@ -616,6 +835,12 @@ dim(final.passed)[[1]] == dims
 ########################################################################################
 annotate.PD <- function(x) {
   
+=======
+               'Ter'= 'X', '='='=', 'del'='DEL')
+
+annotate.PD <- function(x) {
+
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   MUTS <- x
   translate_consequence = c(
     "frameshift_variant" = "Frame_Shift_", 
@@ -624,12 +849,20 @@ annotate.PD <- function(x) {
     "inframe_deletion" = "In_Frame_Del", 
     "inframe_insertion" = "In_Frame_Ins",
     "synonymous_variant" = "synonymous_variant",
+<<<<<<< HEAD
     "missense_variant" = "Missense_Mutation",
+=======
+    "missense_variant" = "Missense",
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     "intron_variant" = "intron_variant",
     "splice_donor_variant" = "Splice_Site",
     "coding_sequence_variant" = "coding_sequence_variant",
     "protein_altering_variant" = "protein_altering_variant",
+<<<<<<< HEAD
     "splice_acceptor_variant" = "Splice_Site",
+=======
+    "splice_accepter_variant" = "Splice_Site",
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     "3_prime_UTR_variant" = "3_prime_UTR_variant",
     "5_prime_UTR_variant" = "5'Flank",
     "stop_lost" = "Nonsense_Mutation",
@@ -644,11 +877,26 @@ annotate.PD <- function(x) {
     mutate(VariantClass = translate_consequence[str_split(Consequence_VEP,"&",simplify = TRUE)[,1]]) %>%
     mutate(VariantClass = ifelse(VariantClass == 'Frame_Shift_', paste0('Frame_Shift_', translate_type[VARIANT_CLASS_VEP]), VariantClass))
   
+<<<<<<< HEAD
   
   MUTS <- MUTS[,c("CHROM","POS","REF","ALT","SYMBOL_VEP","HGVSp_VEP","HGVSc_VEP","VariantClass","SAMPLE","EXON_VEP","AAchange")]
   MUTS$aa_ref <- sapply(MUTS$AAchange, function(x) str_split(x, "[0-9]+", n=2)[[1]][1])
   MUTS$aa_alt <- sapply(MUTS$AAchange, function(x) str_split(x, "[0-9]+", n=2)[[1]][2])
   MUTS$aa_pos <- as.numeric(str_extract(MUTS$AAchange, "\\d+"))
+=======
+  MUTS$HGVSp_VEP <- gsub("(.*:p\\.)(.*)(fs.*)", "\\2", MUTS$HGVSp_VEP)
+  MUTS$HGVSp_VEP <- gsub("(.*:p\\.)(.*)", "\\2", MUTS$HGVSp_VEP)
+  MUTS$HGVSp_VEP <- gsub("del", "", MUTS$HGVSp_VEP)
+  MUTS$HGVSp_VEP <- gsub("%3D", "=", MUTS$HGVSp_VEP) 
+  MUTS <- MUTS[,c("CHROM","POS","REF","ALT","SYMBOL_VEP","HGVSp_VEP","VariantClass","SAMPLE","EXON_VEP")]
+  
+  MUTS$aa_ref <- sapply(MUTS$HGVSp_VEP, function(x) str_split(x, "[0-9]+", n=2)[[1]][1])
+  MUTS$aa_alt <- sapply(MUTS$HGVSp_VEP, function(x) str_split(x, "[0-9]+", n=2)[[1]][2])
+  MUTS$aa_pos <- as.numeric(str_extract(MUTS$HGVSp_VEP, "\\d+"))
+  
+  MUTS <- MUTS %>% 
+    mutate(AAchange=paste0(AminoAcids[aa_ref],aa_pos,AminoAcids[aa_alt]))
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   MUTS$var_key = paste(MUTS$CHROM, MUTS$POS, MUTS$REF, MUTS$ALT, sep = ":")
   
   ###create list of tumor suppressor genes####
@@ -657,11 +905,16 @@ annotate.PD <- function(x) {
   ## file 2
   oncoKB_curated = read_delim(args$oncoKB_curated, delim = "\t", guess_max = 5e6)
   oncoKB_curated.tsg = oncoKB_curated %>% filter(Is_Tumor_Suppressor=="Yes")
+<<<<<<< HEAD
+=======
+  #oncoKB_variants = read_delim("data/all_annotated_variants_v2.0.tsv", delim = "\t", guess_max = 5e6)
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   
   TSG = c(gene_census$Gene,oncoKB_curated.tsg$Hugo_Symbol) %>% unique()
   
   
   ###########annotate with COSMIC########
+<<<<<<< HEAD
   #source("/storage1/fs1/bolton/Active/projects/annotation_files/cosmic/cosmic.parallel.compute1.R")
   ## need to add a parallel
   MUTS <- cosmic.run(MUTS, "SAMPLE")
@@ -669,6 +922,25 @@ annotate.PD <- function(x) {
   MUTS$heme_cosmic_count = fillna(MUTS$heme_cosmic_count, 0)
   MUTS$myeloid_cosmic_count = fillna(MUTS$myeloid_cosmic_count, 0)
   
+=======
+  COSMIChg38 <- read.table(args$cosmic_file, sep = "\t", quote = "", header = T)
+  MUTS = left_join(MUTS, COSMIChg38 %>% dplyr::select(COSMIC78_ID, CosmicCount, heme_cosmic_count, var_key),by="var_key")
+
+  MUTS$CosmicCount = fillna(MUTS$CosmicCount, 0)
+  MUTS$heme_cosmic_count = fillna(MUTS$heme_cosmic_count, 0)
+  
+  ##read in PD annoation files from papaemmanuil lab##
+  ## file 4
+  #A <- readxl::read_xlsx(args$pd_annotation_file)[,1:9] # now tsv
+  A <- read.table(args$pd_annotation_file, sep = "\t", header = T, quote = "")[,1:9]
+  A$keys = apply(A, 1, function(x) {
+    names(x)[x != '*'] %>% .[!. %in% c('source', 'ch_my_pd', 'ch_pancan_pd')]
+  })
+  pd_dfs = split(A, paste(A$keys))
+  
+  panmyeloid_variant_counts = read_delim(args$pan_myeloid, delim = "\t", guess_max = 5e6)
+  panmyeloid_variant_counts$var_key = paste0("chr", gsub("_", ":", panmyeloid_variant_counts$ID_VARIANT))
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   
   #annotate oncokb
   get_oncokb = function(mut) {
@@ -676,7 +948,11 @@ annotate.PD <- function(x) {
     apiKey = "a83627cd-47e4-4be0-82dd-8f4cc9e4d6d0"
     request_url = paste0("https://oncokb.org//api/v1/annotate/mutations/byProteinChange?hugoSymbol=",
                          mut['SYMBOL_VEP'], "&alteration=", mut['AAchange'], "&consequence=", mut['VariantClass'])
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     res=httr::content(httr::GET(request_url, httr::add_headers(Authorization = paste("Bearer", apiKey))))
     return(res$oncogenic)
   }
@@ -703,6 +979,7 @@ annotate.PD <- function(x) {
   #   4. FLT3-ITDs
   #   5. In-frame indels in CALR, CEBPA, CHEK2, ETV6, EZH2
   
+<<<<<<< HEAD
   ##read in PD annoation files from papaemmanuil lab##
   ## file 4
   A <- read.table(args$pd_annotation_file, sep = "\t", header = T, quote = "")[,1:9]
@@ -711,6 +988,8 @@ annotate.PD <- function(x) {
   })
   pd_dfs = split(A, paste(A$keys))
   
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   ch_my_variants = NULL
   pd_dfs = split(A, paste(A$keys))
   MUTS$aa_pos <- as.character(MUTS$aa_pos)
@@ -718,7 +997,11 @@ annotate.PD <- function(x) {
   colnames(MUTS)[5] <- c("Gene")
   MUTS.temp <- MUTS
   matched = list()
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   for (i in 1:length(pd_dfs)){
     temp = as.data.frame(pd_dfs[i])
     colnames(temp) = colnames(A)
@@ -730,14 +1013,21 @@ annotate.PD <- function(x) {
       MUTS.temp <- MUTS.temp %>% filter(!(var_key %in% matched))
       temp <- temp %>% filter(Exon == '*')
     }
+<<<<<<< HEAD
     # are all keys is both tables?
     print(all(keys %in% colnames(temp), keys %in% colnames(MUTS.temp)))
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     pds = left_join(MUTS.temp, temp[,c(keys,'ch_my_pd','source')], by=keys)
     pds = pds %>% filter(ch_my_pd>0)
     matched = append(matched, pds$var_key)
     ch_my_variants = rbind(ch_my_variants, pds)
   }
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   ch_my_variants = ch_my_variants %>% dplyr::select(source, var_key, ch_my_pd) %>% unique()
   tryCatch(
     expr = {
@@ -751,12 +1041,16 @@ annotate.PD <- function(x) {
   MUTS = left_join(MUTS, ch_my_variants, by="var_key")
   MUTS$ch_my_pd = fillna(MUTS$ch_my_pd, 0)
   
+<<<<<<< HEAD
   
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   # 6. Any variant occurring in the COSMIC “haematopoietic and lymphoid” category greater than or equal to 10 times
   
   MUTS$ch_my_pd = ifelse(MUTS$heme_cosmic_count>=10,ifelse(MUTS$ch_my_pd==2,2,1),MUTS$ch_my_pd)
   
   # 7. Any variant noted as potentially oncogenic in an in-house dataset of 7,000 individuals with myeloid neoplasm greater than or equal to 5 times
+<<<<<<< HEAD
   panmyeloid_variant_counts = read_delim(args$pan_myeloid, delim = "\t", guess_max = 5e6)
   panmyeloid_variant_counts$var_key = with(panmyeloid_variant_counts, paste(CHROM,POS,REF,ALT, sep = ":"))
   panmyeloid_variant_counts <- panmyeloid_variant_counts[panmyeloid_variant_counts$Annotation == "ONCOGENIC" | 
@@ -769,27 +1063,45 @@ annotate.PD <- function(x) {
             LEFT JOIN `panmyeloid_variant_counts` as r
             on l.var_key = r.var_key OR l.Gene_HGVSp_VEP = r.Gene_HGVSp_VEP")
   MUTS <- MUTS %>%
+=======
+  
+  MUTS = left_join(MUTS, panmyeloid_variant_counts %>% dplyr::select(Annotation,MDS,AML,MPN,var_key), by = 'var_key') %>%
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     mutate(
       MDS = fillna(MDS, 0),
       AML = fillna(AML, 0),
       MPN = fillna(MPN, 0),
+<<<<<<< HEAD
       Annotation = fillna(Annotation, ''),
       n_panmyeloid = ifelse(Annotation == 'ONCOGENIC', MDS + AML + MPN, 0))
   
+=======
+      Annotation = fillna(Annotation, '')
+    ) %>%
+    mutate(n_panmyeloid = ifelse(Annotation == 'ONCOGENIC', MDS + AML + MPN, 0))
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   
   MUTS$ch_my_pd = ifelse(MUTS$n_panmyeloid>=5,ifelse(MUTS$ch_my_pd==2,2,1),MUTS$ch_my_pd)
   # We annotated variants as oncogenic (CH-PD) if they fulfilled any of the following criteria: #reffered to in code as ch_pancan_pd
   # 1. Any variant noted as oncogenic or likely oncogenic in OncoKB
   
+<<<<<<< HEAD
   MUTS$ch_pd = ifelse(MUTS$oncoKB=="Oncogenic" | MUTS$oncoKB=="Likely Oncogenic" | hotspots$oncoKB== "Predicted Oncogenic", 1, 0)
   MUTS$isOncogenic <- MUTS$oncoKB=="Oncogenic" | MUTS$oncoKB=="Likely Oncogenic"
   MUTS$isTSG <- MUTS$Gene %in% TSG
+=======
+  MUTS$ch_pd = ifelse(MUTS$oncoKB=="Oncogenic" | MUTS$oncoKB=="Likely Oncogenic", 1,0)
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   
   # 2. Any truncating mutations (nonsense, essential splice site or frameshift indel) in known tumor suppressor genes as per the Cancer Gene Census or OncoKB.
   # Genes not listed in the cancer census or OncoKB were reviewed in the literature to determine if they were potentially tumor suppressor genes.# Annotate PD based on prevelance in cancer databases (COSMIC, Oncokb)
   
   
+<<<<<<< HEAD
   MUTS$ch_pd = ifelse(MUTS$isTSG &
+=======
+  MUTS$ch_pd = ifelse(MUTS$Gene %in% TSG &
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
                         MUTS$VariantClass %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Nonsense_Mutation", "Splice_Site"), 1, MUTS$ch_pd)
   
   #3. Any variant reported as somatic at least 20 times in COSMIC
@@ -799,12 +1111,17 @@ annotate.PD <- function(x) {
   #4. Any variant meeting criteria for CH-Myeloid-PD as above.
   
   MUTS = MUTS %>% mutate(ch_pd = ifelse(ch_my_pd == 1 | ch_my_pd == 2, 1, ch_pd))
+<<<<<<< HEAD
   
+=======
+  #MUTS$DMP_PATIENT_ID = gsub("-T.*", "", MUTS$DMP_ASSAY_ID)
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
   
   annotate_PD.R = MUTS %>% distinct(CHROM,POS,REF,ALT,SAMPLE, .keep_all = TRUE)
   
   sample=grep("SAMPLE",colnames(x))
   
+<<<<<<< HEAD
   if(all(annotate_PD.R[,c(1:4,9)]==x[,c(1:4,sample)])) {
     message("good same dim as orig")
     return(
@@ -821,10 +1138,30 @@ annotate.PD <- function(x) {
                                          ) & VariantClass=="Missense_Mutation" ~ 1,
                                          gene_loci_vep %in% vars$gene_loci_vep & VariantClass %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Nonsense_Mutation", "Splice_Site") ~ 1,
                                          TRUE ~ 0))
+=======
+  if(all(annotate_PD.R[,c(1:4,8)]==x[,c(1:4,sample)])) {
+    message("good same dim as orig")
+    return(
+      annotate_PD.R %>% # annotate_PD.R is the MUTS %>% distinct(CHROM,POS,REF,ALT,SAMPLE, .keep_all = TRUE)
+        dplyr::mutate(loci = str_extract(AAchange, "[A-Z]\\d+"),
+                      AAchange = str_remove(AAchange, "p."),
+                      gene_aachange = paste(Gene,AAchange,sep = "_"),
+                      gene_loci = paste(Gene,loci,sep = "_"),
+                      ch_pd2 = case_when(ch_pd==1 ~ 1,
+                                              gene_loci %in% topmed.loci.n$gene_loci & gene_aachange %in% topmed.mutation.1$gene_aachange & VariantClass=="Missense_Mutation" ~ 1,
+                                              gene_loci %in% topmed.loci.n$gene_loci & VariantClass %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Nonsense_Mutation", "Splice_Site") ~ 1,
+                                              gene_loci %in% kelly.loci.n$gene_loci & gene_aachange %in% kelly.mutation.1$gene_aachange & VariantClass=="Missense_Mutation" ~ 1,
+                                              gene_loci %in% kelly.loci.n$gene_loci & VariantClass %in% c("Frame_Shift_Del", "Frame_Shift_Ins", "Nonsense_Mutation", "Splice_Site") ~ 1,
+                                              TRUE ~ 0))
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     )
   } else {
     message("something wrong with dims")
   }
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 }
 
 
@@ -834,11 +1171,18 @@ final.passed$Vardict_PON_2AT2_percent <- fillna(final.passed$Vardict_PON_2AT2_pe
 ## let's look at 
     # gnomAD_MAX.Stringent.0007, gnomAD_MAX.lessStringent.0007, 
     # MAX_gnomAD_AF_VEP, MAX_gnomADe_AF_VEP, MAX_gnomADg_AF_VEP
+<<<<<<< HEAD
 # final.passed$Vardict_PON_2AT2_percent = 1 = fail
 final.passed$passed_everything <- (!final.passed$Vardict_PON_2AT2_percent &
                                      !final.passed$Mutect2_PON_2AT2_percent &
                                      final.passed$alt_strand_counts_min_2_callers &
                                      final.passed$max.under.0.35 &
+=======
+final.passed$passed_everything <- (!final.passed$Vardict_PON_2AT2_percent &
+                                     !final.passed$Mutect2_PON_2AT2_percent &
+                                     final.passed$alt_strand_counts_min_2_callers &
+                                     final.passed$min.under.0.35 &
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
                                      final.passed$max.over.0.02 &
                                      final.passed$passed &
                                      final.passed$complexity_filters &
@@ -847,6 +1191,7 @@ final.passed$passed_everything <- (!final.passed$Vardict_PON_2AT2_percent &
 final.passed$passed_everything_mutect <- final.passed$passed_everything & final.passed$Mutect2_PASS
 
 annotation <- annotate.PD(final.passed)
+<<<<<<< HEAD
 ## add n_panmyeloid
 # final.df <-  left_join(final.passed,
 #                        annotation %>%
@@ -861,5 +1206,22 @@ final.df <-  left_join(final.passed,
 final.df$eid <- args$eid
 col.order <- read.table(args$col_order)$V1
 final.df <- final.df[,col.order]
+=======
+final.df <-  left_join(final.passed,
+                       annotation %>%
+                         dplyr::select("CHROM","POS","REF","ALT","SAMPLE","CosmicCount","heme_cosmic_count","MDS",
+                                       "AML","MPN","ch_my_pd","ch_pd","ch_pd2","VariantClass","AAchange","Gene"),
+                       by=c("CHROM","POS","REF","ALT","SAMPLE"))
+final.df$eid <- args$eid
+# write.table(final.df, paste0(final.df$SAMPLE[1],".final.tsv"), row.names = F, sep = "\t", quote = F)
+final.df$Vardict_FILTER
+
+final.df %>% 
+  dplyr::mutate(ch_pd2 = case_when(Vardict_FILTER=="PASS" ~ "BCBIO",
+                                   Vardict_FILTER=="BCBIO" ~ "PASS",
+                                   
+                                   TRUE ~ NA))
+
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 write.table(final.df, paste0(args$eid,".final.tsv"), row.names = F, sep = "\t", quote = F)
 write.table(colnames(final.df), paste0(args$eid,".columns.txt"), row.names = F, col.names = F)

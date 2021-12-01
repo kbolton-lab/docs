@@ -279,7 +279,11 @@ colnames(final)[colnames(final) %in% intersection.cols.x] <- intersection
 final <- final[,!(colnames(final) %in% intersection.cols.y)]
 
 ## remove blank CSQ columns because they are non-coding and separate
+<<<<<<< HEAD
 final <- final[!is.na(final$CSQ),]
+=======
+final <- final[!is.na(final$CSQ) | (!is.na(final$Vardict_calpos) & is.na(final$Mutect2_CALLER)),]
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 # VEP CSQ
 ## new VEP has 96 fields
 ## new VEP with gnomADg has 106 fields

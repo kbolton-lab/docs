@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 ## old FINAL_12 mutect scatter
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 function __W12_FINAL {
 	# array2=($(dx ls "/Bulk/Exome sequences/Exome OQFE CRAM files/10/" | grep -v "crai" | cut -d'_' -f1 | sort | head -n100 | grep -v -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/log))
 	# for eid in ${array2[@]}; do W10_FINAL $eid 10; done
@@ -12,7 +15,11 @@ function __W12_FINAL {
 	# mutect _scatter
 	dx run workflow-G4qkQJQJ6XG0P2Bz4Qj3zxk2 -f $wf_folder/input_json/$2/$1.json -y --priority low --project $BRIAN --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}'
 	# mutect_single
+<<<<<<< HEAD
 	# dx run workflow-G4x6JB0JQ281gy5Q4K814GXF -f $wf_folder/input_json/$2/$1.json -y --priority low
+=======
+	dx run workflow-G4x6JB0JQ281gy5Q4K814GXF -f $wf_folder/input_json/$2/$1.json -y --priority low
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 	echo $1 >> /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/logs/log12
 }
 workflow_id=workflow-G4qkQJQJ6XG0P2Bz4Qj3zxk2
@@ -39,6 +46,7 @@ for folder in 12; do
 done
 dx run workflow-G4qkQJQJ6XG0P2Bz4Qj3zxk2 --batch-tsv split_dx_batch.0000.tsv_aa -istage-G4fq8KjJ6XG6pBYqK1VXFgZV.project=project-G3Yj1vjJ6XG579jbKyjXPGGY -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}, "stageSystemRequirements": {"stage-G4KqPz0J6XGJZGB842qJVYQK":{"executionPolicy": {"restartOn": {"AppInternalError": 1}}}}}'
 
+<<<<<<< HEAD
 
 
 
@@ -46,6 +54,11 @@ dx run workflow-G4qkQJQJ6XG0P2Bz4Qj3zxk2 --batch-tsv split_dx_batch.0000.tsv_aa 
 
 # kelly
 # dx run workflow-G4x6JB0JQ281gy5Q4K814GXF -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/input_json/12/1219875.json -y --priority low --project project-G4qpk1jJQ285yvbXPFZKXkk8 --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}'
+=======
+# dx run workflow-G4v1kZjJQ286B56406bBFxvQ -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/input_json/12/1208696.json -y --priority low
+
+# kelly
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 function W12_FINAL_K {
 	wf_folder="/Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL"
 	# tail -n+2 /Users/brian/Bolton/UKBB/clinicaldata_ukbb_transplant.csv | awk -F, '{print $1}' | grep -v -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/TOTAL/total.txt
@@ -53,12 +66,18 @@ function W12_FINAL_K {
 	subfolder=${sample:0:2}
 	project=$2
 	/Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/template2.sh $sample $subfolder $wf_folder $project
+<<<<<<< HEAD
 	echo dx run workflow-G4x6JB0JQ281gy5Q4K814GXF -f $wf_folder/input_json/$subfolder/$sample.json -y --priority low --project $KELLY --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}'
 	echo $sample >> /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/logs/log${subfolder}
 }
 # dx update stage workflow-G4x6JB0JQ281gy5Q4K814GXF "mutect_vep" --executable applet-G4fpZk8J6XGGQpPQJyQXfkpQ
 # dx update stage workflow-G4x6JB0JQ281gy5Q4K814GXF "final_annotation" --executable applet-G52PBG0JQ289QY9fBy9B1ZxX
 # dx update stage workflow-G4x6JB0JQ281gy5Q4K814GXF "final_annotation_and_declutter" -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/FINAL_Transplant/input.json
+=======
+	echo dx run workflow-G4x6JB0JQ281gy5Q4K814GXF -f $wf_folder/input_json/$subfolder/$sample.json -y --priority low --project $KELLY
+	echo $sample >> /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/logs/log${subfolder}
+}
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 
 # brian 
 function W12_FINAL_B {
@@ -69,6 +88,7 @@ function W12_FINAL_B {
 	project=$2
 	/Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/template2.sh $sample $subfolder $wf_folder $project
 	
+<<<<<<< HEAD
 	echo dx run workflow-G4x8k0QJ6XG88z719jyVVX77 -f $wf_folder/input_json/$subfolder/$sample.json -y --priority low --project $BRIAN --extra-args '{"stageSystemRequirements": {"stage-11":{"executionPolicy": {"restartOn": {"AppInternalError": 1, "UnresponsiveWorker": 2}}}}}'
 	echo $sample >> /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/logs/log${subfolder}
 }
@@ -76,3 +96,8 @@ function W12_FINAL_B {
 dx run workflow-G4x8k0QJ6XG88z719jyVVX77 -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/input_json/12/1233463.json -y --priority low --project project-G3Yj1vjJ6XG579jbKyjXPGGY --extra-args '{"stageSystemRequirements": {"stage-G4KqPz0J6XGJZGB842qJVYQK":{"executionPolicy": {"restartOn": {"AppInternalError": 1, "UnresponsiveWorker": 2}}}}}'
 
 dx run workflow-G4x8k0QJ6XG88z719jyVVX77 -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/input_json/12/1237094.json -y --priority low --project project-G3Yj1vjJ6XG579jbKyjXPGGY --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}, "stageSystemRequirements": {"stage-G4KqPz0J6XGJZGB842qJVYQK":{"executionPolicy": {"restartOn": {"AppInternalError": 1}}}}}'
+=======
+	echo dx run workflow-G4x8k0QJ6XG88z719jyVVX77 -f $wf_folder/input_json/$subfolder/$sample.json -y --priority low --project $BRIAN
+	echo $sample >> /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/logs/log${subfolder}
+}
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01

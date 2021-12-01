@@ -108,6 +108,7 @@ dx ls project-G4qpk1jJQ285yvbXPFZKXkk8:/CH_Exome/Workflow_Outputs/FINAL/Final_Ou
 for batch in ab ad af ah aj al an ap ar at av; do
     grep -v -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/GERMLINE/kelly.complete.txt /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/GERMLINE/splits/split_${batch} > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/GERMLINE/splits/split_${batch}_remaining
 done
+wc -l  /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/GERMLINE/splits/split_a{b,d,f,h,j,l,n,p,r,t,v}_remaining
 for batch in ab ad af ah aj al an ap ar at av; do
     GERMLINE /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/GERMLINE/splits/split_${batch}_remaining $workflow $KELLY
 done

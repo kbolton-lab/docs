@@ -29,7 +29,11 @@ grep -v -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/logs/log$
 # workflow_id=workflow-G4qkQJQJ6XG0P2Bz4Qj3zxk2
 # dx run $workflow_id --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0000.tsv -y --priority low
 
+<<<<<<< HEAD
 workflow_id=workflow-G4x6JB0JQ281gy5Q4K814GXF
+=======
+workflow_id=workflow-G4x6JB0JQ281gy5Q4K814GXF # Kelly
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 for folder in 12; do
     cd /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder
     for batch in dx_batch.0001.tsv; do
@@ -40,14 +44,23 @@ for folder in 12; do
             # cat "$file" >> ${batch}_tmp_file
             grep -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/12/dx_batch_1_latest.0001.tsv "$file" >> ${batch}_tmp_file
             mv -f ${batch}_tmp_file "$file"
+<<<<<<< HEAD
             wc -l $file
             dx run $workflow_id --batch-tsv $file -istage-G4fq8KjJ6XG6pBYqK1VXFgZV.project=$KELLY -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}'
             sleep 120
+=======
+            echo dx run $workflow_id --batch-tsv $file -istage-G4fq8KjJ6XG6pBYqK1VXFgZV.project=$KELLY -y --priority low
+            
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         done
     done
 done
 
+<<<<<<< HEAD
 workflow_id=workflow-G4x8k0QJ6XG88z719jyVVX77
+=======
+workflow_id=workflow-G4x8k0QJ6XG88z719jyVVX77 # Brian
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 for folder in 12; do
     cd /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder
     for batch in dx_batch.0002.tsv; do
@@ -55,11 +68,18 @@ for folder in 12; do
         tail -n +2 $batch | split -l 100 - split_${batch}_
         for file in split_${batch}_*; do
             head -n 1 $batch > ${batch}_tmp_file
+<<<<<<< HEAD
             grep -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/12/dx_batch_1_latest.0002.tsv "$file" >> ${batch}_tmp_file
             mv -f ${batch}_tmp_file "$file"
             wc -l $file
             dx run $workflow_id --batch-tsv $file -istage-G4fq8KjJ6XG6pBYqK1VXFgZV.project=$BRIAN -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}, "stageSystemRequirements": {"stage-G4KqPz0J6XGJZGB842qJVYQK":{"executionPolicy": {"restartOn": {"AppInternalError": 1}}}}}'
             sleep 30
+=======
+            cat "$file" >> ${batch}_tmp_file
+            mv -f ${batch}_tmp_file "$file"
+            dx run $workflow_id --batch-tsv $file -istage-G4fq8KjJ6XG6pBYqK1VXFgZV.project=$BRIAN -y --priority low
+            
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         done
     done
 done

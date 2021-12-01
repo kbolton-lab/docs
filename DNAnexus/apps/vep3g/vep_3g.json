@@ -13,14 +13,24 @@
     },
     "vcf": {
         "$dnanexus_link": {
+<<<<<<< HEAD
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
             "id": "file-G5y8ZP8JQ289826f6X9P37gq"
+=======
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4KbGy0J6XGFJJfj6xkkbbY0"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         }
     },
     "vcf_index": {
         "$dnanexus_link": {
+<<<<<<< HEAD
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
             "id": "file-G5y8ZPQJQ283pKB673g0JbF4"
+=======
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4KbGyjJ6XG7fjz7PVZ3GGZk"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         }
     },
     "caller": "germline_mane_canonical_length_rank_biotype",

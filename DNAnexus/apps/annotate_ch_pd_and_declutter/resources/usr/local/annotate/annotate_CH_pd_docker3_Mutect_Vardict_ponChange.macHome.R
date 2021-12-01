@@ -89,66 +89,6 @@ cosmic.run <- function(df, sample.column) {
   }
 }
 
-# cosmic.run <- function(df, sample.column) {
-#   
-#   X1 <- split(df, df[,"CHROM"])
-#   ptm <- proc.time()
-#   X.1 <- parallel::mclapply(ls(X1), function(x) {
-#     # X.1 <- lapply(ls(X1)[7:8], function(x) {
-#     df.chr <- X1[[x]]
-#     df.chr$HGVSp_VEP <- gsub(".*:","",df.chr$HGVSp_VEP)
-#     df.chr$Gene_HGVSp_VEP <- with(df.chr, paste(SYMBOL_VEP, HGVSp_VEP, sep = "_"))
-#     cosmic <- read.table(paste0("~/CosmicMutantExport.final.more.minimal.test.",x,".tsv"),
-#                          header = T, sep = "\t", comment.char = "", quote="")
-#     colnames(cosmic) <- c("COSMIC_ID","var_key","HGVSP","CosmicCount","heme_cosmic_count","myeloid_cosmic_count","Gene_HGVSp_VEP")
-#     
-#     cosmic.test <- sqldf("SELECT l.*, r.COSMIC_ID, r.var_key as var_key_cosmic, HGVSP, r.CosmicCount, 
-#               r.heme_cosmic_count, r.myeloid_cosmic_count
-#               FROM `df.chr` as l
-#               LEFT JOIN `cosmic` as r
-#               on l.var_key = r.var_key OR l.Gene_HGVSp_VEP = r.Gene_HGVSp_VEP")
-#     cosmic.test <- cosmic.test[,c(colnames(df.chr),"COSMIC_ID","CosmicCount","heme_cosmic_count","myeloid_cosmic_count")]
-#     cosmic.test$CosmicCount <- fillna(cosmic.test$CosmicCount,0)
-#     cosmic.test$heme_cosmic_count <- fillna(cosmic.test$heme_cosmic_count,0)
-#     cosmic.test$myeloid_cosmic_count <- fillna(cosmic.test$myeloid_cosmic_count,0)
-#     cosmic.test <- cosmic.test %>% 
-#       group_by(var_key,cosmic.test[[sample.column]]) %>%
-#       slice_max(order_by = heme_cosmic_count, n = 1, with_ties = F)
-#     cosmic.test <- data.frame(cosmic.test)
-#     
-#     row.names(cosmic.test) <- cosmic.test$var_key
-#     cosmic.test <- cosmic.test[df.chr$var_key,]
-#     
-#     if (all(cosmic.test[,c("CHROM","POS","REF","ALT",sample.column)]==df.chr[,c("CHROM","POS","REF","ALT",sample.column)])) {
-#       print(paste("good inner", x))
-#       return(cosmic.test)
-#     } else {
-#       print(paste("bad inner", x))
-#     }
-#   })
-#   proc.time() - ptm
-#   
-#   if (length(X1) == length(X.1)) { 
-#     names(X.1) <- ls(X1) 
-#   } else {
-#     stop("WRONG")
-#   }
-#   
-#   all.match <- all(sapply(ls(X1), function(x) {
-#     dim(X1[[x]])[1] == dim(X.1[[x]])[1]
-#   }))
-#   if (all.match) {
-#     cosmic.final2 <- bind_rows(X.1)
-#   }
-#   if (all(cosmic.final2[,c("CHROM","POS","REF","ALT",sample.column)]==df[,c("CHROM","POS","REF","ALT",sample.column)])) {
-#     print("good")
-#     MUTS <- cbind(df, cosmic.final2 %>% dplyr::select(COSMIC_ID,CosmicCount,heme_cosmic_count,myeloid_cosmic_count))
-#     return(MUTS)
-#   } else {
-#     print("bad")
-#   }
-# }
-
 parser <- arg_parser("Process NGS variant calls")
 parser <- add_argument(parser, "--impact-file", type="character", help="kelly's file")
 parser <- add_argument(parser, "--bick-file", type="character", help="bick's file")
@@ -179,12 +119,16 @@ args <- parse_args(parser)
 args <- parse_args(parser, list(c("-i","~/Bolton/data/hg38_mut_full_long_filtered_KB_deid_2.tsv"),
                                 c("-b","~/Bolton/data/bick_topmed_variants.txt"),
                                 c("-c","~/Bolton/data/hg38_cosmic78_parsed.sorted.txt"),
-                                # c("-v", paste("~/Bolton/UKBB/docs/DNAnexus/apps/test/1218352_23153_0_0.mutect.final.annotated.vcf.gz",
-                                #               "~/Bolton/UKBB/docs/DNAnexus/apps/test/1218352_23153_0_0.vardict.final.annotated.vcf.gz",
-                                #               sep=",")),
-                                c("-v", paste("/Users/brian/Bolton/UKBB/results/lung/update/1755996_23153_0_0.mutect.vep.annotated.vcf.gz",
-                                              "/Users/brian/Bolton/UKBB/results/lung/update/1755996_23153_0_0.vardict.final.annotated.vcf.gz",
+                                c("-v", paste("/Users/brian/Bolton/TwinStrand/final.lofreq.vcf",
+                                              "/Users/brian/Bolton/TwinStrand/final.lofreq.vcf",
+                                              "/Users/brian/Bolton/TwinStrand/final.lofreq.vcf",
+                                              "/Users/brian/Bolton/TwinStrand/final.lofreq.vcf",
+                                              "/Users/brian/Bolton/TwinStrand/final.lofreq.vcf",
+                                              "/Users/brian/Bolton/TwinStrand/final.lofreq.vcf",
                                               sep=",")),
+                                # c("-v", paste("/Users/brian/Bolton/UKBB/results/lung/update/1755996_23153_0_0.mutect.vep.annotated.vcf.gz",
+                                #               "/Users/brian/Bolton/UKBB/results/lung/update/1755996_23153_0_0.vardict.final.annotated.vcf.gz",
+                                #               sep=",")),
                                 c("-e","1218352_23153_0_0"),
                                 c("-T","~/Bolton/data/gene_census_TSG.txt"),
                                 c("--oncoKB-curated","~/Bolton/data/all_curated_genes_v2.0.tsv"),
@@ -196,7 +140,7 @@ args <- parse_args(parser, list(c("-i","~/Bolton/data/hg38_mut_full_long_filtere
                                 c("--simple-repeats","~/Bolton/data/simpleRepeat.bed"),
                                 c("--repeat-masker","~/Bolton/data/repeatMaskerJoinedCurrent.bed"),
                                 c("--target-length", 39652397), ## 38997831
-                                c("--bolton-bick-vars","~/Bolton/data/bick.bolton.vars2.txt"), # new
+                                c("--bolton-bick-vars","~/Bolton/data/bick.bolton.vars3.txt"), # new
                                 c("--mut2-bick","~/Bolton/data/topmed.n2.mutation.1.c.p.txt"), # new
                                 c("--mut2-kelly","~/Bolton/data/kelly.n2.mutation.1.c.p.txt"),
                                 c("--matches2","~/Bolton/data/matches.2.c.p.txt"), # MORE NEW!
@@ -634,6 +578,13 @@ final.passed <- sqldf("SELECT l.*, r.`n.loci.vep`, r.`source.totals.loci`
             LEFT JOIN `vars` as r
             on l.key = r.key OR l.gene_loci_vep = r.gene_loci_vep")
 final.passed <- final.passed[!duplicated(final.passed),]
+vars.truncating <- vars[vars$truncating=="truncating",]
+lung.ch_pd2 <- sqldf("SELECT l.*, r.`truncating_loci_total`, r.`source.totals.loci.truncating`
+            FROM `lung.ch_pd2` as l
+            LEFT JOIN `vars.truncating` as r
+            on l.key = r.key OR l.gene_loci_vep = r.gene_loci_vep") # source.totals.loci
+lung.ch_pd2 <- lung.ch_pd2[!duplicated(lung.ch_pd2),]
+lung.ch_pd2$truncating_loci_total <- fillna(lung.ch_pd2$truncating_loci_total, 0)
 ## make sure aachange exists as in doesn't end with an '_'; example: DNMT3A_ for splice 
 final.passed <- sqldf("SELECT l.*, r.`n.HGVSp`, r.`source.totals.p`
             FROM `final.passed` as l
@@ -645,7 +596,7 @@ final.passed <- sqldf("SELECT l.*, r.`n.HGVSc`, r.`source.totals.c`
             LEFT JOIN `vars` as r
             on l.key = r.key OR (l.gene_cDNAchange = r.gene_cDNAchange) AND r.gene_cDNAchange NOT LIKE '%_'")
 final.passed <- final.passed[!duplicated(final.passed),]
-dim(final.passed)[[1]] == dims
+paste0("dims match after sqldf: ",dim(final.passed)[[1]] == dims)
 
 ########################################################################################
 annotate.PD <- function(x) {

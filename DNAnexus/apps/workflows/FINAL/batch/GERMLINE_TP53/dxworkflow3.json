@@ -1,0 +1,126 @@
+{
+  "name": "GERMLINE_TP53",
+  "title": "GERMLINE_TP53",
+  "summary": "UKBB with only 9 jobs",
+  "stages": [
+    {
+      "id": "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv",
+      "name": "bqsr_spark",
+      "executable": "applet-G6BF8XQJQ28862yBKz2G5QB1",
+      "folder": "/CH_Exome/Workflow_Outputs/FINAL/BQSR/Germline_TP53",
+      "input": {
+        "reference": {
+          "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        },
+        "reference_index": {
+          "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        },
+        "reference_dict": {
+          "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+        },
+        "known_sites": [
+          {
+            "$dnanexus_link": "file-G3zPJg0J6XG8j2fy4XKPF8pZ"
+          },
+          {
+            "$dnanexus_link": "file-G3zPJV8J6XG5Y1JBPjgFbQQf"
+          },
+          {
+            "$dnanexus_link": "file-G3zPGgQJ6XGKy6V90xB23Gg9"
+          }
+        ],
+        "known_sites_index": [
+          {
+            "$dnanexus_link": "file-G4KgzyjJ6XGP2F6B9Gpj6z94"
+          },
+          {
+            "$dnanexus_link": "file-G4Kj1kQJ6XG4z8J45x2fP49b"
+          },
+          {
+            "$dnanexus_link": "file-G3zPQyQJ6XG448K8Kp7Xq3kY"
+          }
+        ]
+      }
+    },
+    {
+      "id": "stage-G4KkV88J6XG340022vxq916x",
+      "name": "haplotype_caller",
+      "executable": "applet-G6XgzK8JQ28JyxGBGX7zZ182",
+      "folder": "/CH_Exome/Workflow_Outputs/FINAL/HaplotypeCaller",
+      "input": {
+        "reference": {
+          "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        },
+        "reference_index": {
+          "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        },
+        "reference_dict": {
+          "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+        },
+        "interval_list": {
+          "$dnanexus_link": "file-G6YF888JQ28FB8kgJvZfkF2P"
+        },
+        "tumor_bam": {
+          "$dnanexus_link": {
+            "stage": "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv",
+            "outputField": "bam_out"
+          }
+        },
+        "tumor_bai": {
+          "$dnanexus_link": {
+            "stage": "stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv",
+            "outputField": "bam_out_index"
+          }
+        }
+      }
+    },
+    {
+      "id": "stage-G4KpvP8J6XGGY19F6Vpxz7pJ",
+      "name": "vep",
+      "executable": "applet-G5Zy9q8JQ280Qf9P1qFqvJ82",
+      "folder": "/CH_Exome/Workflow_Outputs/FINAL/MutectVEP/Germline",
+      "input": {
+        "reference": {
+          "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        },
+        "reference_index": {
+          "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        },
+        "synonyms": {
+          "$dnanexus_link": "file-G46qvVjJ6XG7GYy908bk63Xb"
+        },
+        "gnomad_file": {
+          "$dnanexus_link": "file-G46qqJ8J6XGKP0v42VYfBFxK"
+        },
+        "gnomad_file_index": {
+          "$dnanexus_link": "file-G48jkGQJ6XGB107g64pfBB26"
+        },
+        "clinvar_file": {
+          "$dnanexus_link": "file-G46qv30J6XGFYkX6Kv9j7gG5"
+        },
+        "clinvar_file_index": {
+          "$dnanexus_link": "file-G48jkj0J6XG8ZYjZJp3GB9JK"
+        },
+        "gnomad_V3": {
+          "$dnanexus_link": "file-G4fkXKjJ6XG5bvG84XGxP97b"
+        },
+        "gnomad_V3_index": {
+          "$dnanexus_link": "file-G4fkYJjJ6XG0Kg1V37pv39K5"
+        },
+        "vcf": {
+          "$dnanexus_link": {
+            "stage": "stage-G4KkV88J6XG340022vxq916x",
+            "outputField": "vcf"
+          }
+        },
+        "vcf_index": {
+          "$dnanexus_link": {
+            "stage": "stage-G4KkV88J6XG340022vxq916x",
+            "outputField": "vcf_index"
+          }
+        },
+        "caller": "haplotype_caller"
+      }
+    }
+  ]
+}
