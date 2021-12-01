@@ -5,7 +5,11 @@
 main() {
     set -exou pipefail
 <<<<<<< HEAD
+<<<<<<< HEAD
     #wget https://raw.githubusercontent.com/griffithlab/pVACtools/master/tools/pvacseq/VEP_plugins/Wildtype.pm
+=======
+    wget https://raw.githubusercontent.com/griffithlab/pVACtools/master/tools/pvacseq/VEP_plugins/Wildtype.pm
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 =======
     wget https://raw.githubusercontent.com/griffithlab/pVACtools/master/tools/pvacseq/VEP_plugins/Wildtype.pm
 >>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
@@ -59,7 +63,10 @@ main() {
 
     docker load -i $dockerimage_vep_path
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 =======
 >>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/vep \
@@ -67,7 +74,11 @@ main() {
             --format vcf \
             -i complex.only.variant.query.vcf.gz \
 <<<<<<< HEAD
+<<<<<<< HEAD
             --fork $fork \
+=======
+            --fork 4 \
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 =======
             --fork 4 \
 >>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
@@ -81,6 +92,7 @@ main() {
             --dir /opt/vep/.vep/ \
             --synonyms $synonyms_path \
 <<<<<<< HEAD
+<<<<<<< HEAD
             --plugin Frameshift \
             --plugin Wildtype \
             --assembly GRCh38 \
@@ -88,6 +100,8 @@ main() {
             --merged \
             $additional_args \
 =======
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
             --sift p \
             --polyphen p \
             --coding_only \
@@ -101,12 +115,16 @@ main() {
             --check_existing \
             --buffer_size 1000 \
             --af_gnomad \
+<<<<<<< HEAD
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+=======
 >>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
             --custom $gnomad_file_path,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
             --custom $gnomad_V3_path,gnomADg,vcf,exact,1,AF,AF_ami,AF_oth,AF_afr,AF_sas,AF_asj,AF_fin,AF_amr,AF_nfe,AF_eas \
             --custom $clinvar_file_path,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
             --force_overwrite && bgzip complex.only.variant.query.vep.annotated.vcf && tabix complex.only.variant.query.vep.annotated.vcf.gz"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     # docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/vep \
     #     /bin/bash -c "/opt/vep/src/ensembl-vep/vep \
@@ -140,6 +158,8 @@ main() {
     #         --custom $clinvar_file_path,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
     #         --force_overwrite && bgzip complex.only.variant.query.vep.annotated.vcf && tabix complex.only.variant.query.vep.annotated.vcf.gz"
 
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 =======
 >>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 

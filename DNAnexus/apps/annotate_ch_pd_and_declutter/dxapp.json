@@ -123,8 +123,13 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
+<<<<<<< HEAD
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
             "id": "file-G5j80zjJQ289P281KVq12VqP" 
+=======
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4gy0jQJ6XGPpb7Q4GpGZX1z" 
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         }
       },
       "patterns": [
@@ -139,8 +144,13 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
+<<<<<<< HEAD
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
             "id": "file-G5b2Kj8JQ281jkJx6y0XzQVB"
+=======
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G51q1z0J6XGFgfY84jXVyvpf"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         }
       },
       "patterns": [
@@ -228,8 +238,13 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
+<<<<<<< HEAD
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
             "id": "file-G5b4yJQJQ283kZJpJzz40YqB"
+=======
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4KjGZQJ6XGP32PJ704VqBX4"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         }
       },
       "help": "R installed"
@@ -260,7 +275,11 @@
       "label": "mutect",
       "class": "string",
       "optional": true,
+<<<<<<< HEAD
       "default": "mutect_single_orientation",
+=======
+      "default": "mutect_single",
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
       "patterns": [
         "*"
       ],
@@ -276,6 +295,7 @@
         "*"
       ],
       "help": ""
+<<<<<<< HEAD
     },
     {
       "name": "cosmic_files",
@@ -366,6 +386,8 @@
         "*.txt"
       ],
       "help": ""
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     }
   ],
   "outputSpec": [

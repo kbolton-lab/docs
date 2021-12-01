@@ -27,7 +27,10 @@ main() {
     echo "Value of vcf2PON: '$vcf2PON'"
     echo "Value of vcf2PON_index: '$vcf2PON_index'"
     echo "Value of caller: '$caller'"
+<<<<<<< HEAD
     echo "Value of intervals: '$intervals'"
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 
     dx-download-all-inputs --parallel
   
@@ -38,7 +41,12 @@ main() {
     mv $vcf2PON_index_path .
     mv $dockerimage_msk_getbasecountsR_path .
 
+<<<<<<< HEAD
     p_value=$(grep -v "^@" $intervals_path | awk '{print $1,$2,$3}' | awk '$4=$3-$2+1 {sum+=$4}END {print .05/sum}')
+=======
+
+    
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
    
     vcf_filename=$(basename -- "$vcf_name")
     extension="${vcf_filename##*.}"
@@ -47,8 +55,16 @@ main() {
         vcf_filename=$(basename $vcf_name .gz)
     fi
 
+<<<<<<< HEAD
     ## get <eid>_23153_0_0 from <eid>_23153_0_0.<suffix>
     eid_nameroot=$(echo $vcf_name | cut -d'.' -f1)
+=======
+
+    ## get <eid>_23153_0_0 from <eid>_23153_0_0.<suffix>
+    eid_nameroot=$(echo $vcf_name | cut -d'.' -f1)
+    
+
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     msk_out="$eid_nameroot.normal.pileup.vcf"
 
     bams=""
@@ -66,7 +82,11 @@ main() {
    
     docker load -i $dockerimage_msk_getbasecountsR_name
     docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/msk/bin/:/usr/local/msk/bin -w /home/dnanexus kboltonlab/msk_getbasecounts:3.0 \
+<<<<<<< HEAD
         /bin/bash /usr/local/msk/bin/MSK.sh $reference_name "$bams" $vcf_filename $msk_out $eid_nameroot $vcf2PON_name $caller $p_value
+=======
+        /bin/bash /usr/local/msk/bin/MSK.sh $reference_name "$bams" $vcf_filename $msk_out $eid_nameroot $vcf2PON_name $caller
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 
     vcf_out=$(dx upload $eid_nameroot.$caller.msk.pon2.vcf.gz --brief)
     vcf_out_index=$(dx upload $eid_nameroot.$caller.msk.pon2.vcf.gz.tbi --brief)

@@ -17,7 +17,12 @@ parser.add_argument('folder_prefix', metavar='N', type=str,
                     help='output folder with template to name new input file')
 parser.add_argument('project', metavar='N', type=str,
                     help='project id')
+<<<<<<< HEAD
 # args = parser.parse_args(['1036101','"file-Fyf3kj8J7YXfQX8B3kyz1YYY"'])
+=======
+# args = parser.parse_args(['1036101','"file-Fyf3kj8J7YXfQX8B3kyz1YYY"',
+#                           "/Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/Mutect_Vardict_CH_NO_BQSR"])
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 args = parser.parse_args()
 args.cram = args.cram.strip("\"")
 args.cram_index = args.cram_index.strip("\"")

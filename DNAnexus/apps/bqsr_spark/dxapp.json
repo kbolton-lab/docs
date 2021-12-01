@@ -157,7 +157,17 @@
     "aws:eu-west-2": {
       "systemRequirements": {
         "*": {
+<<<<<<< HEAD
           "instanceType": "mem2_ssd1_v2_x8"
+=======
+          "instanceType": "mem3_ssd1_v2_x16",
+          "clusterSpec": {
+            "type": "dxspark",
+            "version": "2.4.4",
+            "initialInstanceCount": 1,
+            "ports": "9500, 9700-9750"
+          }
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         }
       }
     }

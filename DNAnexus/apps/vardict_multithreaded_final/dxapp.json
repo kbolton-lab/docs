@@ -143,7 +143,11 @@
       "systemRequirements": {
         "*": {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "instanceType": "mem1_ssd1_v2_x16"
+=======
+          "instanceType": "mem3_ssd1_v2_x16"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 =======
           "instanceType": "mem3_ssd1_v2_x16"
 >>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01

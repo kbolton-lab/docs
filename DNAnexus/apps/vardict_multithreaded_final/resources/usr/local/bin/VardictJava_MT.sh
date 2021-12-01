@@ -19,5 +19,9 @@ echo $normal_sample_name
 /usr/bin/bgzip $eid_nameroot.vardict.vcf && /usr/bin/tabix $eid_nameroot.vardict.vcf.gz
 
 # extract tumor before bcbio filter or both normal and tumor will be canidates for the filter
+<<<<<<< HEAD
 ## bqsr changes to where Vardict NM is 0 for all????
 /usr/bin/bcftools view -s ${tumor_sample_name} --threads 64 $eid_nameroot.vardict.vcf.gz | /usr/bin/bcftools norm -f $REF -m -any --threads 64 | /usr/bin/bcftools filter -e "((FMT/AF * FMT/DP < 3) && ( FMT/MQ < 55.0 || FMT/DP < 10 || FMT/QUAL < 30 ))" -m+ -s "BCBIO" --threads 64 -Oz -o $eid_nameroot.vardict.BCBIOfiltered.vcf.gz && /usr/bin/tabix $eid_nameroot.vardict.BCBIOfiltered.vcf.gz
+=======
+/usr/bin/bcftools view -s ${tumor_sample_name} --threads 64 $eid_nameroot.vardict.vcf.gz | /usr/bin/bcftools norm -f $REF -m -any --threads 64 | /usr/bin/bcftools filter -e "((FMT/AF * FMT/DP < 6) && ((FMT/MQ < 55.0 && FMT/NM > 1.0) || (FMT/MQ < 60.0 && FMT/NM > 2.0) || (FMT/DP < 10) || (FMT/QUAL < 45)))" -m+ -s "BCBIO" --threads 64 -Oz -o $eid_nameroot.vardict.BCBIOfiltered.vcf.gz && /usr/bin/tabix $eid_nameroot.vardict.BCBIOfiltered.vcf.gz 
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01

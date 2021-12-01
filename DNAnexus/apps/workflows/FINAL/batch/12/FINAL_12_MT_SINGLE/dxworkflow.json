@@ -728,7 +728,11 @@
     {
       "id": "stage-G4KqPz0J6XGJZGB842qJVYQK",
       "name": "final_annotation",
+<<<<<<< HEAD
       "executable": "applet-G52PBG0JQ289QY9fBy9B1ZxX",
+=======
+      "executable": "applet-G524Pz0J6XG4XZYk4bZpV7BQ",
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/Final_Outputs/12",
       "input": {
         "intervals": {

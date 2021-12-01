@@ -105,6 +105,7 @@
       "help": ""
     },
     {
+<<<<<<< HEAD
       "name": "intervals",
       "label": "intervals file for confirming length of targets for p-value correction",
       "class": "file",
@@ -115,6 +116,8 @@
       "help": ""
     },
     {
+=======
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
       "name": "caller",
       "label": "caller",
       "class": "string",
@@ -161,8 +164,12 @@
     "interpreter": "bash",
     "file": "src/msk_pileup_mutect_pon2.sh",
     "execDepends":[
+<<<<<<< HEAD
       {"name": "samtools"},
       {"name": "bc"}
+=======
+      {"name": "samtools"}
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     ],
     "distribution": "Ubuntu",
     "release": "20.04",

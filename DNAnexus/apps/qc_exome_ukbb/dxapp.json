@@ -162,7 +162,11 @@
     "aws:eu-west-2": {
       "systemRequirements": {
         "*": {
+<<<<<<< HEAD
           "instanceType": "mem2_ssd1_v2_x4"
+=======
+          "instanceType": "mem3_ssd1_v2_x4"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         }
       }
     }
