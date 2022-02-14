@@ -3,9 +3,9 @@
 
 ```shell
 annotate_CH_pd_docker3_Mutect_Vardict_ponChange.UKBB.scratch1.R \
-  --variant-calls-files ${file_id}_23153_0_0.mutect.vep.annotated.vcf.gz,${file_id}_23153_0_0.vardict.final.annotated.vcf.gz 
-  --truncating /scratch1/fs1/bolton/annotation_files/BB.truncating.more.than.1.tsv \
-  --TSG-file /scratch1/fs1/bolton/annotation_files/gene_census_TSG.txt \
+   --variant-calls-files ${file_id}_23153_0_0.mutect.vep.annotated.vcf.gz,${file_id}_23153_0_0.vardict.final.annotated.vcf.gz 
+   --truncating /scratch1/fs1/bolton/annotation_files/BB.truncating.more.than.1.tsv \
+   --TSG-file /scratch1/fs1/bolton/annotation_files/gene_census_TSG.txt \
    --sample_id $file_id \
    --out_folder /storage1/fs1/bolton/Active/projects/mocha/UKBB/exome/results/$folder/final_outputs \
    --oncoKB-curated /scratch1/fs1/bolton/annotation_files/all_curated_genes_v3.0.tsv \
