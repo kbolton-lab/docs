@@ -1,0 +1,7 @@
+@HD	VN:1.5
+@SQ	SN:20	LN:1000000	UR:http://www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta	AS:GRCh37	M5:0dec9660ec1efaaf33281c0d5ea2560f	SP:Homo Sapiens
+@SQ	SN:X	LN:1000000	UR:http://www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta	AS:GRCh37	M5:7e0e2e580297b7764e31dbc80c2540dd	SP:Homo Sapiens
+@SQ	SN:Y	LN:3000000	UR:http://www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta	AS:GRCh37	M5:1fa3474750af0948bdf97d5a0ee52e51	SP:Homo Sapiens
+20	1	1000000	+	.
+X	1	1000000	+	.
+Y	1	1000000	+	.

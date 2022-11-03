@@ -1,0 +1,21 @@
+{
+    "filters":{
+        "op":"and",
+        "content":[
+            {
+                "op":"in",
+                "content":{
+                    "field":"files.file_id",
+                    "value":[
+                        "ad8c4921-7b03-4fcf-98f3-e151d4d6a54b",
+                        "b3aaad19-0700-47e6-a2e5-e7d491de42ea"
+                    ]
+                }
+            }
+        ]
+    },
+    "format":"json",
+    "fields":"file_id,file_name,cases.samples.portions.analytes.aliquots.submitter_id",
+    "size":"1000",
+    "pretty": "true"
+}

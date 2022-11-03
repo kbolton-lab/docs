@@ -1,0 +1,57 @@
+@HD	VN:1.5
+@SQ	SN:20	LN:1000000	UR:http://www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta	AS:GRCh37	M5:0dec9660ec1efaaf33281c0d5ea2560f	SP:Homo Sapiens
+@SQ	SN:X	LN:1000000	UR:http://www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta	AS:GRCh37	M5:7e0e2e580297b7764e31dbc80c2540dd	SP:Homo Sapiens
+@SQ	SN:Y	LN:3000000	UR:http://www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta	AS:GRCh37	M5:1fa3474750af0948bdf97d5a0ee52e51	SP:Homo Sapiens
+20	68349	68410	+	ice_targets
+20	76644	77060	+	ice_targets
+20	123268	123329	+	ice_targets
+20	126054	126335	+	ice_targets
+20	138184	138236	+	ice_targets
+20	139413	139667	+	ice_targets
+20	168525	168761	+	ice_targets
+20	170214	170266	+	ice_targets
+20	207928	207989	+	ice_targets
+20	209917	210414	+	ice_targets
+20	238418	238479	+	ice_targets
+20	239716	239949	+	ice_targets
+20	251846	251910	+	ice_targets
+20	256607	256729	+	ice_targets
+20	257400	257522	+	ice_targets
+20	257683	257788	+	ice_targets
+20	257865	258026	+	ice_targets
+20	258969	259072	+	ice_targets
+20	259811	259973	+	ice_targets
+X	200853	200983	+	ice_targets
+X	205398	205538	+	ice_targets
+X	207313	207445	+	ice_targets
+X	208164	208323	+	ice_targets
+X	209700	209887	+	ice_targets
+X	215762	216004	+	ice_targets
+X	221740	221864	+	ice_targets
+X	224026	224179	+	ice_targets
+X	224398	224547	+	ice_targets
+X	228085	228294	+	ice_targets
+X	228867	229591	+	ice_targets
+X	230816	230887	+	ice_targets
+X	295100	295254	+	ice_targets
+X	299337	299447	+	ice_targets
+X	299511	299633	+	ice_targets
+X	301498	301677	+	ice_targets
+X	302040	302133	+	ice_targets
+X	302616	302668	+	ice_targets
+X	305847	306409	+	ice_targets
+X	619519	619564	+	ice_targets
+Y	150854	150981	+	ice_targets
+Y	155399	155536	+	ice_targets
+Y	157314	157443	+	ice_targets
+Y	158165	158321	+	ice_targets
+Y	159701	159885	+	ice_targets
+Y	165763	166002	+	ice_targets
+Y	171740	171864	+	ice_targets
+Y	174026	174179	+	ice_targets
+Y	174398	174547	+	ice_targets
+Y	178085	178294	+	ice_targets
+Y	178867	179591	+	ice_targets
+Y	180816	180887	+	ice_targets
+Y	245101	245252	+	ice_targets
+Y	249338	249445	+	ice_targets

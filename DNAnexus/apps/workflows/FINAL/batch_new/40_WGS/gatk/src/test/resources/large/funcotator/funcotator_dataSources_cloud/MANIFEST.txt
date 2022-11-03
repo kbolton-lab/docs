@@ -1,0 +1,4 @@
+Version:          0.0.1T
+Use Case:         Testing
+Source:           https://github.com/broadinstitute/gatk.git
+Alternate Source: N/A

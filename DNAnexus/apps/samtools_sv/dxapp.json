@@ -1,0 +1,153 @@
+{
+  "name": "samtools_sv",
+  "title": "samtools_sv",
+  "summary": "samtools_sv",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "reference",
+      "label": "reference assembly fasta",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa",
+        "*.fasta"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_fai",
+      "label": "reference assembly index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "cram",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.cram"
+      ],
+      "help": ""
+    },
+    {
+      "name": "cram_index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.crai",
+        "*.cram.crai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "fusion_sites",
+      "class": "file",
+      "optional": false,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G8YxJ2QJP6z69ZVVFVfBYyPB",
+            "id": "file-G941768JP6z49J42KVQ22944"
+        }
+      },
+      "patterns": [
+        "*.bed"
+      ],
+      "help": ""
+    },
+    {
+      "name": "dockerimage_samtools_sv",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G8YxJ2QJP6z69ZVVFVfBYyPB",
+            "id": "file-G940gbQJP6z0Kbk95578x9qf"
+        }
+      },
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "subset_bam",
+      "class": "file",
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "subset_bam_bai",
+      "class": "file",
+      "patterns": [
+        "*.bai",
+        "*.bam.bai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "subset_filtered_bam",
+      "class": "file",
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "subset_filtered_bam_bai",
+      "class": "file",
+      "patterns": [
+        "*.bai",
+        "*.bam.bai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "flagstat",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "readlength",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 2
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/samtools_sv.sh",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "allProjects": "VIEW"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem3_ssd1_v2_x4"
+        }
+      }
+    }
+  }
+}

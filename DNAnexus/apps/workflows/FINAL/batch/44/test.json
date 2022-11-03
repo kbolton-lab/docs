@@ -1,0 +1,29 @@
+[
+  {
+    "alteration": "S774VfsTer12",
+    "consequence": "frameshift_variant",
+    "type":"regular",
+    "gene": {
+      "hugoSymbol": "KMT2A"
+    },
+    "referenceGenome": "GRCh37"
+  },
+  {
+   "alteration": "R110L",
+   "consequence": "missense_variant",
+   "type":"regular",
+   "gene": {
+     "hugoSymbol":"TP53"
+   },
+   "referenceGenome": "GRCh37"
+  },
+  {
+  "type":"regular",
+  "gene": {
+     "hugoSymbol":"TP53"
+  },
+  "alteration":"C229_I232del",
+  "consequence":"inframe_deletion"
+}
+]
+

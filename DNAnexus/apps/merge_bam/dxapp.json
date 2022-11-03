@@ -1,0 +1,106 @@
+{
+  "name": "merge_bam",
+  "title": "merge_bam",
+  "summary": "merge_bam",
+  "dxapi": "1.0.0",
+  "folder": "/CH_Exome/Workflow/BAMS/",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "bam_in1",
+      "label": "bam1",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bai_in1",
+      "label": "bai1",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bam_in2",
+      "label": "bam2",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bai_in2",
+      "label": "bai2",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "out_name",
+      "label": "file out",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "bam_out",
+      "label": "Output_BAM",
+      "class": "file",
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bai_out",
+      "label": "Output_BAM_Index",
+      "class": "file",
+      "patterns": [
+        "*.bam.bai"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/merge_bam.sh",
+    "execDepends":[
+      {"name": "samtools"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem3_ssd1_v2_x8"
+        }
+      }
+    }
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
+  }
+}

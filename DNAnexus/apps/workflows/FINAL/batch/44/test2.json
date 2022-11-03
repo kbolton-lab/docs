@@ -1,0 +1,35 @@
+[
+  {
+    "alteration": "S774VfsTer12",
+    "consequence": "frameshift_variant",
+    "type":"regular",
+    "gene": {
+      "hugoSymbol": "KMT2A"
+    }
+  },
+  {
+   "alteration": "R110L",
+   "consequence": "missense_variant",
+   "type":"regular",
+   "gene": {
+     "hugoSymbol":"TP53"
+   }
+  },
+  {
+  "type":"regular",
+  "gene": {
+     "hugoSymbol":"TP53"
+  },
+  "alteration":"C229_I232del",
+  "consequence":"inframe_deletion"
+},
+{
+   "type":"regular",
+   "gene": {
+      "hugoSymbol":"MSH6"
+   },
+   "alteration":"F1088LfsTer5",
+   "consequence":"frameshift_variant"
+ }
+]
+

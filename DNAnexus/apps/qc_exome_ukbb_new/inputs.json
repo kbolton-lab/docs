@@ -1,0 +1,51 @@
+{
+    "bam": {
+        "$dnanexus_link": {
+            "project": "project-G8YxJ2QJP6z69ZVVFVfBYyPB",
+            "id": "file-G9yjf08JP6zF11QPPpzJFB6P"
+        }
+    },
+    "reference": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        }
+    },
+    "reference_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        }
+    },
+    "bait_intervals": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5bgvB8JQ288QVGK2JP6BxYG"
+        }
+    },
+    "target_intervals": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5bgvB8JQ288QVGK2JP6BxYG"
+        }
+    },
+    "per_base_intervals": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5bgvB8JQ288QVGK2JP6BxYG"
+        }
+    },
+    "per_target_intervals": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5bgvB8JQ288QVGK2JP6BxYG"
+        }
+    },
+    "omni_vcf": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3zPG58J6XG2z5Qb8yGfPfP2"
+        }
+    },
+    "picard_metric_accumulation_level": "LIBRARY"
+}

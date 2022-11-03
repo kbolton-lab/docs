@@ -1,0 +1,1 @@
+/home/travis/build/broadinstitute/gatk/src/test/resources/large/dbsnp_138.b37.20.21.vcf.idx

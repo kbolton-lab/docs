@@ -1,0 +1,90 @@
+{
+  "name": "samtools",
+  "title": "samtools",
+  "summary": "Converts cram file to bam file and indexes the bam.",
+  "dxapi": "1.0.0",
+  "folder": "/CH_Exome/Workflow/BAMS/",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "cram_in",
+      "label": "Input_CRAM",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.cram"
+      ],
+      "help": ""
+    },
+    {
+      "name": "crai_in",
+      "label": "Input_CRAM",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.cram.crai",
+        "*.crai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "ref_fasta",
+      "label": "Reference_Genome",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa"
+      ],
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "fq1",
+      "label": "Output_BAM",
+      "class": "file",
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "fq2",
+      "label": "Output_BAM_Index",
+      "class": "file",
+      "patterns": [
+        "*.bam.bai"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 4
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/samtools.sh",
+    "execDepends":[
+      {"name": "samtools"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem2_ssd1_v2_x8"
+        }
+      }
+    }
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
+  }
+}

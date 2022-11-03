@@ -1,0 +1,82 @@
+{
+  "name": "tcga_dl",
+  "title": "tcga_dl",
+  "summary": "tcga_dl",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "uuid",
+      "label": "uuid",
+      "class": "string",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "token_file",
+      "label": "token_file",
+      "class": "file",
+      "optional": false,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G428g40Jf312vx5727kY9KXZ",
+            "id": "file-G8B3YvjJf3164G1Q5JXpFp2z"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "bam",
+      "label": "bam",
+      "class": "file",
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bai",
+      "label": "bai",
+      "class": "file",
+      "patterns": [
+        "*.bai"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 5
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/tcga_dl.sh",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "network": [
+      "*"
+    ],
+    "project": "CONTRIBUTE"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_v2_x8"
+        }
+      }
+    }
+  }
+}

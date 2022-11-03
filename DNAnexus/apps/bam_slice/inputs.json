@@ -1,0 +1,20 @@
+{
+    "cram_in": {
+        "$dnanexus_link": {
+            "project": "project-G8YxJ2QJP6z69ZVVFVfBYyPB",
+            "id": "file-FyK32qjJkF6115xX9VJfB62X"
+        }
+    },
+    "crai_in": {
+        "$dnanexus_link": {
+            "project": "project-G8YxJ2QJP6z69ZVVFVfBYyPB",
+            "id": "file-FyK32qjJkF65BXqZ55P0q53P"
+        }
+    },
+    "ref_fasta": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        }
+    }
+}

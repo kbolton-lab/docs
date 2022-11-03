@@ -1,0 +1,33 @@
+{
+  "name": "37",
+  "title": "Batch_New_Rerun",
+  "summary": "UKBB with only 1 jobs",
+  "stages": [
+    {
+      "id": "stage-G4KkV88J6XG340022vxq916x",
+      "name": "mutect_single_orientation",
+      "executable": "applet-G6F0v98JQ28F5pFXP2qjyqp8",
+      "folder": "/CH_Exome/Workflow_Outputs/FINAL/Mutect_Rerun/37",
+      "input": {
+        "reference": {
+          "$dnanexus_link": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        },
+        "reference_index": {
+          "$dnanexus_link": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        },
+        "reference_dict": {
+          "$dnanexus_link": "file-G3zKypQJ6XG24V7Y6YQj0PFB"
+        },
+        "normal_bam": {
+          "$dnanexus_link": "file-Fybx858J2kZj4gBb3kQYGQ19"
+        },
+        "normal_bai": {
+          "$dnanexus_link": "file-Fybx840J2kZXKg6V3jYvqfFb"
+        },
+        "interval_list": {
+          "$dnanexus_link": "file-GGJyP08J6XG0JPY2F300bX3f"
+        }
+      }
+    }
+  ]
+}

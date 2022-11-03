@@ -1,0 +1,26 @@
+{
+    "mutect_vcf": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G66716jJQ283KbKQ4Pv75yjy"
+        }
+    },
+    "vardict_vcf": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G6671FjJQ28Bz5X3996bz2y4"
+        }
+    },
+    "intervals": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5bgvB8JQ288QVGK2JP6BxYG"
+        }
+    },
+    "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+    "cosmic_files": [
+        {
+            "$dnanexus_link": "file-G5ZzBX0JQ2816V7v8gxGyzG3"
+        }
+      ]
+}

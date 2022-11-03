@@ -1,0 +1,38 @@
+{
+    "vcf": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4xpbKjJ9Zz0k9yy4f6QKFZ2"
+        }
+    },
+    "vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4xpbP8J9ZzBK2Vz4VjjjKJb"
+        }
+    },
+    "exclude_vcf": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G424kX8J6XG28JG94KYP5FVk"
+        }
+    },
+    "exclude_vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G424kjQJ6XG06Bqj82kF5Yyj"
+        }
+    },
+    "tumor_bam": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G4xq5VjJpyjVgyP14fypg03p"
+        }
+    },
+    "tumor_bai": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G4xq5f0JpyjXf2XQ4jqQ5KqQ"
+        }
+    }
+}

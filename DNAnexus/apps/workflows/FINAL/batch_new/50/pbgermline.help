@@ -1,0 +1,168 @@
+usage: dx run pbgermline [-iINPUT_NAME=VALUE ...]
+
+dx run oqfe -ireads_fastqgzs=file-FyK32qjJkF6115xX9VJfB62X  -igenome_fastagz=file-G3jKk3QJ6XG9KY8680qg9j8b -ireuse_cram_header=true -isample=4000375 --destination project-G4qpk1jJQ285yvbXPFZKXkk8:/Brian/test/
+dx run applet-GFp245QJQ289xvb8FGJFzfPg --destination project-G4qpk1jJQ285yvbXPFZKXkk8:/Brian/test/ -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/vardict2/vardict_test_inputs_WGS_25.json -y
+
+App: Germline Pipeline (Nvidia Clara Parabricks accelerated)
+
+Version: 3.7.0 (published)
+
+Call germline variants using the exact same algorithms as the BWA-GATK4
+germline variant analysis
+
+See the app page for more information:
+  https://platform.dnanexus.com/app/pbgermline
+
+Inputs:
+  FQ left: -ireads_fastqgzs=(file) [-ireads_fastqgzs=... [...]]
+        Left ended fastq files. If you include multiple fq pairs, please
+        ensure that the left ended reads are passed in the proper order in
+        respect to their right ended counterparts.
+
+  FQ right: -ireads2_fastqgzs=(file) [-ireads2_fastqgzs=... [...]]
+        Right ended fastq files. If you include multiple fq pairs, please
+        ensure that the right ended reads are passed in the proper order in
+        respect to their left ended counterparts.
+
+  Reference FASTA: -igenome_fastagz=(file)
+        The reference genome in fasta or fasta.gz format.
+
+        Suggestions:
+          {'project': 'project-BQpp3Y804Y0xbyG4GJPQ01xv', 'region': 'aws:us-east-1', 'name': 'Reference Genome Files: AWS US-east'}
+          {'project': 'project-F4gXb605fKQyBq5vJBG31KGG', 'region': 'aws:ap-southeast-2', 'name': ' Reference Genome Files: AWS Sydney'}
+          {'project': 'project-F3zxk7Q4F30Xp8fG69K1Vppj', 'region': 'aws:eu-central-1', 'name': 'Reference Genome Files: AWS Germany'}
+
+  Reference BWA index: -igenomeindex_targz=(file)
+        BWA-mem index of the same input reference FASTA file.
+
+        Suggestions:
+          project-BQpp3Y804Y0xbyG4GJPQ01xv://file-* (DNAnexus Reference Genomes: AWS US-east)
+          project-F3zxk7Q4F30Xp8fG69K1Vppj://file-* (DNAnexus Reference Genomes: AWS Germany)
+          project-F4gXb605fKQyBq5vJBG31KGG://file-* (DNAnexus Reference Genomes: AWS Sydney)
+
+  Interval file: [-iinterval_file=(file) [-iinterval_file=... [...]]]
+        (Optional) Interval file with possible formats: Picard-style
+        (.interval_list or .picard), GATK-style (.list or .intervals), or BED
+        file (.bed).
+
+  Known SNPs: [-iknown_vcfgzs=(file) [-iknown_vcfgzs=... [...]]]
+        (Optional) Known sites. These should be uncompressed vcf files for
+        known SNPs.
+
+        Suggestions:
+          project-B6JG85Z2J35vb6Z7pQ9Q02j8:/gatk.resources.b37/file-* (GRCh37/hs37d5/b37 (1000G Phase I/II) [tick one dbSNP file]: AWS US-east)
+          project-B6JG85Z2J35vb6Z7pQ9Q02j8:/gatk.resources.hg19/file-* (UCSC hg19 [tick one dbSNP file]: AWS US-east)
+          project-B6JG85Z2J35vb6Z7pQ9Q02j8:/gatk.resources.GRCh38/file-* (GRCh38/hg38 [tick one dbSNP file]: AWS US-east)
+          project-F3zqGV04fXX5j7566869fjFq:/gatk.resources.b37/file-* (GRCh37/hs37d5/b37 (1000G Phase I/II) [tick one dbSNP file]: AWS Germany)
+          project-F3zqGV04fXX5j7566869fjFq:/gatk.resources.hg19/file-* (UCSC hg19 [tick one dbSNP file]: AWS Germany)
+          project-F3zqGV04fXX5j7566869fjFq:/gatk.resources.GRCh38/file-* (GRCh38/hg38 [tick one dbSNP file]: AWS Germany)
+          project-F4gYG1850p1JXzjp95PBqzY5:/gatk.resources.b37/file-* (GRCh37/hs37d5/b37 (1000G Phase I/II) [tick one dbSNP file]: AWS Sydney)
+          project-F4gYG1850p1JXzjp95PBqzY5:/gatk.resources.hg19/file-* (UCSC hg19 [tick one dbSNP file]: AWS Sydney)
+          project-F4gYG1850p1JXzjp95PBqzY5:/gatk.resources.GRCh38/file-* (GRCh38/hg38 [tick one dbSNP file]: AWS Sydney)
+
+  Known INDELs: [-iknown_indels_vcfgzs=(file) [-iknown_indels_vcfgzs=... [...]]]
+        (Optional) Known sites. These should be uncompressed vcf files for
+        known INDELs.
+
+        Suggestions:
+          project-B6JG85Z2J35vb6Z7pQ9Q02j8:/gatk.resources.b37/file-* (GRCh37/hs37d5/b37 (1000G Phase I/II) [tick both indel files]: AWS US-east)
+          project-B6JG85Z2J35vb6Z7pQ9Q02j8:/gatk.resources.hg19/file-* (UCSC hg19 [tick both indel files]: AWS US-east)
+          project-B6JG85Z2J35vb6Z7pQ9Q02j8:/gatk.resources.GRCh38/file-* (GRCh38/hg38 [tick both indel files]: AWS US-east)
+          project-F3zqGV04fXX5j7566869fjFq:/gatk.resources.b37/file-* (GRCh37/hs37d5/b37 (1000G Phase I/II) [tick both indel files]: AWS Germany)
+          project-F3zqGV04fXX5j7566869fjFq:/gatk.resources.hg19/file-* (UCSC hg19 [tick both indel files]: AWS Germany)
+          project-F3zqGV04fXX5j7566869fjFq:/gatk.resources.GRCh38/file-* (GRCh38/hg38 [tick both indel files]: AWS Germany)
+          project-F4gYG1850p1JXzjp95PBqzY5:/gatk.resources.b37/file-* (GRCh37/hs37d5/b37 (1000G Phase I/II) [tick both indel files]: AWS Sydney)
+          project-F4gYG1850p1JXzjp95PBqzY5:/gatk.resources.hg19/file-* (UCSC hg19 [tick both indel files]: AWS Sydney)
+          project-F4gYG1850p1JXzjp95PBqzY5:/gatk.resources.GRCh38/file-* (GRCh38/hg38 [tick both indel files]: AWS Sydney)
+
+  NVIDIA Parabricks License: -ilicense_file_bin=(file)
+        License file provided by NVIDIA Parabricks to run the app.
+
+  Output prefix: [-ioutput_prefix=(string)]
+        (Optional) Prefix name without spaces used for output files. If no
+        prefix is given, one will be generated from the input files.
+
+  Read group SM tag: [-iread_group_sm=(string, default="sample")]
+        (Optional) Set the SM tag for read groups in this run.
+
+  Read group LB tag: [-iread_group_lb=(string, default="lib1")]
+        (Optional) Set the LB tag for read groups in this run.
+
+  Read group PL tag: [-iread_group_pl=(string, default="bar")]
+        (Optional) Set the PL tag for read groups in this run.
+
+  Read group ID prefix: [-iread_group_id=(string, default="")]
+        (Optional) Set the ID prefix for read groups in this run. If no prefix
+        is given, one will be generated from the input filenames.
+
+  Do not mark duplicates: [-ino_mark_duplicates=(boolean, default=false)]
+        (Optional) If this option is set to true, then the pipeline will not
+        mark duplicates and will generate bam after co-ordinate sorting.
+
+  Generate duplicate metrics: [-igenerate_duplicate_metrics=(boolean, default=false)]
+        (Optional) If this option is set to true, a duplicate metrics file
+        will be generated after Marking Duplicates. If the pipeline does not
+        mark duplicates, no file will be generated.
+
+  Generate variant calls in gvcf format: [-igvcf=(boolean, default=true)]
+        (Optional) If this option is set to true, the output variants will be
+        in gvcf format (.g.vcf). Otherwise, they will be in vcf format (.vcf).
+        Note that if this option is set to false, annotation groups will be
+        ignored.
+
+  Compress output variant files using gzip: [-igzip_output=(boolean, default=true)]
+        (Optional) If this option is set to true, the output variants will be
+        gzipped (*.vcf.gz/*.g.vcf.gz).
+
+  Original haplotype caller options: [-ihaplotypecaller_options=(string)]
+        (Optional) Pass supported haplotype caller options as one string.
+        Currently supported original haplotypecaller options: -min-pruning
+        <int>, -standard-min-confidence-threshold-for-calling <int>,
+        -max-reads-per-alignment-start <int>, -min-dangling-branch-length
+        <int>, -pcr-indel-model <NONE, HOSTILE, AGGRESSIVE, CONSERVATIVE>.
+        e.g. "-min-pruning 4 -standard-min-confidence-threshold-for-calling
+        30"
+
+  Max alternate alleles: [-imax_alternate_alleles=(string, default="3")]
+        (Optional) Maximum number of alternate alleles to genotype. This
+        number must be greater than 0.
+
+  Add StandardAnnotation group: [-istandard_annotation_group=(boolean, default=true)]
+        (Optional) If this option is set to true, the StandardAnnotation group
+        will be added to the output variant calls. Note that this option will
+        be ignored if variants are not generated in gvcf format.
+
+  Add StandardHCAnnotation group: [-istandard_hc_annotation_group=(boolean, default=true)]
+        (Optional) If this option is set to true, the StandardHCAnnotation
+        group will be added to the output variant calls. Note that this option
+        will be ignored if variants are not generated in gvcf format.
+
+  Add AS_StandardAnnotation group: [-ias_standard_annotation_group=(boolean, default=true)]
+        (Optional) If this option is set to true, the AS_StandardAnnotation
+        group will be added to the output variant calls. Note that this option
+        will be ignored if variants are not generated in gvcf format.
+
+  GVCF GQ bands: [-igvcf_gq_bands=(string, default="10 20 30 40 50 60 70 80 90")]
+        (Optional) Exclusive upper bounds for reference confidence GQ bands.
+        Numbers must be integers in the range [1, 100] and specified in
+        increasing order, separated by spaces.
+
+Outputs:
+  BAM output: markdupped_bam (file)
+        BAM file after Marking Duplicates.
+
+  VCF output: variants_vcfgz (file)
+        VCF variants file after either variant calling or joint genotyping.
+
+  GVCF output: [variants_gvcfgz (file)]
+        (Optional) GVCF variants file after variant calling. If variant calls
+        are not generated in gvcf format, this file will not be generated.
+
+  Recal output: [recal_table_txt (file)]
+        (Optional) Report file after Base Quality Score Recalibration. If no
+        known sites files are passed as input, this file will not be
+        generated.
+
+  Duplicate metrics output: [duplicate_metrics (file)]
+        (Optional) Duplicate metrics file after Marking Duplicates. If the
+        pipeline does not mark duplicates, this file will not be generated.

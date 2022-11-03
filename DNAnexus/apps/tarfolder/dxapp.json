@@ -1,0 +1,76 @@
+{
+  "name": "tarfolder",
+  "title": "tarfolder",
+  "summary": "tarfolder.",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "folder_in",
+      "label": "folder_in",
+      "class": "string",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "folder_name",
+      "label": "folder_name",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "tar_name",
+      "label": "tar_name",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "tar_out",
+      "label": "tar_out",
+      "class": "file",
+      "patterns": [
+        "*.tar.gz"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 10
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/tarfolder.sh",
+    "execDepends":[
+      {"name": "multiqc",
+      "package_manager": "pip"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem2_ssd1_v2_x4"
+        }
+      }
+    }
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "allProjects": "VIEW",
+    "network": [
+      "*"
+    ]
+  }
+}

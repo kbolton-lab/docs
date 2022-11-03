@@ -1,0 +1,14 @@
+{
+    "cram_in": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-Fybx858J2kZj4gBb3kQYGQ19"
+        }
+    },
+    "ref_fasta": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        }
+    }
+}

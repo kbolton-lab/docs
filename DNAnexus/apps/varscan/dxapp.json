@@ -1,0 +1,204 @@
+{
+  "name": "varscan",
+  "title": "Varscan",
+  "summary": "Run Varscan",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "reference",
+      "label": "reference assembly fasta",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.fa",
+        "*.fasta"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_index",
+      "label": "reference assembly index",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.fai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_dict",
+      "label": "reference assembly dict",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.dict"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_bam",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_bai",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bai",
+        "*.bam.bai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "normal_bam",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "normal_bai",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam.bai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "interval_beds_array",
+      "class": "array:file",
+      "optional": false,
+      "patterns": [
+        "*.bed"
+      ],
+      
+      "help": ""
+    },
+    {
+      "name": "dockerimage_picard",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G45zk80J6XGF9205K3kBKfj9"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "dockerimage_bcftools",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G45zpP0J6XGJv4VyK3xb9vB8"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "dockerimage_varscan",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-GFq0py8JQ283VZq64xgJ77K3"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "AF_THR",
+      "label": "allel frequency threshold",
+      "class": "string",
+      "optional": true,
+      "default": "0.005",
+      "help": ""
+    },
+    {
+      "name": "output_name",
+      "label": "output_name",
+      "class": "string",
+      "optional": true,
+      "default": "merged.varscan.vcf.gz",
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "vcf",
+      "class": "file",
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_index",
+      "class": "file",
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_sample_name",
+      "class": "string",
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 8
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/varscan.sh",
+    "execDepends":[
+      {"name": "samtools", "stages": ["main","process"]},
+      {"name": "default-jre", "stages": ["main","process"]},
+      {"name": "default-jdk", "stages": ["main","process"]},
+      {"name": "bcftools", "stages": ["main","process","postprocess"]},
+      {"name": "tabix", "stages": ["main","process","postprocess"]}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "allProjects": "VIEW"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "main": {
+          "instanceType": "mem1_ssd2_v2_x4"
+        },
+        "map": {
+          "instanceType": "mem1_ssd2_v2_x4"
+        },
+        "process": {
+          "instanceType": "mem3_ssd1_v2_x8"
+        },
+        "postprocess": {
+          "instanceType": "mem1_ssd1_v2_x4"
+        }
+      }
+    }
+  }
+}

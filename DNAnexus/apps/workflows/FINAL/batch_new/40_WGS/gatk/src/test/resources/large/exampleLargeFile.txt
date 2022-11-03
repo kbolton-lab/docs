@@ -1,0 +1,1 @@
+This is a file to test if git-lfs is working.  Please don't change this text.

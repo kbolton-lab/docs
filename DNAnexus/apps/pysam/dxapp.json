@@ -1,0 +1,121 @@
+{
+  "name": "pysam",
+  "title": "pysam",
+  "summary": "We are getting files alignment_summary_metrics and hs_metrics",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "variant",
+      "label": "input variant",
+      "class": "string",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "cram",
+      "label": "input cram",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.cram"
+      ],
+      "help": ""
+    },
+    {
+      "name": "crai",
+      "label": "input crai",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.cram"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "label": "reference assembly fasta",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa",
+        "*.fasta"
+      ],
+      "help": "",
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        }
+      }
+    },
+    {
+      "name": "reference_index",
+      "label": "reference assembly index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fai"
+      ],
+      "help": "",
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        }
+      }
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "bam_out",
+      "class": "file",
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bai_out",
+      "class": "file",
+      "patterns": [
+        "*.bam.bai"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 2
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/pysam.sh",
+    "execDepends":[
+      {"name": "pysam",
+      "package_manager": "pip"},
+      {"name": "python3"},
+      {"name": "samtools"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "network": ["*"]
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem2_ssd1_v2_x4"
+        }
+      }
+    }
+  }
+}

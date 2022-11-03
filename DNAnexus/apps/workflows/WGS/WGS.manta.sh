@@ -1,0 +1,3 @@
+{"id": "applet-G941BKQJP6zPggY9FqgxP7Vg"}
+
+dx run project-G8YxJ2QJP6z69ZVVFVfBYyPB:/Brian/tools/samtools_sv -ireference=file-G3jKk3QJ6XG9KY8680qg9j8b -ireference_fai=file-G3jKq0jJ6XGFqZ6Z9q4gB1yg -icram=file-FyxQg28JkF699qfv5V2Z9J0x -icram_index=file-FyyK2yjJkF68z68J15X3bQxG -ifusion_sites=file-G941768JP6z49J42KVQ22944 -y --priority low --destination project-G8YxJ2QJP6z69ZVVFVfBYyPB:/Brian/Outputs/test/

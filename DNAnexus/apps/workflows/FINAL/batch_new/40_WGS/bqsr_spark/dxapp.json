@@ -1,0 +1,144 @@
+{
+  "name": "bqsr_spark",
+  "title": "bqsr_spark",
+  "summary": "bqsr_spark",
+  "httpsApp": {
+    "ports": [
+      8081
+    ],
+    "shared_access": "NONE",
+    "dns": {}
+  },
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "name": "bam",
+      "label": "bam",
+      "help": "",
+      "class": "file",
+      "patterns": ["*.bam", "*.cram"],
+      "optional": false
+    },
+    {
+      "name": "bam_index",
+      "label": "bam_index",
+      "help": "",
+      "class": "file",
+      "patterns": ["*.bam.bai", "*.cram.crai"],
+      "optional": false
+    },
+    {
+      "name": "reference",
+      "label": "reference",
+      "help": "",
+      "class": "file",
+      "patterns": ["*.fa", "*.fasta"],
+      "optional": false
+    },
+    {
+      "name": "reference_index",
+      "label": "reference_index",
+      "help": "",
+      "class": "file",
+      "patterns": ["*.fa.fai", "*.fasta.fai"],
+      "optional": false
+    },
+    {
+      "name": "reference_dict",
+      "label": "reference_dict",
+      "help": "",
+      "class": "file",
+      "patterns": ["*.dict"],
+      "optional": false
+    },
+    {
+      "name": "known_sites",
+      "label": "known_sites",
+      "help": "",
+      "class": "array:file",
+      "patterns": ["*.vcf.gz"],
+      "optional": false
+    },
+    {
+      "name": "known_sites_index",
+      "label": "known_sites_index",
+      "help": "",
+      "class": "array:file",
+      "patterns": ["*.vcf.gz.tbi"],
+      "optional": false
+    },
+    {
+      "name": "dockerimage_gatk",
+      "help": "",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+          "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+          "id": "file-G464PjQJ6XGK5YYg78FP1z1k"
+        }
+      }
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "bam_out",
+      "label": "bam_out",
+      "help": "",
+      "class": "file",
+      "patterns": ["*.bam"]
+    },
+    {
+      "name": "bam_out_index",
+      "label": "bam_out_index",
+      "help": "",
+      "class": "file",
+      "patterns": ["*.bam.bai"]
+    },
+    {
+      "name": "cluster_runtime_logs_tarball",
+      "label": "Cluster runtime logs tarball",
+      "help": "The tarball of the cluster runtime logs",
+      "class": "file",
+      "patterns": ["*.tar.gz"],
+      "optional": true
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "timeoutPolicy": {
+      "*": {
+        "hours": 4
+      }
+    },
+    "execDepends": [
+      {
+        "name": "openjdk-8-jdk"
+      },
+      {
+        "name": "python3.8"
+      }
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0",
+    "file": "src/code.sh"
+  },
+  "access": {
+    "network": [
+      "*"
+    ],
+    "project": "CONTRIBUTE",
+    "allProjects": "VIEW"
+  },
+  "ignoreReuse": false,
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem3_ssd1_v2_x16"
+        }
+      }
+    }
+  }
+}

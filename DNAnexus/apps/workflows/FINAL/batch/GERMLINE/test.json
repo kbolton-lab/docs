@@ -1,0 +1,44 @@
+[
+    {
+        "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+        "id": "file-G4gQYB0JzgkZyx3V4bfQ4Z8g",
+        "describe": {
+            "id": "file-G4gQYB0JzgkZyx3V4bfQ4Z8g",
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "class": "file",
+            "name": "1002297_23153_0_0.final.tsv",
+            "state": "closed",
+            "folder": "/CH_Exome/Workflow_Outputs/FINAL/Final_Outputs/10/Need_to_REDO",
+            "modified": 1630472634139,
+            "size": 6578096
+        }
+    },
+    {
+        "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+        "id": "file-G5bvp98JpGp00QF2GBjXyf2Q",
+        "describe": {
+            "id": "file-G5bvp98JpGp00QF2GBjXyf2Q",
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "class": "file",
+            "name": "1002297_23153_0_0.final.tsv",
+            "state": "closed",
+            "folder": "/CH_Exome/Workflow_Outputs/FINAL/Final_Outputs/Lung",
+            "modified": 1634454852880,
+            "size": 9620277
+        }
+    },
+    {
+        "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+        "id": "file-G4gQYB0JzgkZyx3V4bfQ4Z8g",
+        "describe": {
+            "id": "file-G4gQYB0JzgkZyx3V4bfQ4Z8g",
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "class": "file",
+            "name": "1002297_23153_0_0.final.tsv",
+            "state": "closed",
+            "folder": "/CH_Exome/Workflow_Outputs/FINAL/Final_Outputs/10/Need_to_REDO",
+            "modified": 1631038672033,
+            "size": 6578096
+        }
+    }
+]

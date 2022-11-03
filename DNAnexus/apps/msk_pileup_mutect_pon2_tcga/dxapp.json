@@ -1,0 +1,180 @@
+{
+  "name": "msk_pileup_mutect_pon2_tcga",
+  "title": "msk_pileup_mutect_pon2_tcga",
+  "summary": "msk_pileup_mutect_pon2_tcga",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "vcf",
+      "label": "vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        ".vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_index",
+      "label": "vcf_index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        ".vcf.gz.tbi"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "label": "reference",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa"
+      ],
+      "help": ""
+    },
+    {
+      "name": "reference_index",
+      "label": "reference_index",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa.fai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mapq",
+      "label": "map qual min",
+      "class": "int",
+      "optional": true,
+      "default": 5,
+      "help": ""
+    },
+    {
+      "name": "baseq",
+      "label": "base qual min",
+      "class": "int",
+      "optional": true,
+      "default": 5,
+      "help": ""
+    },
+    {
+      "name": "normal_bams",
+      "class": "array:file",
+      "optional": false,
+      "patterns": [
+        "*.bam",
+        "*.bam.bai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "dockerimage_msk_getbasecountsR",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4K54K8J6XG9BKKJ6yZyXg9V"
+        }
+      },
+      "help": "MSK get base counts counts with R installed"
+    },
+    {
+      "name": "vcf2PON",
+      "label": "file to intersect",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf2PON_index",
+      "label": "index to intersect",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    },
+    {
+      "name": "intervals",
+      "label": "intervals file for confirming length of targets for p-value correction",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "caller",
+      "label": "caller",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "vcf_normal_out",
+      "label": "vcf_normal_out",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_out",
+      "label": "vcf_out",
+      "class": "file",
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vcf_out_index",
+      "label": "vcf_out_index",
+      "class": "file",
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 10
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/msk_pileup_mutect_pon2_tcga.sh",
+    "execDepends":[
+      {"name": "samtools"},
+      {"name": "bc"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem3_ssd1_v2_x16"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "name": "bam_slice",
+  "title": "bam_slice",
+  "summary": "Converts cram file to bam file and indexes the bam.",
+  "dxapi": "1.0.0",
+  "folder": "/CH_Exome/Workflow/BAMS/",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "cram_in",
+      "label": "Input_CRAM",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.cram"
+      ],
+      "help": ""
+    },
+    {
+      "name": "crai_in",
+      "label": "Input_CRAM",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.cram.crai",
+        "*.crai"
+      ],
+      "help": ""
+    },
+    {
+      "name": "region",
+      "label": "region",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "ref_fasta",
+      "label": "Reference_Genome",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa"
+      ],
+      "help": "",
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        }
+      }
+    },
+    {
+      "name": "ref_fai",
+      "label": "Reference_Genome",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.fa"
+      ],
+      "help": "",
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        }
+      }
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "bam",
+      "label": "Output_BAM",
+      "class": "file",
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bai",
+      "label": "Output_BAM_Index",
+      "class": "file",
+      "patterns": [
+        "*.bam.bai"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 4
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/bam_slice.sh",
+    "execDepends":[
+      {"name": "samtools"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem2_ssd1_v2_x8"
+        }
+      }
+    }
+  },
+  "access": {
+    "network": [
+      "*"
+    ]
+  }
+}

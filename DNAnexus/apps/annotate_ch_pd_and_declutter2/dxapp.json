@@ -1,0 +1,438 @@
+{
+  "name": "annotate_ch_pd_and_declutter2",
+  "title": "annotate_ch_pd_and_declutter2",
+  "summary": "annotate_ch_pd_and_declutter2",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "mutect_vcf",
+      "label": "mutect_vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz",
+        "*.mutect.final.annotated.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vardict_vcf",
+      "label": "vardict_vcf",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf",
+        "*.vcf.gz",
+        "*.vardict.final.annotated.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_sample_name",
+      "label": "sample_name",
+      "class": "string",
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "impact_annotation",
+      "label": "impact_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48Zx1jJ6XGGjFYgF8fyp3q8"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "topmed_annotation",
+      "label": "topmed_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4Kf0G8J6XG5B77Q6QxKPzv9"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "cosmic_annotation",
+      "label": "cosmic_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48Zy88J6XG22P06FQ789XYY"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": "default hg38 liftover"
+    },
+    {
+      "name": "tsg_annotation",
+      "label": "tsg_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyPQJ6XG7QB5jJ35VJ1Zx"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "oncoKB_annotation",
+      "label": "oncoKB_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyPQJ6XGB107g64pf9ZKv"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "pd_table_annotation",
+      "label": "pd_table_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G775XyjJQ2879fk61xX7BQ5B" 
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "panmyeloid_annotation",
+      "label": "panmyeloid_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5b2Kj8JQ281jkJx6y0XzQVB"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "blacklist_annotation",
+      "label": "blacklist_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyPjJ6XGKpyYyBF4387f9"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "segemental_duplications_annotation",
+      "label": "segemental_duplications_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyQ0J6XG7QB5jJ35VJ1Zz"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "simple_repeats_annotation",
+      "label": "simple_repeats_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyQ8J6XG9yf8v32QV14BK"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "repeat_masker_annotation",
+      "label": "repeat_masker_annotation",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G48ZyXQJ6XGKpyYyBF4387fp"
+        }
+      },
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "intervals",
+      "label": "intervals file for confirming length of targets for p-value correction",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "dockerimage_annotate_PD",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5b4yJQJQ283kZJpJzz40YqB"
+        }
+      },
+      "help": "R installed"
+    },
+    {
+      "name": "project",
+      "label": "project",
+      "class": "string",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bqsr_spark",
+      "label": "bqsr_spark",
+      "class": "string",
+      "optional": true,
+      "default": "bqsr_spark",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mutect",
+      "label": "mutect",
+      "class": "string",
+      "optional": true,
+      "default": "mutect_single_orientation",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vardict",
+      "label": "vardict",
+      "class": "string",
+      "optional": true,
+      "default": "vardict",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "cosmic_files",
+      "class": "array:file",
+      "optional": false,
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bolton_bick_vars",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5bq3VQJQ28GVYVBFV2XqJz2"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mut2_bick",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G775Z6jJQ28934K11qyBBp31"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mut2_kelly",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G775Z68JQ2879fk61xX7BQ6B"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    { 
+      "name": "muts2",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G775b58JQ2856fkY3b7fxgV5"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "col_order",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5qVzQ8JQ2883v6GFfVQb7g9"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "final_tsv",
+      "class": "file",
+      "patterns": [
+        "*.tsv"
+      ],
+      "help": ""
+    },
+    {
+      "name": "column_check",
+      "label": "list of columns in final_tsv",
+      "class": "file",
+      "patterns": [
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "success_bam",
+      "label": "success_bam",
+      "class": "string",
+      "patterns": [
+        "*"
+      ],
+      "help": "print success"
+    },
+    {
+      "name": "success_bai",
+      "label": "success_bai",
+      "class": "string",
+      "patterns": [
+        "*"
+      ],
+      "help": "print success"
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/annotate_ch_pd_and_declutter2.sh",
+    "execDepends":[
+      {"name": "bcftools"}
+    ],
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "network": [
+      "*"
+    ],
+    "project": "CONTRIBUTE"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem3_ssd1_v2_x8"
+        }
+      }
+    }
+  }
+}

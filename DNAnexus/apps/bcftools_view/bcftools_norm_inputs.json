@@ -1,0 +1,17 @@
+{
+    "vcf": {
+        "$dnanexus_link": {
+            "project": "project-G8YxJ2QJP6z69ZVVFVfBYyPB",
+            "id": "file-G2zY8fjJykJQByXg2KYByxb6"
+        }
+    },
+    "vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G8YxJ2QJP6z69ZVVFVfBYyPB",
+            "id": "file-G2zK1XQJykJq1pz84f3V0gVP"
+        }
+    },
+    "output_type": "z",
+    "output_name": "normalized.vcf.gz",
+    "tumor_sample_name": "3601309_23141_0_0.g"
+}

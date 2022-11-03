@@ -1,0 +1,111 @@
+{
+  "name": "bcftools_merge",
+  "title": "merge vcfs",
+  "summary": "merge vcfs",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "vcfs",
+      "class": "array:file",
+      "optional": false,
+      "patterns": [
+        "*.vcf.gz",
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    },
+    {
+      "name": "tumor_sample_name",
+      "class": "string",
+      "optional": true,
+      "default": "TUMOR",
+      "help": ""
+    },
+    {
+      "name": "output_vcf_suffix",
+      "class": "string",
+      "optional": true,
+      "default": "bcftools_merged.vcf.gz",
+      "help": ""
+    },
+    {
+      "name": "reference",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "reference_index",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        }
+      },
+      "help": ""
+    },
+    {
+      "name": "dockerimage_bcftools",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G45zpP0J6XGJv4VyK3xb9vB8"
+        }
+      },
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "merged_vcf",
+      "class": "file",
+      "patterns": [
+        "*.vcf.gz"
+      ],
+      "help": ""
+    },
+    {
+      "name": "merged_vcf_index",
+      "class": "file",
+      "patterns": [
+        "*.vcf.gz.tbi"
+      ],
+      "help": ""
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 1
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/bcftools_merge.sh",
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
+  },
+  "access": {
+    "project": "CONTRIBUTE"
+  },
+  "regionalOptions": {
+    "aws:eu-west-2": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem3_ssd1_v2_x2"
+        }
+      }
+    }
+  }
+}

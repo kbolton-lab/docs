@@ -1,0 +1,83 @@
+{
+    "vcf": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "id": "file-G69B350J4jqPX6pj7p4qZfF1"
+=======
+            "id": "file-G500y3QJj1VbkG8p34pFjpjv"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+=======
+            "id": "file-G500y3QJj1VbkG8p34pFjpjv"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+        }
+    },
+    "vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "id": "file-G69B35jJ4jqG5zPq7qPzV0XQ"
+=======
+            "id": "file-G500y40Jj1VyPgxj4fVpy4Jq"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+=======
+            "id": "file-G500y40Jj1VyPgxj4fVpy4Jq"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+        }
+    },
+    "intersect_vcf": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "id": "file-G695G88J9g93kgzB8z1QZf3x"
+=======
+            "id": "file-G4z8JF8JBGQ2b3924bXpbKqQ"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+=======
+            "id": "file-G4z8JF8JBGQ2b3924bXpbKqQ"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+        }
+    },
+    "intersect_vcf_index": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "id": "file-G695G8jJ9g9KyB3x7q0x4Qj0"
+=======
+            "id": "file-G4z8JFQJBGQ46Qg32XBK10K5"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+=======
+            "id": "file-G4z8JFQJBGQ46Qg32XBK10K5"
+>>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+        }
+    },
+    "caller": "vardict",
+    "vcf2PON": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4KbGy0J6XGFJJfj6xkkbbY0"
+        }
+    },
+    "vcf2PON_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G4KbGyjJ6XG7fjz7PVZ3GGZk"
+        }
+    },
+    "reference": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKk3QJ6XG9KY8680qg9j8b"
+        }
+    },
+    "reference_index": {
+        "$dnanexus_link": {
+            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "id": "file-G3jKq0jJ6XGFqZ6Z9q4gB1yg"
+        }
+    }
+}

@@ -1,0 +1,2 @@
+/home/travis/build/broadinstitute/gatk/src/test/resources/large/VQSR/ALL.wgs.indels_mills_devine_hg19_leftAligned_collapsed_double_hit.sites.20.1M-10M.vcf.idx
+/home/travis/build/broadinstitute/gatk/src/test/resources/large/VQSR/Omni25_sites_1525_samples.b37.20.1M-10M.vcf.idx
