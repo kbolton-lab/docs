@@ -1,6 +1,0 @@
-##INFO=<ID=calpos,Number=1,Type=String,Description="Positions of subject vcf for complex variants">
-##INFO=<ID=calref,Number=1,Type=String,Description="REF for Positions of subject vcf for complex variants">
-##INFO=<ID=calalt,Number=1,Type=String,Description="ALT for Positions of subject vcf for complex variants">
-##INFO=<ID=calpos_best,Number=1,Type=String,Description="Best Positions of subject vcf for complex variants">
-##INFO=<ID=calref_best,Number=1,Type=String,Description="Best REF for Positions of subject vcf for complex variants">
-##INFO=<ID=calalt_best,Number=1,Type=String,Description="Best ALT for Positions of subject vcf for complex variants"

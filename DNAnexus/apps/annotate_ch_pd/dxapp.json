@@ -1,7 +1,7 @@
 {
   "name": "annotate_ch_pd",
-  "title": "R_annotate_mutect_vardict_single_pon_run",
-  "summary": "change to just running mutect and vardict while only running PoN on mutect",
+  "title": "annotate_ch_pd",
+  "summary": "annotate_ch_pd",
   "dxapi": "1.0.0",
   "version": "0.0.1",
   "inputSpec": [
@@ -123,8 +123,8 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4gy0jQJ6XGPpb7Q4GpGZX1z" 
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G775XyjJQ2879fk61xX7BQ5B" 
         }
       },
       "patterns": [
@@ -139,8 +139,8 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G51q1z0J6XGFgfY84jXVyvpf"
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5b2Kj8JQ281jkJx6y0XzQVB"
         }
       },
       "patterns": [
@@ -228,11 +228,144 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4KjGZQJ6XGP32PJ704VqBX4"
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5b4yJQJQ283kZJpJzz40YqB"
         }
       },
       "help": "R installed"
+    },
+    {
+      "name": "project",
+      "label": "project",
+      "class": "string",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bqsr_spark",
+      "label": "bqsr_spark",
+      "class": "string",
+      "optional": true,
+      "default": "bqsr_spark",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mutect",
+      "label": "mutect",
+      "class": "string",
+      "optional": true,
+      "default": "mutect_single_orientation",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "vardict",
+      "label": "vardict",
+      "class": "string",
+      "optional": true,
+      "default": "vardict",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "cosmic_files",
+      "class": "array:file",
+      "optional": false,
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bolton_bick_vars",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5bq3VQJQ28GVYVBFV2XqJz2"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mut2_bick",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G775Z6jJQ28934K11qyBBp31"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "mut2_kelly",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G775Z68JQ2879fk61xX7BQ6B"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    { 
+      "name": "muts2",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G775b58JQ2856fkY3b7fxgV5"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "col_order",
+      "class": "file",
+      "optional": true,
+      "default": {
+        "$dnanexus_link": {
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5qVzQ8JQ2883v6GFfVQb7g9"
+        }
+      },
+      "patterns": [
+        "*.tsv",
+        "*.txt"
+      ],
+      "help": ""
     }
   ],
   "outputSpec": [
@@ -261,7 +394,7 @@
       }
     },
     "interpreter": "bash",
-    "file": "src/annotate_CH_pd.sh",
+    "file": "src/annotate_ch_pd.sh",
     "execDepends":[
       {"name": "bcftools"}
     ],

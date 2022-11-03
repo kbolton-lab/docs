@@ -20,31 +20,31 @@
     "tumor_bam": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4Z52x0J6XG2g5b00xvfby3p"
+            "id": "file-FybxzkQJ1JfyYGJZ3jyQ9zX9"
         }
     },
     "tumor_bai": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4Z5310J6XG8Jbz5KFZ4xGY2"
+            "id": "file-FybxzZjJ1JfjzFQF3jG6zP0z"
         }
     },
     "normal_bam": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4fXYyjJ6XGB5pFpB6Bx709F"
+            "id": "file-Fybx858J2kZj4gBb3kQYGQ19"
         }
     },
     "normal_bai": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4fXZ4jJ6XG91g9PJBJQP0Zj"
+            "id": "file-Fybx840J2kZXKg6V3jYvqfFb"
         }
     },
     "interval_list": {
         "$dnanexus_link": {
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G41XqV0J6XGPYJzK3Pjvy64P"
+            "id": "file-GGJyP08J6XG0JPY2F300bX3f"
         }
     }
 }

@@ -24,6 +24,8 @@ main() {
     ## normalize
     /usr/bin/bcftools norm -f $reference_path -m -any --threads 8 -Oz -o $output_name_norm $output_name && /usr/bin/tabix $output_name_norm
 
+    /usr/local/bin/bcftools norm -f $reference_path -m -any --threads 8 1199870_23153_0_0.raw.vcf.gz | ZL
+
     vcf=$(dx upload "$output_name_norm" --brief)
     dx-jobutil-add-output vcf --class=file "$vcf"
 

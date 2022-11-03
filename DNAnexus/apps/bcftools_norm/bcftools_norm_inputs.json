@@ -1,17 +1,17 @@
 {
     "vcf": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G46pXKjJp2gKvzjg6Q7y30Yk"
+            "project": "project-G8YxJ2QJP6z69ZVVFVfBYyPB",
+            "id": "file-G2zY8fjJykJQByXg2KYByxb6"
         }
     },
     "vcf_index": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G46pXP0Jp2g1Gj8053Bj9KG4"
+            "project": "project-G8YxJ2QJP6z69ZVVFVfBYyPB",
+            "id": "file-G2zK1XQJykJq1pz84f3V0gVP"
         }
     },
     "output_type": "z",
-    "output_name": "mutect_full.vcf.gz",
-    "tumor_sample_name": "UKB_5666276_233029566"
+    "output_name": "normalized.vcf.gz",
+    "tumor_sample_name": "3601309_23141_0_0.g"
 }

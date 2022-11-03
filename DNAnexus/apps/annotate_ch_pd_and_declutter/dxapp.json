@@ -123,13 +123,8 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
-<<<<<<< HEAD
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
-            "id": "file-G5j80zjJQ289P281KVq12VqP" 
-=======
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4gy0jQJ6XGPpb7Q4GpGZX1z" 
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+            "id": "file-G775XyjJQ2879fk61xX7BQ5B" 
         }
       },
       "patterns": [
@@ -144,13 +139,8 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
-<<<<<<< HEAD
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
             "id": "file-G5b2Kj8JQ281jkJx6y0XzQVB"
-=======
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G51q1z0J6XGFgfY84jXVyvpf"
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         }
       },
       "patterns": [
@@ -238,13 +228,8 @@
       "optional": true,
       "default": {
         "$dnanexus_link": {
-<<<<<<< HEAD
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
             "id": "file-G5b4yJQJQ283kZJpJzz40YqB"
-=======
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4KjGZQJ6XGP32PJ704VqBX4"
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         }
       },
       "help": "R installed"
@@ -275,11 +260,7 @@
       "label": "mutect",
       "class": "string",
       "optional": true,
-<<<<<<< HEAD
       "default": "mutect_single_orientation",
-=======
-      "default": "mutect_single",
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
       "patterns": [
         "*"
       ],
@@ -295,7 +276,6 @@
         "*"
       ],
       "help": ""
-<<<<<<< HEAD
     },
     {
       "name": "cosmic_files",
@@ -330,7 +310,7 @@
       "default": {
         "$dnanexus_link": {
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
-            "id": "file-G67Z978JQ281g2jF4QbjvPpF"
+            "id": "file-G775Z6jJQ28934K11qyBBp31"
         }
       },
       "patterns": [
@@ -346,7 +326,7 @@
       "default": {
         "$dnanexus_link": {
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
-            "id": "file-G67Z9B8JQ287G3Y68g9X4PKJ"
+            "id": "file-G775Z68JQ2879fk61xX7BQ6B"
         }
       },
       "patterns": [
@@ -362,7 +342,7 @@
       "default": {
         "$dnanexus_link": {
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
-            "id": "file-G67YxZ0JQ287G3Y68g9X4K4p"
+            "id": "file-G775b58JQ2856fkY3b7fxgV5"
         }
       },
       "patterns": [
@@ -386,8 +366,6 @@
         "*.txt"
       ],
       "help": ""
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     }
   ],
   "outputSpec": [

@@ -49,6 +49,7 @@ main() {
     bcftools filter --no-version --threads 4 -e 'INFO/HWE<=1e-15' -Oz -o out/3.vcf.gz
 
     # genotype level filtering
+    bcftools filter 
     bcftools filter --no-version --threads 4 -Oz -o "$output_name" \
     -e '(INFO/TYPE="SNP" && (FMT/DP<7 || MAX(FMT/AD[:1]/FMT/DP)<=0.15)) || (INFO/TYPE="INDEL" && (FMT/DP<10 || MAX(FMT/AD[:1]/FMT/DP)<=0.20))' out/3.vcf.gz
 

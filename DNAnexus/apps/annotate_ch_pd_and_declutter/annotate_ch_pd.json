@@ -1,29 +1,18 @@
 {
     "mutect_vcf": {
         "$dnanexus_link": {
-<<<<<<< HEAD
-            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
-            "id": "file-G66716jJQ283KbKQ4Pv75yjy"
-=======
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4g9f60JyJ528Q5pPVZf7j3k"
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+            "id": "file-G7777z0JKjjpX4VgFJXvZ9fK"
         }
     },
     "vardict_vcf": {
         "$dnanexus_link": {
-<<<<<<< HEAD
-            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
-            "id": "file-G6671FjJQ28Bz5X3996bz2y4"
-=======
             "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4g9Kk0JFy73Z9fv6QkPbXQK"
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+            "id": "file-G7770yQJ7FBb7qz3Jg0X4b76"
         }
     },
     "intervals": {
         "$dnanexus_link": {
-<<<<<<< HEAD
             "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
             "id": "file-G5bgvB8JQ288QVGK2JP6BxYG"
         }
@@ -103,10 +92,4 @@
             "$dnanexus_link": "file-G5ZzFFQJQ287f1pF0YPz80JV"
         }
       ]
-=======
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4Kf988J6XGFKZVV2pPQzYfX"
-        }
-    }
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 }

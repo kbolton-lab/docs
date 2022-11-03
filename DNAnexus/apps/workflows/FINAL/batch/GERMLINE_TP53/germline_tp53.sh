@@ -1,4 +1,4 @@
-dx run workflow-G6Xfjj0JQ28P24VG0p41ZpF3 --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/GERMLINE_TP53/test.hc_caller.batch -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}'
+dx run workflow-G6Xfjj0JQ28P24VG0p41ZpF3 --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/10/dx_batch.0000.tsv -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}'
 
 
 

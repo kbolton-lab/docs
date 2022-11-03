@@ -3365,14 +3365,20 @@
 @SQ	SN:HLA-DRB1*15:03:01:01	LN:11567	UR:ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa	AS:GRCh38	M5:e6a26b767a62b282e0db211bbc9a7363	SP:Human
 @SQ	SN:HLA-DRB1*15:03:01:02	LN:11569	UR:ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa	AS:GRCh38	M5:4e0d459b9bd15bff8645de84334e3d25	SP:Human
 @SQ	SN:HLA-DRB1*16:02:01	LN:11005	UR:ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa	AS:GRCh38	M5:4a972df76bd3ee2857b87bd5be5ea00a	SP:Human
-chr17	7668421	7669692	+	.
-chr17	7670607	7670717	+	.
-chr17	7673533	7673610	+	.
-chr17	7673699	7673839	+	.
-chr17	7674179	7674292	+	.
-chr17	7674857	7674973	+	.
-chr17	7675051	7675238	+	.
-chr17	7675992	7676274	+	.
-chr17	7676380	7676405	+	.
-chr17	7676519	7676624	+	.
-chr17	7687375	7687490	+	.
+chr17	7668421	7669692	-	.
+chr17	7670607	7670717	-	.
+chr17	7673533	7673610	-	.
+chr17	7673699	7673839	-	.
+chr17	7674179	7674292	-	.
+chr17	7674857	7674973	-	.
+chr17	7675051	7675238	-	.
+chr17	7675992	7676274	-	.
+chr17	7676380	7676405	-	.
+chr17	7676519	7676624	-	.
+chr17	7687375	7687490	-	.
+chr3	128479427   128481320	-	.
+chr3	128481817	128481946	-	.
+chr3	128483858	128484007	-	.
+chr3	128485725	128486370	-	.
+chr3	128486801	128487078	-	.
+chr3	128492897	128493201	-	.

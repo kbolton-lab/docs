@@ -375,7 +375,7 @@
     {
       "id": "stage-G4KpvP8J6XGGY19F6Vpxz7pJ",
       "name": "mutect2_vep",
-      "executable": "applet-G5Zy9q8JQ280Qf9P1qFqvJ82",
+      "executable": "applet-G775g28JQ288JQG78yYqBpX2",
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/MutectVEP/Germline",
       "input": {
         "reference": {
@@ -506,7 +506,7 @@
     {
       "id": "stage-G4KqPz0J6XGJZGB842qJVYQK",
       "name": "final_annotation_and_declutter",
-      "executable": "applet-G68jZfQJQ28KBbY72GZ6zp7q",
+      "executable": "applet-G779qF8JQ28K9Gp138q7pVpv",
       "folder": "/CH_Exome/Workflow_Outputs/FINAL/Final_Outputs/Germline",
       "input": {
         "vardict_vcf": {

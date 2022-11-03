@@ -170,7 +170,6 @@
       "help": ""
     },
     {
-<<<<<<< HEAD
       "name": "additional_args",
       "class": "string",
       "optional": true,
@@ -178,8 +177,6 @@
       "help": "" 
     },
     {
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
       "name": "dockerimage_vep",
       "class": "file",
       "optional": true,

@@ -22,7 +22,7 @@ main() {
     eid_nameroot=$(echo $tumor_bam_name | cut -d'.' -f1)
     docker load -i ${dockerimage_vardict_path}
 
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/bin/:/usr/local/bin -w /home/dnanexus kboltonlab/vardictjava:1.0 \
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -v /usr/local/bin/:/usr/local/bin -w /home/dnanexus kboltonlab/vardict:bedtools \
         /bin/bash /usr/local/bin/VardictJava_MT.sh ${reference_path} ${AF_THR} ${tumor_bam_path} ${bed_path} ${normal_bam_path} $eid_nameroot
 
 

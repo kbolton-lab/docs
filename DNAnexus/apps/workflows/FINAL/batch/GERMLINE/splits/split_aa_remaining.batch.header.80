@@ -1,1 +1,116 @@
-batch ID	stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam	stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam_index	stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam ID	stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam_index ID
+for app in $(dx describe workflow-G6YQPb8JQ2856j9q6fJxqKQy --json | jq -r '.stages[].executable'); do dx describe $app | grep instance; done | sort | uniq -c
+
+
+
+
+
+dx run workflow-G6YQPb8JQ2856j9q6fJxqKQy --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/11/dx_batch.0002.tsv -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv=mem1_ssd1_v2_x16 --instance-type stage-G4KkV88J6XG340022vxq916x=mem2_ssd2_v2_x4
+
+dx run workflow-G6Yvgg0JQ28BGKgX7GGz5JFY --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/11/dx_batch.0003.tsv -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv=mem2_ssd1_v2_x16 --instance-type stage-G4KkV88J6XG340022vxq916x=mem1_ssd2_v2_x4
+
+
+
+
+
+
+
+dx run workflow-G6YQPb8JQ2856j9q6fJxqKQy --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/11/dx_batch.0004.tsv -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' 
+
+
+dx run workflow-G6YQPb8JQ2856j9q6fJxqKQy --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/11/dx_batch.0005.tsv -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv=mem1_ssd1_v2_x16 --instance-type stage-G4KkV88J6XG340022vxq916x=mem2_ssd2_v2_x4
+
+
+dx run workflow-G6YQPb8JQ2856j9q6fJxqKQy --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/11/dx_batch.0006.tsv -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type stage-G4Q4Pk8J6XGFjX9F3xfbg8Qv=mem2_ssd1_v2_x16 --instance-type stage-G4KkV88J6XG340022vxq916x=mem1_ssd2_v2_x4
+
+
+dx run workflow-G6YQPb8JQ2856j9q6fJxqKQy --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/11/dx_batch.0007.tsv -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}'
+
+
+for file in $(ls *.vcf.gz | head); do 
+    sample=$(bcftools query -l $file)
+    printf "$sample\t$file\n" >> map.sample_map
+done
+
+rm map.sample_map
+touch map.sample_map
+touch map.sample_map2
+for file in $(ls *.haplotype_caller.vcf.gz | grep -v normalized | tail -n500 ); do 
+    sample=$(bcftools query -l $file)
+    printf "$sample\t$file\n" >> map.sample_map
+done
+
+bsub -n2 -oo GenomicsDBImport.test.log -G compute-timley -g /bwileytest2 -q general -M 32G -R 'rusage[mem=32G]' -a "docker(broadinstitute/gatk:4.2.1.0)" /bin/bash -c '/gatk/gatk --java-options "-Xmx4g -Xms4g" \
+       GenomicsDBImport \
+       --genomicsdb-workspace-path UKBB.test \
+       --batch-size 500 \
+       -L tp53.gata2.canonical.splice.1_index.interval_list \
+       --sample-name-map map.sample_map \
+       --tmp-dir tmp \
+       --reader-threads 20'
+
+bsub -n2 -oo GenomicsDBImport.2.log -G compute-timley -g /bwileytest2 -q general -M 32G -R 'rusage[mem=32G]' -a "docker(broadinstitute/gatk)" /bin/bash -c  '/gatk/gatk --java-options "-Xmx4g -Xms4g" \
+       GenomicsDBImport \
+       --genomicsdb-workspace-path UKBB2 \
+       --batch-size 1000 \
+       -L tp53.gata2.canonical.splice.1_index.interval_list \
+       --sample-name-map map.sample_map2 \
+       --tmp-dir tmp \
+       --reader-threads 20'
+
+
+
+for sample in $(ls *.normalized.haplotype_caller.vcf.gz | cut -d. -f1); do
+    bcftools norm -m +any -Oz -o $sample.haplotype_caller.vcf.gz $sample.normalized.haplotype_caller.vcf.gz && tabix $sample.haplotype_caller.vcf.gz
+done
+bcftools norm -m +any -Oz -o 1002440_23153_0_0.haplotype_caller.vcf.gz 1002440_23153_0_0.normalized.haplotype_caller.vcf.gz
+bcftools norm -m +any -Oz -o 1002462_23153_0_0.haplotype_caller.vcf.gz 1002462_23153_0_0.normalized.haplotype_caller.vcf.gz
+
+/gatk/gatk --java-options "-Xmx4g" GenotypeGVCFs \
+   -R ../../GRCh38_full_analysis_set_plus_decoy_hla.fa \
+   -V gendb://UKBB \
+   -L chr3 \
+   -L chr17 \
+   -O output.vcf.gz
+
+/gatk/gatk --java-options "-Xmx4g" GenotypeGVCFs \
+   -R ../../GRCh38_full_analysis_set_plus_decoy_hla.fa \
+   -V gendb://UKBB2 \
+   -O output2.vcf.gz
+
+array=($(ls *.haplotype_caller.vcf.gz | grep -v normalized | head -n500))
+array2="${array[@]/#/--variant }"
+echo "${array[@]/%/ }"
+gatk CombineGVCFs \
+   -R ../../GRCh38_full_analysis_set_plus_decoy_hla.fa \
+   --variant sample1.g.vcf.gz \
+   --variant sample2.g.vcf.gz \
+   -O cohort.g.vcf.gz
+
+/gatk/gatk CombineGVCFs \
+   -R ../../GRCh38_full_analysis_set_plus_decoy_hla.fa \
+   $array2 \
+   -O cohort.g.vcf.gz
+
+gatk HaplotypeCaller --java-options "-Xmx32g" \
+    -R /Users/brian/test/cromwell-executions/wf/f78e611c-6c02-4aad-b530-8606fdaeaab7/call-fpFilter/inputs/1757216333/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+    -I /Users/brian/test/cromwell-executions/vardict/85925cae-60d2-4740-8b3b-ea087ee635cd/call-vardictNormal/inputs/566503166/1010590_23153_0_0_chr22.bam \
+    -O test.vcf.gz \
+    -L /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/interval_lists/bed/tp53.gata2.canonical.splice.1_index.interval_list \
+    -ERC GVCF \
+    -G AS_StandardAnnotation \
+    -G StandardAnnotation
+
+
+gatk --java-options "-Xmx3g -Xms3g" HaplotypeCaller \
+    -R /Users/brian/test/cromwell-executions/wf/f78e611c-6c02-4aad-b530-8606fdaeaab7/call-fpFilter/inputs/1757216333/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+    --trust-all-polymorphic \
+    -tranche 100.0 -tranche 99.95 -tranche 99.9 -tranche 99.8 -tranche 99.6 -tranche 99.5 -tranche 99.4 -tranche 99.3 -tranche 99.0 -tranche 98.0 -tranche 97.0 -tranche 90.0 \
+    -an QD -an MQRankSum -an ReadPosRankSum -an FS -an MQ -an SOR -an DP \
+    -mode SNP \
+    --max-gaussians 6 \
+    --resource:hapmap,known=false,training=true,truth=true,prior=15 hapmap_3.3.hg38.vcf.gz \
+    --resource:omni,known=false,training=true,truth=true,prior=12 1000G_omni2.5.hg38.vcf.gz \
+    --resource:1000G,known=false,training=true,truth=false,prior=10 1000G_phase1.snps.high_confidence.hg38.vcf.gz \
+    --resource:dbsnp,known=true,training=false,truth=false,prior=7 snvs.hq.vcf.gz \
+    -O cohort_snps.recal \
+    --tranches-file cohort_snps.tranches

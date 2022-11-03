@@ -1,7 +1,7 @@
 {
-  "name": "msk_pileup_mutect_pon2",
-  "title": "msk_pileup_mutect_pon2",
-  "summary": "msk_pileup_mutect_pon2",
+  "name": "msk_pileup_mutect_pon2_test",
+  "title": "msk_pileup_mutect_pon2_test",
+  "summary": "msk_pileup_mutect_pon2_test",
   "dxapi": "1.0.0",
   "version": "0.0.1",
   "inputSpec": [
@@ -105,7 +105,6 @@
       "help": ""
     },
     {
-<<<<<<< HEAD
       "name": "intervals",
       "label": "intervals file for confirming length of targets for p-value correction",
       "class": "file",
@@ -116,8 +115,6 @@
       "help": ""
     },
     {
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
       "name": "caller",
       "label": "caller",
       "class": "string",
@@ -158,18 +155,14 @@
   "runSpec": {
     "timeoutPolicy": {
       "*": {
-        "hours": 1
+        "hours": 4
       }
     },
     "interpreter": "bash",
     "file": "src/msk_pileup_mutect_pon2.sh",
     "execDepends":[
-<<<<<<< HEAD
       {"name": "samtools"},
       {"name": "bc"}
-=======
-      {"name": "samtools"}
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
     ],
     "distribution": "Ubuntu",
     "release": "20.04",

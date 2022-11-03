@@ -14,7 +14,6 @@ eid_nameroot=$(echo $vcf | cut -d'.' -f1)
 bcftools isec -C -w1 ${vcf} ${exclude_vcf} -Oz -o gnomad.filtered.vcf.gz && tabix gnomad.filtered.vcf.gz
 
 zgrep -v "^#" gnomad.filtered.vcf.gz | grep -v "MQ0" | cut -f 1,2 | while read chr pos; do
-<<<<<<< HEAD
     /usr/local/bin/samtools stats -d -@8 "$bam" $chr:$pos-$pos > stats
     mapq0=$(grep "reads MQ0:" stats | cut -f3); printf "$chr\t$pos\t$mapq0\t" >> mapq0counts
     # sequences/reads
@@ -26,13 +25,3 @@ printf "##INFO=<ID=MQ0,Number=1,Type=Integer,Description=\"Number of MAPQ == 0 r
 bgzip -f mapq0counts
 tabix mapq0counts.gz -s1 -b2 -e2;
 bcftools annotate --threads 8 -a mapq0counts.gz -h MQ0.header -c CHROM,POS,MQ0,samtools_DP gnomad.filtered.vcf.gz | bcftools filter -m+ -e "((INFO/MQ0) / (INFO/samtools_DP)) > $mapq0perc" -s "MQ0" --threads 8 -Oz -o $eid_nameroot.mapq0.soft-filtered.vcf.gz && tabix $eid_nameroot.mapq0.soft-filtered.vcf.gz
-=======
-    mapq0=$(samtools stats -d -@8 "$bam" $chr:$pos-$pos | grep "reads MQ0:" | cut -f3); printf "$chr\t$pos\t$mapq0\n" >> mapq0counts
-done
-
-printf "##INFO=<ID=MQ0,Number=1,Type=Integer,Description=\"Number of MAPQ == 0 reads covering this record\">" > MQ0.header;
-
-bgzip -f mapq0counts
-tabix mapq0counts.gz -s1 -b2 -e2;
-bcftools annotate --threads 8 -a mapq0counts.gz -h MQ0.header -c CHROM,POS,MQ0 gnomad.filtered.vcf.gz | bcftools filter -m+ -e "((INFO/MQ0) / (FMT/DP)) > $mapq0perc" -s "MQ0" --threads 8 -Oz -o $eid_nameroot.mapq0.soft-filtered.vcf.gz && tabix $eid_nameroot.mapq0.soft-filtered.vcf.gz
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01

@@ -9,7 +9,7 @@ if ($scatter_count == 1) {
     File::Copy::copy($interval_list,qq{$i.interval_list});
 } else {
 
-    my $retval = system('gatk', 'IntervalListTools', 'OUTPUT='.$output_dir, 'INPUT='.$interval_list, 'SCATTER_COUNT='. $scatter_count);
+    my $retval = system('/Users/brian/Bolton/UKBB/docs/DNAnexus/apps/bqsr_spark/resources/gatk/gatk', 'IntervalListTools', 'OUTPUT='.$output_dir, 'INPUT='.$interval_list, 'SCATTER_COUNT='. $scatter_count);
     exit $retval if $retval != 0;
 
     for (glob("$output_dir/*/scattered.interval_list")) {

@@ -88,11 +88,7 @@
   "outputSpec": [
     {
       "name": "mapq0_vcf",
-<<<<<<< HEAD
       "label": "mapq0_vcf",
-=======
-      "label": "soft-filter mapq0 vcf",
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
       "class": "file",
       "patterns": [
         "*"
@@ -101,11 +97,7 @@
     },
     {
       "name": "mapq0_vcf_index",
-<<<<<<< HEAD
       "label": "mapq0_vcf_index",
-=======
-      "label": "index",
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
       "class": "file",
       "patterns": [
         "*"
@@ -116,7 +108,7 @@
   "runSpec": {
     "timeoutPolicy": {
       "*": {
-        "hours": 1
+        "hours": 4
       }
     },
     "interpreter": "bash",

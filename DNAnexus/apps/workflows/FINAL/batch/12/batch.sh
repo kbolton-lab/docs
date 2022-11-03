@@ -1,106 +1,199 @@
+# Brian's Project: $BRIAN
+12
+13
+# ODDS
+
+25 ****************************************************
+
+dx run $KELLY:/test/tools/annotate_ch_pd -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/annotate_ch_pd_and_declutter/annotate_ch_pd_chr4.json --destination $BRIAN:/CH_Exome/Workflow_Outputs/FINAL/Final_Outputs/25 -y
+
+# Kelly's Project: $KELLY
+10
+11
+(12)
+# EVENS
+14
+16
+18
+
+########################################################################################################
+########################################################################################################
+
 folder=12
-folder_m1=$(($folder - 1 ))
-cp -r /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder_m1 /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder
-mv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/$folder_m1.sh mv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/$folder.sh
+PROJECT=$BRIAN
+workflow=workflow-G7Y46j8J6XGJ58y30XjyV1j0
+# dx generate_batch_inputs -istage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam='(.*)_23153_0_0.cram$' -istage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam_index='(.*)_23153_0_0.cram.crai' --path "UKBB_Exome_2021:Bulk/Exome sequences/Exome OQFE CRAM files/$folder" -o "/Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch"
 
-mv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/FINAL_${folder_m1} /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/FINAL_${folder}
-gsed -i "s/FINAL_${folder_m1}/FINAL_${folder}/g" /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/FINAL_${folder}/dxworkflow.json
 
-gsed -i "s|/${folder_m1}|/${folder}|g" /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/FINAL_${folder}/dxworkflow.json
-workflow_id=$(dx build /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/FINAL_${folder} --workflow --destination /test/workflows/ --keep-open | jq -r .id )
+# "mem1_ssd1_v2_x8": 0.0528,
+# "mem2_ssd1_v2_x8": 0.0528,
+# "mem3_ssd1_v2_x8": 0.0528,
 
-#"id": "workflow-G4qkB9QJ6XGKVJJ1Bxv6Gz2y"
-mv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/${folder_m1}.sh /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/${folder}.sh
-gsed -i "s/W${folder_m1}_FINAL/W${folder}_FINAL/g" /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/${folder}.sh
-gsed -i "s|logs/log${folder_m1}|logs/log${folder}|g" /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/${folder}.sh
-gsed -i "s/workflow-[a-zA-Z0-9]\+/$workflow_id/g" /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/${folder}.sh
-touch /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/logs/log12
+function TOTAL {
+   folder=$1
 
-rm /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch*
-dx generate_batch_inputs -istage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam='(.*)_23153_0_0.cram$' -istage-G4Q4Pk8J6XGFjX9F3xfbg8Qv.bam_index='(.*)_23153_0_0.cram.crai' --path "UKBB_Exome_2021:Bulk/Exome sequences/Exome OQFE CRAM files/$folder" -o "/Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch"
-source /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/${folder}.sh
-mkdir /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/input_json/$folder
-1=$(sed -n '2p' /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0000.tsv | awk '{print $1}')
-2=$folder
-W${folder}_FINAL $1 $2
+   (dx ls $BRIAN:/CH_Exome/Workflow_Outputs/FINAL/VardictIntersectMutect/"$folder"/"*.vcf.gz";
+    dx ls $BRIAN:/CH_Exome/Workflow_Outputs/FINAL/VardictIntersectMutect/"Lung"/"*.vcf.gz"; 
+    dx ls $BRIAN:/CH_Exome/Workflow_Outputs/FINAL/VardictIntersectMutect/"Germline"/"*.vcf.gz") | cut -d_ -f1 | sort | uniq > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/brian.vardict.total.txt
 
-grep -v -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/logs/log${folder} /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0000.tsv > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0000.tsv.tmp && mv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0000.tsv.tmp /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0000.tsv
+    (dx ls $BRIAN:/CH_Exome/Workflow_Outputs/FINAL/MutectVEP/"$folder"/"*.vcf.gz";
+     dx ls $BRIAN:/CH_Exome/Workflow_Outputs/FINAL/MutectVEP/"Lung"/"*.vcf.gz"; 
+    dx ls $BRIAN:/CH_Exome/Workflow_Outputs/FINAL/MutectVEP/"Germline"/"*.vcf.gz") | cut -d_ -f1 | sort | uniq > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/brian.mutect.total.txt
 
-# workflow_id=workflow-G4qkQJQJ6XG0P2Bz4Qj3zxk2
-# dx run $workflow_id --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0000.tsv -y --priority low
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-workflow_id=workflow-G4x6JB0JQ281gy5Q4K814GXF
-=======
-workflow_id=workflow-G4x6JB0JQ281gy5Q4K814GXF # Kelly
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-=======
-workflow_id=workflow-G4x6JB0JQ281gy5Q4K814GXF # Kelly
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-for folder in 12; do
-    cd /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder
-    for batch in dx_batch.0001.tsv; do
-        ls $batch
-        tail -n +2 $batch | split -l 100 - split_${batch}_
-        for file in split_${batch}_*; do
-            head -n 1 $batch > ${batch}_tmp_file
-<<<<<<< HEAD
-            # cat "$file" >> ${batch}_tmp_file
-            grep -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/12/dx_batch_1_latest.0001.tsv "$file" >> ${batch}_tmp_file
-            mv -f ${batch}_tmp_file "$file"
-<<<<<<< HEAD
-            wc -l $file
-            dx run $workflow_id --batch-tsv $file -istage-G4fq8KjJ6XG6pBYqK1VXFgZV.project=$KELLY -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}'
-            sleep 120
-=======
-            echo dx run $workflow_id --batch-tsv $file -istage-G4fq8KjJ6XG6pBYqK1VXFgZV.project=$KELLY -y --priority low
-            
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-=======
-            cat "$file" >> ${batch}_tmp_file
-            mv -f ${batch}_tmp_file "$file"
-            echo dx run $workflow_id --batch-tsv $file -istage-G4fq8KjJ6XG6pBYqK1VXFgZV.project=$KELLY -y --priority low
-            
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-        done
-    done
+   (dx ls $KELLY:/CH_Exome/Workflow_Outputs/FINAL/VardictIntersectMutect/"Lung"/"*.vcf.gz"; 
+    dx ls $KELLY:/CH_Exome/Workflow_Outputs/FINAL/VardictIntersectMutect/"Germline"/"*.vcf.gz"; 
+    dx ls $KELLY:/CH_Exome/Workflow_Outputs/FINAL/VardictIntersectMutect/"Transplant"/"*.vcf.gz") | cut -d_ -f1 | sort | uniq > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/kelly.vardict.total.txt
+ 
+   (dx ls $KELLY:/CH_Exome/Workflow_Outputs/FINAL/MutectVEP/"Lung"/"*.vcf.gz"; 
+    dx ls $KELLY:/CH_Exome/Workflow_Outputs/FINAL/MutectVEP/"Germline"/"*.vcf.gz"; 
+    dx ls $KELLY:/CH_Exome/Workflow_Outputs/FINAL/MutectVEP/"Transplant"/"*.vcf.gz") | cut -d_ -f1 | sort | uniq > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/kelly.mutect.total.txt
+
+   cat /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/*.vardict.total.txt | grep ^$folder | sort | uniq > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/VARDICT.total.txt
+
+   cat /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/*.mutect.total.txt | grep ^$folder | sort | uniq > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/MUTECT.total.txt
+
+   # intersect to see which are done # 853 either order
+   grep -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/VARDICT.total.txt /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/MUTECT.total.txt > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/total.RAN.txt
+
+   # not done/failed?
+   # grep -v -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/MUTECT.total.txt /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/VARDICT.total.txt
+
+   # Any in progress?
+   # https://askubuntu.com/questions/642563/passing-variable-into-awk-gsub
+   dx find executions --project $PROJECT --state in_progress -n 2000 --origin-jobs --name "$folder-*" | grep analysis | awk -v folder=$folder '{gsub("'"$folder-"'","",$2); print $2}' > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/running.txt
+   
+   cat /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/total.RAN.txt /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/running.txt | sort | uniq > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/total.RAN.RUNNING.txt
+   # /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/workflow.total.txt
+
+   i=0
+   for batch in {0000..0008}; do
+      echo $batch
+      head -n251 /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.$batch.tsv | grep -v -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/total.RAN.RUNNING.txt > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.$batch.a.tsv
+      wc_l=$(wc -l /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.$batch.tsv | awk '{print $1}')
+      if [[ $wc_l -gt 1 ]]; then
+         #echo "increment"
+         i=$((i+1))
+         echo $i
+      else 
+         #echo "no increment"
+      fi
+      
+      if [[ $wc_l -gt 251 ]]; then
+         #echo "do this"
+         i=$((i+1))
+         echo $i
+         my_tail=$(echo $wc_l-250-1 | bc)
+         (head -n1 /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.$batch.tsv; tail -n${my_tail} /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.$batch.tsv | grep -v -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/total.RAN.RUNNING.txt) > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.$batch.b.tsv
+      else 
+         #echo "don't do this"
+      fi
+      wc -l /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.$batch.*.tsv
+   done
+   wc -l /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.*.*.tsv
+
+   total_to_run=$(wc -l /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.*.*.tsv | tail -n1 | awk -v remove=$i '{print $1-remove}')
+   total_ran_run=$(wc -l /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/total.RAN.RUNNING.txt | awk '{print $1}')
+   total_crams=$(wc -l  /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/$folder.crams.run | awk '{print $1}')
+   echo "$total_to_run + $total_ran_run = $(echo $total_to_run + $total_ran_run | bc)"
+   echo $total_crams
+}
+export -f TOTAL
+
+## RUN TOTAL!!!
+TOTAL 12
+
+
+# BQSR 
+# tp_53_bqsr
+dx ls project-G4qpk1jJQ285yvbXPFZKXkk8:/CH_Exome/Workflow_Outputs/FINAL/BQSR/Germline_TP53/"*.bam" | cut -d_ -f1 | grep ^$folder | sort | uniq > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/tp_53_bqsr.txt
+
+dx ls $KELLY:/CH_Exome/Workflow_Outputs/FINAL/BQSR/$folder/"*.bam" | cut -d_ -f1 | sort | uniq > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/bqsr.K.txt
+dx ls $BRIAN:/CH_Exome/Workflow_Outputs/FINAL/BQSR/$folder/"*.bam" | cut -d_ -f1 | sort | uniq > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/bqsr.B.txt
+
+
+cat /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.*.*.tsv | grep -v batch | awk '{print $1}' > /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/ids_to_run.txt
+
+# for bam in $(grep -v -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/ids_to_run.txt /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/tp_53_bqsr.txt); do 
+#    dx rm project-G4qpk1jJQ285yvbXPFZKXkk8:/CH_Exome/Workflow_Outputs/FINAL/BQSR/Germline_TP53/"$bam*.bam*"
+# done
+
+for bam in $(grep -v -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/ids_to_run.txt /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/bqsr.B.txt); do 
+   dx rm $BRIAN:/CH_Exome/Workflow_Outputs/FINAL/BQSR/$folder/"$bam*.bam*"
 done
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-workflow_id=workflow-G4x8k0QJ6XG88z719jyVVX77
-=======
-workflow_id=workflow-G4x8k0QJ6XG88z719jyVVX77 # Brian
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-=======
-workflow_id=workflow-G4x8k0QJ6XG88z719jyVVX77 # Brian
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-for folder in 12; do
-    cd /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder
-    for batch in dx_batch.0002.tsv; do
-        ls $batch
-        tail -n +2 $batch | split -l 100 - split_${batch}_
-        for file in split_${batch}_*; do
-            head -n 1 $batch > ${batch}_tmp_file
-<<<<<<< HEAD
-<<<<<<< HEAD
-            grep -f /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/12/dx_batch_1_latest.0002.tsv "$file" >> ${batch}_tmp_file
-            mv -f ${batch}_tmp_file "$file"
-            wc -l $file
-            dx run $workflow_id --batch-tsv $file -istage-G4fq8KjJ6XG6pBYqK1VXFgZV.project=$BRIAN -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}, "stageSystemRequirements": {"stage-G4KqPz0J6XGJZGB842qJVYQK":{"executionPolicy": {"restartOn": {"AppInternalError": 1}}}}}'
-            sleep 30
-=======
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-            cat "$file" >> ${batch}_tmp_file
-            mv -f ${batch}_tmp_file "$file"
-            dx run $workflow_id --batch-tsv $file -istage-G4fq8KjJ6XG6pBYqK1VXFgZV.project=$BRIAN -y --priority low
-            
-<<<<<<< HEAD
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-        done
-    done
+########################################################################################################
+########################################################################################################
+########################################################################################################
+## run all since not many
+for batch in {0000..0007}; do
+   for file in a b; do
+      word_count=$(wc -l /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.$batch.$file.tsv | awk '{print $1}')
+      if [ $word_count -gt 1 ]; then
+         dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.$batch.$file.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}' --instance-type 0=mem3_ssd1_v2_x8  --instance-type 5=mem1_ssd1_v2_x8
+      else
+      echo no
+      fi
+   done
 done
+
+
+"mem1_ssd1_v2_x8": 0.0528,
+"mem2_ssd1_v2_x8": 0.0528,
+"mem3_ssd1_v2_x8": 0.0528,
+
+# 0000
+
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0000.a.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type 0=mem3_ssd1_v2_x8 --instance-type 2=mem2_ssd1_v2_x4
+
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0000.b.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type 5=mem2_ssd2_x8 
+
+
+
+# 0001
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0001.a.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}' --instance-type 0=mem1_ssd1_v2_x16 --instance-type 5=mem1_ssd1_v2_x16 --instance-type 2=mem2_ssd1_v2_x4
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0001.b.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type 5=mem1_ssd1_v2_x16  
+
+# 0002
+
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0002.a.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}'  --instance-type 2=mem2_ssd1_v2_x4
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0002.b.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}' --instance-type 0=mem2_ssd1_v2_x16
+
+
+# 0003
+
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0003.a.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type 0=mem2_ssd1_v2_x8  --instance-type 5=mem2_ssd2_x8 --instance-type 2=mem2_ssd1_v2_x4 --instance-type 4=mem1_ssd1_v2_x16
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0003.b.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}' --instance-type 4=mem1_ssd1_v2_x16
+
+# 0004
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0004.a.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}'  --instance-type 2=mem2_ssd1_v2_x4
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0004.b.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type 0=mem3_ssd1_v2_x8 
+
+# 0005
+
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0005.a.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type 0=mem2_ssd1_v2_x8  --instance-type 5=mem1_ssd1_v2_x8 --instance-type 2=mem2_ssd1_v2_x4
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0005.b.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type 0=mem3_ssd1_v2_x8
+
+
+# 0006
+
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0006.a.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}'  --instance-type 5=mem2_ssd2_x8 --instance-type 2=mem2_ssd1_v2_x4
+
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0006.b.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type 0=mem3_ssd1_v2_x8 --instance-type 5=mem1_ssd1_v2_x8
+
+
+# 0007
+
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0007.a.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 2}}' --instance-type 0=mem3_ssd1_v2_x8 --instance-type 2=mem2_ssd1_v2_x4
+
+dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0007.b.tsv   -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}' --instance-type 0=mem2_ssd1_v2_x8
+# 0008
+# dx run $workflow --batch-tsv /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/$folder/dx_batch.0008.tsv  -istage-G4KqPz0J6XGJZGB842qJVYQK.project=$BRIAN -y --priority low --extra-args '{"executionPolicy": {"restartOn": {"UnresponsiveWorker": 2}, "maxSpotTries": 5}}'
+
+#Any in progress?
+
+
+
+
+cp /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/29/batch.sh /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/27/batch.sh
+cp /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/31/dxworkflow.json /Users/brian/Bolton/UKBB/docs/DNAnexus/apps/workflows/FINAL/batch/29/dxworkflow.json

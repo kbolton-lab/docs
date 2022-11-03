@@ -1,14 +1,14 @@
 {
     "mutect_vcf": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
             "id": "file-G4g9f60JyJ528Q5pPVZf7j3k"
         }
     },
     "vardict_vcf": {
         "$dnanexus_link": {
-            "project": "project-G3Yj1vjJ6XG579jbKyjXPGGY",
-            "id": "file-G4g9Kk0JFy73Z9fv6QkPbXQK"
+            "project": "project-G4qpk1jJQ285yvbXPFZKXkk8",
+            "id": "file-G5bxfZ0JvB8xq03zFgzXkJG3"
         }
     },
     "intervals": {

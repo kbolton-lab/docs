@@ -4,15 +4,7 @@
 
 main() {
     set -exou pipefail
-<<<<<<< HEAD
-<<<<<<< HEAD
-    #wget https://raw.githubusercontent.com/griffithlab/pVACtools/master/tools/pvacseq/VEP_plugins/Wildtype.pm
-=======
-    wget https://raw.githubusercontent.com/griffithlab/pVACtools/master/tools/pvacseq/VEP_plugins/Wildtype.pm
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-=======
-    wget https://raw.githubusercontent.com/griffithlab/pVACtools/master/tools/pvacseq/VEP_plugins/Wildtype.pm
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
+
     echo "Value of vcf: '$vcf'"
     ## the mutect vcf
     echo "Value of vcf: '$intersect_vcf'"
@@ -62,27 +54,14 @@ main() {
     bcftools filter -i 'INFO/calpos~".*"' complex.variant.query.vcf.gz -Oz -o complex.only.variant.query.vcf.gz && /usr/bin/tabix complex.only.variant.query.vcf.gz
 
     docker load -i $dockerimage_vep_path
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/vep \
+    docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/vep3 \
         /bin/bash -c "/opt/vep/src/ensembl-vep/vep \
             --format vcf \
             -i complex.only.variant.query.vcf.gz \
-<<<<<<< HEAD
-<<<<<<< HEAD
             --fork $fork \
-=======
-            --fork 4 \
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-=======
-            --fork 4 \
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
             --terms SO \
+            --offline \
             --transcript_version \
             --symbol \
             --vcf \
@@ -91,17 +70,12 @@ main() {
             --fasta $reference_path \
             --dir /opt/vep/.vep/ \
             --synonyms $synonyms_path \
-<<<<<<< HEAD
-<<<<<<< HEAD
             --plugin Frameshift \
             --plugin Wildtype \
             --assembly GRCh38 \
             --species homo_sapiens \
             --merged \
             $additional_args \
-=======
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
             --sift p \
             --polyphen p \
             --coding_only \
@@ -114,18 +88,12 @@ main() {
             --merged \
             --check_existing \
             --buffer_size 1000 \
-            --af_gnomad \
-<<<<<<< HEAD
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
             --custom $gnomad_file_path,gnomADe,vcf,exact,1,AF,AF_AFR,AF_AMR,AF_ASJ,AF_EAS,AF_FIN,AF_NFE,AF_OTH,AF_SAS \
             --custom $gnomad_V3_path,gnomADg,vcf,exact,1,AF,AF_ami,AF_oth,AF_afr,AF_sas,AF_asj,AF_fin,AF_amr,AF_nfe,AF_eas \
             --custom $clinvar_file_path,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
             --force_overwrite && bgzip complex.only.variant.query.vep.annotated.vcf && tabix complex.only.variant.query.vep.annotated.vcf.gz"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     # docker run --rm -v /home/dnanexus:/home/dnanexus -v /mnt/UKBB_Exome_2021:/mnt/UKBB_Exome_2021 -w /home/dnanexus kboltonlab/vep \
     #     /bin/bash -c "/opt/vep/src/ensembl-vep/vep \
     #         --format vcf \
@@ -158,15 +126,11 @@ main() {
     #         --custom $clinvar_file_path,clinvar,vcf,exact,1,CLINSIGN,PHENOTYPE,SCORE,RCVACC,TESTEDINGTR,PHENOTYPELIST,NUMSUBMIT,GUIDELINES \
     #         --force_overwrite && bgzip complex.only.variant.query.vep.annotated.vcf && tabix complex.only.variant.query.vep.annotated.vcf.gz"
 
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
-=======
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
 
     /usr/bin/bcftools isec -n+2 -w1 complex.variant.query.vcf.gz ${intersect_vcf_path} -Oz -o $eid_nameroot.vardict.intersect.mutect.vcf.gz && /usr/bin/tabix $eid_nameroot.vardict.intersect.mutect.vcf.gz
     
     printf "##INFO=<ID=PON_2AT2_percent,Number=1,Type=Integer,Description=\"If 2 PoN samples have variant at >=2 percent\">\n" > pon2.header;
-    /usr/bin/bcftools query -f "%CHROM\t%POS\t%REF\t%REF\t1\n" $vcf2PON_path > normal2.txt
+    /usr/bin/bcftools query -f "%CHROM\t%POS\t%REF\t%ALT\t1\n" $vcf2PON_path > normal2.txt
     /usr/bin/bgzip -f normal2.txt
     /usr/bin/tabix -f -s1 -b2 -e2 normal2.txt.gz
     /usr/bin/bcftools concat -a -D complex.only.variant.query.vep.annotated.vcf.gz $eid_nameroot.vardict.intersect.mutect.vcf.gz | /usr/bin/bcftools annotate --threads 4 -a normal2.txt.gz -h pon2.header -c CHROM,POS,REF,ALT,PON_2AT2_percent -Oz -o $name
@@ -178,4 +142,5 @@ main() {
 
     dx-jobutil-add-output annotated_pon2_vcf "$annotated_pon2_vcf" --class=file
     dx-jobutil-add-output annotated_pon2_vcf_index "$annotated_pon2_vcf_index" --class=file
+    
 }

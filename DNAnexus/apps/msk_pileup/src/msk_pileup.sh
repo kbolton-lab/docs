@@ -38,6 +38,7 @@ main() {
     # ls $dockerimage_fisher_julia_path
     # mv $dockerimage_R_path .
     # ls $dockerimage_R_name .
+    mv $bam_mom_index_path ~/in/bam_mom
     mv $dockerimage_msk_getbasecountsR_path .
     ls $dockerimage_msk_getbasecountsR_name .
 

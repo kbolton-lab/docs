@@ -16,7 +16,8 @@ main() {
     ## for extracting tumor
     tumor_sample_name=$(/usr/bin/samtools view -H $tumor_bam_name | /usr/bin/perl -nE 'say $1 if /^\@RG.+\tSM:([ -~]+)/' | head -n 1)
     #echo $tumor_sample_name
-   
+    # eid_nameroot=$(echo $tumor_bam_name | cut -d'.' -f1)
+    # output_name="$eid_nameroot.mutect.filtered.vcf.gz"
     echo "Value of interval_list: '$interval_list'"
     echo "Value of dockerimage_picard: '$dockerimage_picard'"
    

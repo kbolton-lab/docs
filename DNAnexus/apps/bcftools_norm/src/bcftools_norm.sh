@@ -36,4 +36,5 @@ main() {
 
     dx-jobutil-add-output normalized_vcf "$normalized_vcf" --class=file
     dx-jobutil-add-output normalized_vcf_index "$normalized_vcf_index" --class=file
+
 }

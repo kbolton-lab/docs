@@ -4,12 +4,14 @@
   "summary": "bqsr_spark",
   "dxapi": "1.0.0",
   "version": "0.0.1",
+  
   "httpsApp": {
     "shared_access":"NONE",
     "ports": [
       8081
     ]
   },
+
   "inputSpec": [
     {
       "name": "bam",
@@ -98,6 +100,7 @@
       "help": ""
     }
   ],
+
   "outputSpec": [
     {
       "name": "bam_out",
@@ -126,10 +129,11 @@
       "help": "The tarball of the cluster runtime logs"
     }
   ],
+  
   "runSpec": {
     "timeoutPolicy": {
       "*": {
-        "hours": 1
+        "hours": 4
       }
     },
     "interpreter": "bash",
@@ -142,34 +146,29 @@
     "release": "20.04",
     "version": "0"
   },
+  
   "access": {
     "project": "CONTRIBUTE",
     "allProjects": "VIEW",
     "network": [ "*" ]
   },
+  
   "executionPolicy": {
     "restartOn": {
       "UnresponsiveWorker": 2
     },
     "maxSpotTries": 2
   },
+  
   "regionalOptions": {
     "aws:eu-west-2": {
       "systemRequirements": {
         "*": {
-<<<<<<< HEAD
           "instanceType": "mem2_ssd1_v2_x8"
-=======
-          "instanceType": "mem3_ssd1_v2_x16",
-          "clusterSpec": {
-            "type": "dxspark",
-            "version": "2.4.4",
-            "initialInstanceCount": 1,
-            "ports": "9500, 9700-9750"
-          }
->>>>>>> 65d148f5d1ffac4ed8440f892e4a8b651eb53b01
         }
       }
     }
   }
 }
+
+
